@@ -1,0 +1,14 @@
+{
+  "skipTerminateQuickPick": true,
+  "skipSwitchToOutput": false,
+  "skipErrorMessage": true,
+  "commands": [
+    {
+      "text": "📦 Redist",
+      "alignment": "right",
+      "command": "redist.cmd",
+      "skipTerminateQuickPick": false,
+      "priority": 0
+    }
+  ]
+}

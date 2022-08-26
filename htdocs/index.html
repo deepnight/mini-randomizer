@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>Scrambler</title>
+		<link rel="stylesheet" href="data/css/style.min.css?v=2"/>
+		<script type="text/javascript" src="data/js/jquery.min.js"></script>
+	</head>
+
+	<body>
+		<div id="notif"></div>
+
+		<h2>Word scrambler</h2>
+
+		<div class="cols">
+			<div class="col">
+				<textarea id="source" placeholder="Liste de mots (un par ligne)"></textarea>
+				<button id="run">Mélanger ➔</button>
+			</div>
+
+			<div class="col">
+				<textarea id="result" readonly="readonly" placeholder="Mots mélangés"></textarea>
+				<button id="copy">Copier 📋</button>
+			</div>
+		</div>
+
+		<div id="footer">
+			<p>
+				<a href="https://github.com/deepnight/mini-scrambler">Source code</a> |
+				<a href="https://github.com/deepnight/mini-scrambler/releases/latest">Download ZIP</a> |
+				<a href="https://deepnight.net">Author website</a>
+			</p>
+			<p>Distributé sous license Creative Common (<a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>)</p>
+		</div>
+
+		<canvas id="webgl" globalevents="0"></canvas>
+		<script type="text/javascript" src="client.js"></script>
+	</body>
+</html>

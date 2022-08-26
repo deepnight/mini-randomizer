@@ -1,0 +1,16 @@
+#start test
+
+>test
+:place:, :state:
+
+>place
+Supermarché
+Ecole
+Epicerie
+Entrepôt
+
+>state
+bon état x2
+ancien
+en ruines
+dévasté(e) x0.5
