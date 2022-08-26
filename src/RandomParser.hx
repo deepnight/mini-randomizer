@@ -21,10 +21,14 @@ class RandomParser {
 			if( l.length==0 )
 				continue;
 
-			if( OPTION_REG.match(l) )
+			// Option
+			if( OPTION_REG.match(l) ) {
 				setOption( OPTION_REG.matched(1), OPTION_REG.matched(3) );
+				continue;
+			}
 
 			if( KEY_REG.match(l) ) {
+				// New table key
 				curKey = KEY_REG.matched(1);
 				if( !tables.exists(curKey) )
 					tables.set(curKey, []);
@@ -32,11 +36,13 @@ class RandomParser {
 			else if( curKey!=null ) {
 				var probaMul = 1.;
 				if( PROBA_MUL_REG.match(l) ) {
+					// Custom probability
 					probaMul = Std.parseFloat( PROBA_MUL_REG.matched(1) );
 					if( !M.isValidNumber(probaMul) )
 						probaMul = 1;
 					l = PROBA_MUL_REG.matchedLeft();
 				}
+				// Store table entry
 				tables.get(curKey).push({
 					raw: l,
 					probaMul: probaMul,

@@ -1289,6 +1289,7 @@ var RandomParser = function(raw) {
 		}
 		if(RandomParser.OPTION_REG.match(l)) {
 			this.setOption(RandomParser.OPTION_REG.matched(1),RandomParser.OPTION_REG.matched(3));
+			continue;
 		}
 		if(RandomParser.KEY_REG.match(l)) {
 			curKey = RandomParser.KEY_REG.matched(1);
@@ -1327,14 +1328,14 @@ var RandomParser = function(raw) {
 			var x = e.probaMul * 100;
 			result[i] = e.raw + "[" + ((x > 0 ? x + .5 : x < 0 ? x - .5 : 0) | 0) + "%]";
 		}
-		haxe_Log.trace(tmp + result.join(", "),{ fileName : "src/RandomParser.hx", lineNumber : 48, className : "RandomParser", methodName : "new"});
+		haxe_Log.trace(tmp + result.join(", "),{ fileName : "src/RandomParser.hx", lineNumber : 54, className : "RandomParser", methodName : "new"});
 	}
 };
 $hxClasses["RandomParser"] = RandomParser;
 RandomParser.__name__ = "RandomParser";
 RandomParser.prototype = {
 	setOption: function(opt,arg) {
-		haxe_Log.trace("Found option " + opt + ":" + arg,{ fileName : "src/RandomParser.hx", lineNumber : 52, className : "RandomParser", methodName : "setOption"});
+		haxe_Log.trace("Found option " + opt + ":" + arg,{ fileName : "src/RandomParser.hx", lineNumber : 58, className : "RandomParser", methodName : "setOption"});
 	}
 	,__class__: RandomParser
 };
