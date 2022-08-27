@@ -6,177 +6,6 @@ function $extend(from, fields) {
 	if( fields.toString !== Object.prototype.toString ) proto.toString = fields.toString;
 	return proto;
 }
-var hxd_App = function() {
-	var _gthis = this;
-	var engine = h3d_Engine.CURRENT;
-	if(engine != null) {
-		this.engine = engine;
-		engine.onReady = $bind(this,this.setup);
-		haxe_Timer.delay($bind(this,this.setup),0);
-	} else {
-		hxd_System.start(function() {
-			engine = new h3d_Engine();
-			_gthis.engine = engine;
-			engine.onReady = $bind(_gthis,_gthis.setup);
-			engine.init();
-		});
-	}
-};
-hxd_App.__name__ = "hxd.App";
-hxd_App.staticHandler = function() {
-};
-hxd_App.prototype = {
-	onResize: function() {
-	}
-	,onContextLost: function() {
-		if(this.s3d != null) {
-			this.s3d.onContextLost();
-		}
-	}
-	,render: function(e) {
-		this.s3d.render(e);
-		this.s2d.render(e);
-	}
-	,setup: function() {
-		var _gthis = this;
-		var initDone = false;
-		this.engine.onReady = hxd_App.staticHandler;
-		this.engine.onContextLost = $bind(this,this.onContextLost);
-		this.engine.onResized = function() {
-			if(_gthis.s2d == null) {
-				return;
-			}
-			_gthis.s2d.checkResize();
-			if(initDone) {
-				_gthis.onResize();
-			}
-		};
-		this.s3d = new h3d_scene_Scene();
-		this.s2d = new h2d_Scene();
-		this.sevents = new hxd_SceneEvents();
-		this.sevents.addScene(this.s2d);
-		this.sevents.addScene(this.s3d);
-		this.loadAssets(function() {
-			initDone = true;
-			_gthis.init();
-			hxd_Timer.skip();
-			_gthis.mainLoop();
-			hxd_System.setLoop($bind(_gthis,_gthis.mainLoop));
-			hxd_Key.initialize();
-		});
-	}
-	,loadAssets: function(onLoaded) {
-		onLoaded();
-	}
-	,init: function() {
-	}
-	,mainLoop: function() {
-		hxd_Timer.update();
-		this.sevents.checkEvents();
-		if(this.isDisposed) {
-			return;
-		}
-		this.update(hxd_Timer.dt);
-		if(this.isDisposed) {
-			return;
-		}
-		var dt = hxd_Timer.dt;
-		if(this.s2d != null) {
-			this.s2d.setElapsedTime(dt);
-		}
-		if(this.s3d != null) {
-			this.s3d.setElapsedTime(dt);
-		}
-		this.engine.render(this);
-	}
-	,update: function(dt) {
-	}
-	,__class__: hxd_App
-};
-var Boot = function() {
-	hxd_App.call(this);
-};
-Boot.__name__ = "Boot";
-Boot.main = function() {
-	new Boot();
-};
-Boot.__super__ = hxd_App;
-Boot.prototype = $extend(hxd_App.prototype,{
-	init: function() {
-		hxd_App.prototype.init.call(this);
-		new Main();
-	}
-	,update: function(dt) {
-		hxd_App.prototype.update.call(this,dt);
-		dn_Process.updateAll(hxd_Timer.dt * hxd_Timer.wantedFPS);
-	}
-	,__class__: Boot
-});
-var EReg = function(r,opt) {
-	this.r = new RegExp(r,opt.split("u").join(""));
-};
-EReg.__name__ = "EReg";
-EReg.prototype = {
-	match: function(s) {
-		if(this.r.global) {
-			this.r.lastIndex = 0;
-		}
-		this.r.m = this.r.exec(s);
-		this.r.s = s;
-		return this.r.m != null;
-	}
-	,matched: function(n) {
-		if(this.r.m != null && n >= 0 && n < this.r.m.length) {
-			return this.r.m[n];
-		} else {
-			throw haxe_Exception.thrown("EReg::matched");
-		}
-	}
-	,__class__: EReg
-};
-var HxOverrides = function() { };
-HxOverrides.__name__ = "HxOverrides";
-HxOverrides.cca = function(s,index) {
-	var x = s.charCodeAt(index);
-	if(x != x) {
-		return undefined;
-	}
-	return x;
-};
-HxOverrides.substr = function(s,pos,len) {
-	if(len == null) {
-		len = s.length;
-	} else if(len < 0) {
-		if(pos == 0) {
-			len = s.length + len;
-		} else {
-			return "";
-		}
-	}
-	return s.substr(pos,len);
-};
-HxOverrides.remove = function(a,obj) {
-	var i = a.indexOf(obj);
-	if(i == -1) {
-		return false;
-	}
-	a.splice(i,1);
-	return true;
-};
-HxOverrides.now = function() {
-	return Date.now();
-};
-var Lambda = function() { };
-Lambda.__name__ = "Lambda";
-Lambda.array = function(it) {
-	var a = [];
-	var i = $getIterator(it);
-	while(i.hasNext()) {
-		var i1 = i.next();
-		a.push(i1);
-	}
-	return a;
-};
 var dn_struct_FixedArray = function(name,maxSize) {
 	this.name = name;
 	var this1 = new Array(maxSize);
@@ -1205,89 +1034,393 @@ dn_Process.prototype = {
 	}
 	,__class__: dn_Process
 };
-var Main = function() {
-	var _gthis = this;
+var App = function() {
 	dn_Process.call(this);
+	App.ME = this;
 	this.jBody = $("body");
-	this.jSource = this.jBody.find("#source");
-	this.jResult = this.jBody.find("#result");
-	var jRun = $("button#run");
-	var jCopy = $("button#copy");
-	this.jSource.keydown(function(_) {
-		_gthis.reset();
-	});
-	this.jSource.change(function(_) {
-		_gthis.reset();
-	});
-	this.jSource.on("paste",null,function(_) {
-		_gthis.reset();
-	});
-	jRun.click(function(ev) {
-		var raw = _gthis.jSource.val();
-		var source = raw.split("\n");
-		var i = 0;
-		var out = [];
-		while(i < source.length) {
-			var original = source[i];
-			var w = original;
-			var limit = 50;
-			while(_gthis.similarity(w,original) >= 0.8 && limit-- > 0) w = _gthis.scramble(original);
-			out.push(w);
-			++i;
-		}
-		_gthis.jResult.val(out.join("\n"));
-		_gthis.notify("Mélangé !");
-	});
-	jCopy.click(function(ev) {
-		var doc = window.document;
-		_gthis.jResult.select();
-		doc.execCommand("copy");
-		_gthis.notify("Résultat copié dans le presse-papier");
-	});
-	this.jSource.focus();
-	this.reset();
+	this.jButtons = this.jBody.find("#buttons");
+	this.jOutput = this.jBody.find("#output");
+	var raw = "#button Nouveau lieu | location \r\n#button Debug | location | 10\r\n#button Test | occupier | 5\r\n\r\n\r\n>location\r\n:ancientBuilding: :locationDetails: x3\r\n:outdoorLocation: :locationDetails:\r\n\r\n>locationDetails\r\n (:condition:)\\n  :locationFeature:\\n  :occupier:\\n  :loot:\r\n\r\n>ancientBuilding\r\nManoir x0.5\r\nBunker x0.3\r\nMaison\r\nImmeuble d'habitation\r\nCampement\r\nGymnase\r\nChâteau d'eau\r\nBureaux\r\nSupermarché x0.5\r\nRestaurant\r\nBar\r\nEcole\r\nCrèche\r\nEpicerie\r\nEntrepôt\r\nSalle de sport\r\nHôpital x0.5\r\nCabinet médical\r\nMagasin\r\nArmurier x0.3\r\nGare\r\nGarage\r\nStation service\r\nCabane\r\nMarché couvert\r\nPrison\r\nUsine\r\nLaboratoire\r\nLibrairie\r\nCommissariat\r\nChenil\r\nMusée\r\nBâtiment administratif\r\nBoîte de nuit\r\n\r\n>outdoorLocation\r\nTerrain de sport (:sport:)\r\nLac\r\nRoute\r\nAutoroute\r\nParc\r\nPlantation\r\nCimetière\r\nStation tramway\r\nAire de jeux\r\nChantier\r\nParking\r\nCratère\r\nCamion\r\nTrain\r\nMarécage\r\nForêt\r\nCarrière\r\nDéchetterie\r\nConvoi\r\nParc d'attraction\r\nEolienne\r\nPanneaux solaires\r\nStade\r\nSite d'un crash\r\nEpave d'un navire\r\n\r\n>sport\r\nGolf\r\nFootball\r\nBasketball\r\nTir x0.5\r\nNatation\r\nAthlétisme\r\nTennis\r\n\r\n>newBuilding\r\nPlace forte\r\nAvant-poste\r\nStockage\r\nHabitation\r\nAtelier\r\nAbri anti-atomique x0.5\r\n\r\n>condition\r\nStructure en bon état x0.2\r\nStructure ancienne x2\r\nStructure récemment rénovée x0.3\r\nStructure rasée x0.4\r\n\r\n>locationFeature\r\nRien de spécial x2\r\nIncendié x0.5\r\nBombardé\r\nIrradié x0.5\r\nPiégé\r\nDécoration étrange\r\nCamouflé\r\nAmbiance glauque\r\nBombe non-désarmée x0.1\r\nTransformé en :newBuilding:\r\n\r\n>occupier\r\nAucun occupant x2\r\nMonstres mineurs\r\nMonstre majeur\r\nVermine\r\nPillards [:presence:]\r\n:1-2: marchand(s): :trading:\r\nErmite :npcStatus: [:behaviour:, :presence:]\r\nPetite communauté :npcStatus: [:behaviour:]\r\nRobot :npcStatus: [:behaviour:, :presence:]\r\n\r\n>behaviour\r\nAmical\r\nAttitude neutre x4\r\nHostile (:hostility:) x2\r\n\r\n>hostility\r\nCannibale\r\nMéfiant\r\nTerritorial\r\nCache un secret\r\nPeur des PJs\r\n\r\n>npcStatus\r\n- x5\r\nAffamé\r\nAssoiffé\r\nMalade\r\nIrradié\r\nBlessé\r\nEstropié\r\nMourrant\r\nMort(s)\r\n\r\n>presence\r\nAbsent pour le moment\r\nPrésent x3\r\n\r\n>trading\r\nNourriture/Eau x2\r\nMunitions\r\nArmes\r\nArmures\r\nMods\r\n\r\n>loot\r\nBabiole\r\nObjet précieux\r\nNourriture\r\nEau\r\nArme\r\nArmure\r\nMod d'arme\r\nMod d'armure\r\nMunitions";
+	var rdata = RandomParser.run(raw);
+	var r = new Randomizer(rdata);
+	haxe_Log.trace(r.draw("test"),{ fileName : "src/App.hx", lineNumber : 20, className : "App", methodName : "new"});
 };
-Main.__name__ = "Main";
-Main.__super__ = dn_Process;
-Main.prototype = $extend(dn_Process.prototype,{
-	scramble: function(w) {
-		var reg_r = new RegExp("[^a-zÀ-ú]","gi".split("u").join(""));
-		w = w.replace(reg_r,"");
-		w = StringTools.trim(w);
-		w = w.toLowerCase();
-		if(w.length > 0) {
-			var letters = w.split("");
-			dn_Lib.shuffleArray(letters,Std.random);
-			w = letters.join("");
+App.__name__ = "App";
+App.__super__ = dn_Process;
+App.prototype = $extend(dn_Process.prototype,{
+	clearOutput: function() {
+		this.jOutput.empty();
+	}
+	,output: function(str) {
+		str = StringTools.htmlEscape(str);
+		str = "<pre>" + str.split("\\n").join("</pre><pre>") + "</pre>";
+		this.jOutput.append("<div class=\"entry\">" + str + "</div>");
+	}
+	,onDispose: function() {
+		dn_Process.prototype.onDispose.call(this);
+		if(App.ME == this) {
+			App.ME = null;
 		}
-		return w;
-	}
-	,similarity: function(a,b) {
-		var sames = 0;
-		var _g = 0;
-		var _g1 = a.length;
-		while(_g < _g1) {
-			var i = _g++;
-			if(a.charAt(i) == b.charAt(i)) {
-				++sames;
-			}
-		}
-		return sames / a.length;
-	}
-	,notify: function(str) {
-		var jNotif = this.jBody.find("#notif");
-		jNotif.text(str);
-		jNotif.stop(true).hide().slideDown(200).delay(1400).fadeOut(200);
-	}
-	,reset: function() {
-		this.jResult.val("");
 	}
 	,update: function() {
 		dn_Process.prototype.update.call(this);
 	}
-	,__class__: Main
+	,__class__: App
 });
+var hxd_App = function() {
+	var _gthis = this;
+	var engine = h3d_Engine.CURRENT;
+	if(engine != null) {
+		this.engine = engine;
+		engine.onReady = $bind(this,this.setup);
+		haxe_Timer.delay($bind(this,this.setup),0);
+	} else {
+		hxd_System.start(function() {
+			engine = new h3d_Engine();
+			_gthis.engine = engine;
+			engine.onReady = $bind(_gthis,_gthis.setup);
+			engine.init();
+		});
+	}
+};
+hxd_App.__name__ = "hxd.App";
+hxd_App.staticHandler = function() {
+};
+hxd_App.prototype = {
+	onResize: function() {
+	}
+	,onContextLost: function() {
+		if(this.s3d != null) {
+			this.s3d.onContextLost();
+		}
+	}
+	,render: function(e) {
+		this.s3d.render(e);
+		this.s2d.render(e);
+	}
+	,setup: function() {
+		var _gthis = this;
+		var initDone = false;
+		this.engine.onReady = hxd_App.staticHandler;
+		this.engine.onContextLost = $bind(this,this.onContextLost);
+		this.engine.onResized = function() {
+			if(_gthis.s2d == null) {
+				return;
+			}
+			_gthis.s2d.checkResize();
+			if(initDone) {
+				_gthis.onResize();
+			}
+		};
+		this.s3d = new h3d_scene_Scene();
+		this.s2d = new h2d_Scene();
+		this.sevents = new hxd_SceneEvents();
+		this.sevents.addScene(this.s2d);
+		this.sevents.addScene(this.s3d);
+		this.loadAssets(function() {
+			initDone = true;
+			_gthis.init();
+			hxd_Timer.skip();
+			_gthis.mainLoop();
+			hxd_System.setLoop($bind(_gthis,_gthis.mainLoop));
+			hxd_Key.initialize();
+		});
+	}
+	,loadAssets: function(onLoaded) {
+		onLoaded();
+	}
+	,init: function() {
+	}
+	,mainLoop: function() {
+		hxd_Timer.update();
+		this.sevents.checkEvents();
+		if(this.isDisposed) {
+			return;
+		}
+		this.update(hxd_Timer.dt);
+		if(this.isDisposed) {
+			return;
+		}
+		var dt = hxd_Timer.dt;
+		if(this.s2d != null) {
+			this.s2d.setElapsedTime(dt);
+		}
+		if(this.s3d != null) {
+			this.s3d.setElapsedTime(dt);
+		}
+		this.engine.render(this);
+	}
+	,update: function(dt) {
+	}
+	,__class__: hxd_App
+};
+var Boot = function() {
+	hxd_App.call(this);
+};
+Boot.__name__ = "Boot";
+Boot.main = function() {
+	new Boot();
+};
+Boot.__super__ = hxd_App;
+Boot.prototype = $extend(hxd_App.prototype,{
+	init: function() {
+		hxd_App.prototype.init.call(this);
+		new App();
+	}
+	,update: function(dt) {
+		hxd_App.prototype.update.call(this,dt);
+		dn_Process.updateAll(hxd_Timer.dt * hxd_Timer.wantedFPS);
+	}
+	,__class__: Boot
+});
+var EReg = function(r,opt) {
+	this.r = new RegExp(r,opt.split("u").join(""));
+};
+EReg.__name__ = "EReg";
+EReg.prototype = {
+	match: function(s) {
+		if(this.r.global) {
+			this.r.lastIndex = 0;
+		}
+		this.r.m = this.r.exec(s);
+		this.r.s = s;
+		return this.r.m != null;
+	}
+	,matched: function(n) {
+		if(this.r.m != null && n >= 0 && n < this.r.m.length) {
+			return this.r.m[n];
+		} else {
+			throw haxe_Exception.thrown("EReg::matched");
+		}
+	}
+	,matchedLeft: function() {
+		if(this.r.m == null) {
+			throw haxe_Exception.thrown("No string matched");
+		}
+		return HxOverrides.substr(this.r.s,0,this.r.m.index);
+	}
+	,matchedRight: function() {
+		if(this.r.m == null) {
+			throw haxe_Exception.thrown("No string matched");
+		}
+		var sz = this.r.m.index + this.r.m[0].length;
+		return HxOverrides.substr(this.r.s,sz,this.r.s.length - sz);
+	}
+	,__class__: EReg
+};
+var HxOverrides = function() { };
+HxOverrides.__name__ = "HxOverrides";
+HxOverrides.cca = function(s,index) {
+	var x = s.charCodeAt(index);
+	if(x != x) {
+		return undefined;
+	}
+	return x;
+};
+HxOverrides.substr = function(s,pos,len) {
+	if(len == null) {
+		len = s.length;
+	} else if(len < 0) {
+		if(pos == 0) {
+			len = s.length + len;
+		} else {
+			return "";
+		}
+	}
+	return s.substr(pos,len);
+};
+HxOverrides.remove = function(a,obj) {
+	var i = a.indexOf(obj);
+	if(i == -1) {
+		return false;
+	}
+	a.splice(i,1);
+	return true;
+};
+HxOverrides.now = function() {
+	return Date.now();
+};
+var Lambda = function() { };
+Lambda.__name__ = "Lambda";
+Lambda.array = function(it) {
+	var a = [];
+	var i = $getIterator(it);
+	while(i.hasNext()) {
+		var i1 = i.next();
+		a.push(i1);
+	}
+	return a;
+};
 Math.__name__ = "Math";
+var RandomParser = function() { };
+RandomParser.__name__ = "RandomParser";
+RandomParser.run = function(raw) {
+	if(raw == null) {
+		return null;
+	}
+	var rdata = { tables : new haxe_ds_StringMap(), options : []};
+	var lines = raw.split("\n");
+	var curKey = null;
+	var _g = 0;
+	while(_g < lines.length) {
+		var l = lines[_g];
+		++_g;
+		l = RandomParser.cleanUp(l);
+		if(l.length == 0) {
+			continue;
+		}
+		if(RandomParser.OPTION_REG.match(l)) {
+			var o = RandomParser.OPTION_REG.matched(1);
+			var rawArgs = RandomParser.OPTION_REG.matched(3);
+			var args = [];
+			if(rawArgs != null) {
+				var _g1 = 0;
+				var _g2 = rawArgs.split("|");
+				while(_g1 < _g2.length) {
+					var a = _g2[_g1];
+					++_g1;
+					args.push(RandomParser.cleanUp(a));
+				}
+			}
+			rdata.options.push({ opt : o, args : args});
+			continue;
+		}
+		if(RandomParser.KEY_REG.match(l)) {
+			curKey = RandomParser.KEY_REG.matched(1);
+			if(!Object.prototype.hasOwnProperty.call(rdata.tables.h,curKey)) {
+				rdata.tables.h[curKey] = [];
+			}
+		} else if(curKey != null) {
+			var probaMul = 1.;
+			if(RandomParser.PROBA_MUL_REG.match(l)) {
+				probaMul = parseFloat(RandomParser.PROBA_MUL_REG.matched(1));
+				if(!(probaMul != null && !isNaN(probaMul) && isFinite(probaMul))) {
+					probaMul = 1;
+				}
+				l = RandomParser.PROBA_MUL_REG.matchedLeft();
+			}
+			rdata.tables.h[curKey].push({ raw : l, probaMul : probaMul});
+		}
+	}
+	RandomParser.debugRandData(rdata);
+	return rdata;
+};
+RandomParser.debugRandData = function(rdata) {
+	haxe_Log.trace("OPTIONS:",{ fileName : "src/RandomParser.hx", lineNumber : 82, className : "RandomParser", methodName : "debugRandData"});
+	var _g = 0;
+	var _g1 = rdata.options;
+	while(_g < _g1.length) {
+		var o = _g1[_g];
+		++_g;
+		haxe_Log.trace("  " + o.opt + " => " + Std.string(o.args),{ fileName : "src/RandomParser.hx", lineNumber : 84, className : "RandomParser", methodName : "debugRandData"});
+	}
+	haxe_Log.trace("TABLES:",{ fileName : "src/RandomParser.hx", lineNumber : 85, className : "RandomParser", methodName : "debugRandData"});
+	var h = rdata.tables.h;
+	var t_h = h;
+	var t_keys = Object.keys(h);
+	var t_length = t_keys.length;
+	var t_current = 0;
+	while(t_current < t_length) {
+		var key = t_keys[t_current++];
+		var t_key = key;
+		var t_value = t_h[key];
+		var tmp = "  " + t_key + " => ";
+		var _this = t_value;
+		var result = new Array(_this.length);
+		var _g = 0;
+		var _g1 = _this.length;
+		while(_g < _g1) {
+			var i = _g++;
+			var e = _this[i];
+			var x = e.probaMul * 100;
+			result[i] = e.raw + "[" + ((x > 0 ? x + .5 : x < 0 ? x - .5 : 0) | 0) + "%]";
+		}
+		haxe_Log.trace(tmp + result.join(", "),{ fileName : "src/RandomParser.hx", lineNumber : 87, className : "RandomParser", methodName : "debugRandData"});
+	}
+};
+RandomParser.cleanUp = function(str) {
+	str = StringTools.replace(str,"\r","");
+	str = StringTools.trim(str);
+	return str;
+};
+var Randomizer = function(data) {
+	var _gthis = this;
+	this.data = data;
+	var _g = 0;
+	var _g1 = data.options;
+	while(_g < _g1.length) {
+		var o = [_g1[_g]];
+		++_g;
+		if(o[0].opt == "button") {
+			var jBt = $("<button>" + o[0].args[0] + "</button>");
+			jBt.click((function(o) {
+				return function(_) {
+					App.ME.clearOutput();
+					var count = o[0].args[2] == null ? 1 : Std.parseInt(o[0].args[2]);
+					var _g = 0;
+					var _g1 = count;
+					while(_g < _g1) {
+						var i = _g++;
+						App.ME.output(_gthis.draw(o[0].args[1]));
+					}
+				};
+			})(o));
+			App.ME.jButtons.append(jBt);
+		} else {
+			Randomizer.error("Unknown option: " + o[0].opt);
+		}
+	}
+};
+Randomizer.__name__ = "Randomizer";
+Randomizer.error = function(msg) {
+	haxe_Log.trace("ERROR: " + msg,{ fileName : "src/Randomizer.hx", lineNumber : 25, className : "Randomizer", methodName : "error"});
+};
+Randomizer.prototype = {
+	draw: function(key) {
+		if(!Object.prototype.hasOwnProperty.call(this.data.tables.h,key)) {
+			return "<ERR: " + key + ">";
+		}
+		var table = this.data.tables.h[key];
+		var rlist = new dn_struct_RandList();
+		var _g = 0;
+		while(_g < table.length) {
+			var e = table[_g];
+			++_g;
+			var x = e.probaMul * 100;
+			var tmp;
+			if(x > .0) {
+				var t = x + .5 | 0;
+				tmp = t < x ? t + 1 : t;
+			} else if(x < .0) {
+				var t1 = x - .5 | 0;
+				tmp = t1 < x ? t1 + 1 : t1;
+			} else {
+				tmp = 0;
+			}
+			rlist.add(e,tmp);
+		}
+		var entry = rlist.draw();
+		var out = entry.raw;
+		var refReg = new EReg(":([a-z0-9_-]+):","i");
+		var numberReg = new EReg("^([0-9]+)-([0-9]+)$","i");
+		while(refReg.match(out)) {
+			var k = refReg.matched(1);
+			haxe_Log.trace(k,{ fileName : "src/Randomizer.hx", lineNumber : 44, className : "Randomizer", methodName : "draw"});
+			if(numberReg.match(k)) {
+				var min = Std.parseInt(numberReg.matched(1));
+				var max = Std.parseInt(numberReg.matched(2));
+				out = refReg.matchedLeft() + (min + Std.random(max - min + 1)) + refReg.matchedRight();
+			} else {
+				out = refReg.matchedLeft() + this.draw(k) + refReg.matchedRight();
+			}
+		}
+		if(out == "-") {
+			out = "";
+		}
+		return out;
+	}
+	,__class__: Randomizer
+};
 var Reflect = function() { };
 Reflect.__name__ = "Reflect";
 Reflect.field = function(o,field) {
@@ -1374,6 +1507,52 @@ StringBuf.prototype = {
 };
 var StringTools = function() { };
 StringTools.__name__ = "StringTools";
+StringTools.htmlEscape = function(s,quotes) {
+	var buf_b = "";
+	var _g_offset = 0;
+	var _g_s = s;
+	while(_g_offset < _g_s.length) {
+		var s = _g_s;
+		var index = _g_offset++;
+		var c = s.charCodeAt(index);
+		if(c >= 55296 && c <= 56319) {
+			c = c - 55232 << 10 | s.charCodeAt(index + 1) & 1023;
+		}
+		var c1 = c;
+		if(c1 >= 65536) {
+			++_g_offset;
+		}
+		var code = c1;
+		switch(code) {
+		case 34:
+			if(quotes) {
+				buf_b += "&quot;";
+			} else {
+				buf_b += String.fromCodePoint(code);
+			}
+			break;
+		case 38:
+			buf_b += "&amp;";
+			break;
+		case 39:
+			if(quotes) {
+				buf_b += "&#039;";
+			} else {
+				buf_b += String.fromCodePoint(code);
+			}
+			break;
+		case 60:
+			buf_b += "&lt;";
+			break;
+		case 62:
+			buf_b += "&gt;";
+			break;
+		default:
+			buf_b += String.fromCodePoint(code);
+		}
+	}
+	return buf_b;
+};
 StringTools.startsWith = function(s,start) {
 	if(s.length >= start.length) {
 		return s.lastIndexOf(start,0) == 0;
@@ -1605,19 +1784,6 @@ dn_Delayer.prototype = {
 		}
 	}
 	,__class__: dn_Delayer
-};
-var dn_Lib = function() { };
-dn_Lib.__name__ = "dn.Lib";
-dn_Lib.shuffleArray = function(arr,randFunc) {
-	var m = arr.length;
-	var i = 0;
-	var tmp = null;
-	while(m > 0) {
-		i = randFunc(m--);
-		tmp = arr[m];
-		arr[m] = arr[i];
-		arr[i] = tmp;
-	}
 };
 var dn_TType = $hxEnums["dn.TType"] = { __ename__:true,__constructs__:null
 	,TLinear: {_hx_name:"TLinear",_hx_index:0,__enum__:"dn.TType",toString:$estr}
@@ -1883,6 +2049,95 @@ dn_Tweenie.prototype = {
 		}
 	}
 	,__class__: dn_Tweenie
+};
+var dn_struct_RandList = function(rndFunc,arr) {
+	if(rndFunc != null) {
+		this.defaultRandom = rndFunc;
+	} else {
+		this.defaultRandom = Std.random;
+	}
+	this.totalProba = 0;
+	this.drawList = [];
+	if(arr != null) {
+		this.addArray(arr);
+	}
+};
+dn_struct_RandList.__name__ = "dn.struct.RandList";
+dn_struct_RandList.prototype = {
+	add: function(elem,proba) {
+		if(proba == null) {
+			proba = 1;
+		}
+		if(proba <= 0) {
+			return this;
+		}
+		var _g = 0;
+		var _g1 = this.drawList;
+		while(_g < _g1.length) {
+			var e = _g1[_g];
+			++_g;
+			if(e.value == elem) {
+				e.proba += proba;
+				this.totalProba += proba;
+				return this;
+			}
+		}
+		this.drawList.push({ proba : proba, value : elem});
+		this.totalProba += proba;
+		return this;
+	}
+	,addArray: function(arr,proba) {
+		if(proba == null) {
+			proba = 1;
+		}
+		var _g = 0;
+		var _g1 = arr.length;
+		while(_g < _g1) {
+			var i = _g++;
+			var e = arr[i];
+			if(this.contains(e)) {
+				continue;
+			}
+			var n = 1;
+			var _g2 = i + 1;
+			var _g3 = arr.length;
+			while(_g2 < _g3) {
+				var j = _g2++;
+				if(arr[j] == e) {
+					++n;
+				}
+			}
+			this.add(e,n * proba);
+		}
+	}
+	,contains: function(search) {
+		var _g = 0;
+		var _g1 = this.drawList;
+		while(_g < _g1.length) {
+			var e = _g1[_g];
+			++_g;
+			if(e.value == search) {
+				return true;
+			}
+		}
+		return false;
+	}
+	,draw: function(rndFunc) {
+		var n = rndFunc == null ? this.defaultRandom(this.totalProba) : rndFunc(this.totalProba);
+		var accu = 0;
+		var _g = 0;
+		var _g1 = this.drawList;
+		while(_g < _g1.length) {
+			var e = _g1[_g];
+			++_g;
+			if(n < accu + e.proba) {
+				return e.value;
+			}
+			accu += e.proba;
+		}
+		return null;
+	}
+	,__class__: dn_struct_RandList
 };
 var dn_struct_RecyclablePool = function(size,valueConstructor) {
 	this.nalloc = 0;
@@ -11866,6 +12121,154 @@ h3d_pass_Border.prototype = $extend(h3d_pass_ScreenFx.prototype,{
 		this.primitive.dispose();
 	}
 	,__class__: h3d_pass_Border
+});
+var h3d_pass_ColorMatrixShader = function() {
+	this.maskChannel__ = new h3d_Vector();
+	this.maskPower__ = 0;
+	this.maskMatB__ = new h3d_Vector();
+	this.maskMatA__ = new h3d_Vector();
+	this.matrix2__ = new h3d_Matrix();
+	this.matrix__ = new h3d_Matrix();
+	h3d_shader_ScreenShader.call(this);
+};
+h3d_pass_ColorMatrixShader.__name__ = "h3d.pass.ColorMatrixShader";
+h3d_pass_ColorMatrixShader.__super__ = h3d_shader_ScreenShader;
+h3d_pass_ColorMatrixShader.prototype = $extend(h3d_shader_ScreenShader.prototype,{
+	get_texture: function() {
+		return this.texture__;
+	}
+	,set_texture: function(_v) {
+		return this.texture__ = _v;
+	}
+	,get_matrix: function() {
+		return this.matrix__;
+	}
+	,set_matrix: function(_v) {
+		return this.matrix__ = _v;
+	}
+	,get_useAlpha: function() {
+		return this.useAlpha__;
+	}
+	,set_useAlpha: function(_v) {
+		this.constModified = true;
+		return this.useAlpha__ = _v;
+	}
+	,get_useMask: function() {
+		return this.useMask__;
+	}
+	,set_useMask: function(_v) {
+		this.constModified = true;
+		return this.useMask__ = _v;
+	}
+	,get_maskInvert: function() {
+		return this.maskInvert__;
+	}
+	,set_maskInvert: function(_v) {
+		this.constModified = true;
+		return this.maskInvert__ = _v;
+	}
+	,get_hasSecondMatrix: function() {
+		return this.hasSecondMatrix__;
+	}
+	,set_hasSecondMatrix: function(_v) {
+		this.constModified = true;
+		return this.hasSecondMatrix__ = _v;
+	}
+	,get_matrix2: function() {
+		return this.matrix2__;
+	}
+	,set_matrix2: function(_v) {
+		return this.matrix2__ = _v;
+	}
+	,get_mask: function() {
+		return this.mask__;
+	}
+	,set_mask: function(_v) {
+		return this.mask__ = _v;
+	}
+	,get_maskMatA: function() {
+		return this.maskMatA__;
+	}
+	,set_maskMatA: function(_v) {
+		return this.maskMatA__ = _v;
+	}
+	,get_maskMatB: function() {
+		return this.maskMatB__;
+	}
+	,set_maskMatB: function(_v) {
+		return this.maskMatB__ = _v;
+	}
+	,get_maskPower: function() {
+		return this.maskPower__;
+	}
+	,set_maskPower: function(_v) {
+		return this.maskPower__ = _v;
+	}
+	,get_maskChannel: function() {
+		return this.maskChannel__;
+	}
+	,set_maskChannel: function(_v) {
+		return this.maskChannel__ = _v;
+	}
+	,updateConstants: function(globals) {
+		this.constBits = 0;
+		if(this.useAlpha__) {
+			this.constBits |= 1;
+		}
+		if(this.useMask__) {
+			this.constBits |= 2;
+		}
+		if(this.maskInvert__) {
+			this.constBits |= 4;
+		}
+		if(this.hasSecondMatrix__) {
+			this.constBits |= 8;
+		}
+		this.updateConstantsFinal(globals);
+	}
+	,getParamValue: function(index) {
+		switch(index) {
+		case 0:
+			return this.flipY__;
+		case 1:
+			return this.texture__;
+		case 2:
+			return this.matrix__;
+		case 3:
+			return this.useAlpha__;
+		case 4:
+			return this.useMask__;
+		case 5:
+			return this.maskInvert__;
+		case 6:
+			return this.hasSecondMatrix__;
+		case 7:
+			return this.matrix2__;
+		case 8:
+			return this.mask__;
+		case 9:
+			return this.maskMatA__;
+		case 10:
+			return this.maskMatB__;
+		case 11:
+			return this.maskPower__;
+		case 12:
+			return this.maskChannel__;
+		default:
+		}
+		return null;
+	}
+	,getParamFloatValue: function(index) {
+		switch(index) {
+		case 0:
+			return this.flipY__;
+		case 11:
+			return this.maskPower__;
+		default:
+		}
+		return 0.;
+	}
+	,__class__: h3d_pass_ColorMatrixShader
 });
 var h3d_pass__$Copy_ArrayCopyShader = function() {
 	this.layer__ = 0;
@@ -30759,6 +31162,9 @@ dn_Process.END_OF_FRAME_CALLBACKS = new dn_struct_FixedArray(null,256);
 dn_Process.RESIZE_REQUESTED = true;
 dn_Process.PROFILING = false;
 dn_Process.PROFILER_TIMES = new haxe_ds_StringMap();
+RandomParser.OPTION_REG = new EReg("^#([a-z0-9_-]+)([ \t]+(.+)|)","i");
+RandomParser.KEY_REG = new EReg("^[ \t]*>[ \t]*([a-z0-9_-]+)[ \t]*","i");
+RandomParser.PROBA_MUL_REG = new EReg("[ \t]+x([0-9.]+)[ \t]*$","i");
 dn_Cooldown.__meta__ = { obj : { indexes : ["test","jump","a","b","c"]}};
 dn_Cooldown.DEFAULT_COUNT_LIMIT = 512;
 h2d_Object.tmpPoint = new h2d_col_Point();
@@ -30809,6 +31215,7 @@ h3d_mat_Texture.nativeFormat = hxd_PixelFormat.RGBA;
 h3d_pass_Blur.__meta__ = { obj : { ignore : ["shader"]}};
 h3d_shader_ScreenShader.SRC = "HXSLF2gzZC5zaGFkZXIuU2NyZWVuU2hhZGVyBwEFaW5wdXQNAQICCHBvc2l0aW9uBQoBAQADAnV2BQoBAQABAAAEBWZsaXBZAwIAAAUGb3V0cHV0DQICBghwb3NpdGlvbgUMBAUABwVjb2xvcgUMBAUABAAACApwaXhlbENvbG9yBQwEAAAJDGNhbGN1bGF0ZWRVVgUKBAAACghfX2luaXRfXw4GAAALBnZlcnRleA4GAAACAgoAAAUCBgQCBwUMAggFDAUMBgQCCQUKAgMFCgUKAAALAAAFAQYEAgYFDAkDKg4ECgICBQoAAAMGAQoCAgUKBAADAgQDAwEDAAAAAAAAAAADAQMAAAAAAADwPwMFDAUMAA";
 h3d_pass__$Border_BorderShader.SRC = "HXSLHWgzZC5wYXNzLl9Cb3JkZXIuQm9yZGVyU2hhZGVyCQEFaW5wdXQNAQICCHBvc2l0aW9uBQoBAQADAnV2BQoBAQABAAAEBWZsaXBZAwIAAAUGb3V0cHV0DQICBghwb3NpdGlvbgUMBAUABwVjb2xvcgUMBAUABAAACApwaXhlbENvbG9yBQwEAAAJDGNhbGN1bGF0ZWRVVgUKBAAACgVjb2xvcgUMAgAACwhfX2luaXRfXw4GAAAMBnZlcnRleA4GAAANCGZyYWdtZW50DgYAAAMCCwAABQIGBAIHBQwCCAUMBQwGBAIJBQoCAwUKBQoAAAwAAAUBBgQCBgUMCQMqDgQKAgIFCgAAAwYBCgICBQoEAAMCBAMDAQMAAAAAAAAAAAMBAwAAAAAAAPA/AwUMBQwAAQ0AAAUBBgQCCAUMAgoFDAUMAA";
+h3d_pass_ColorMatrixShader.SRC = "HXSLGmgzZC5wYXNzLkNvbG9yTWF0cml4U2hhZGVyFQEFaW5wdXQNAQICCHBvc2l0aW9uBQoBAQADAnV2BQoBAQABAAAEBWZsaXBZAwIAAAUGb3V0cHV0DQICBghwb3NpdGlvbgUMBAUABwVjb2xvcgUMBAUABAAACApwaXhlbENvbG9yBQwEAAAJDGNhbGN1bGF0ZWRVVgUKBAAACgd0ZXh0dXJlCgIAAAsGbWF0cml4BwIAAAwIdXNlQWxwaGECAgABAAAAAAANB3VzZU1hc2sCAgABAAAAAAAOCm1hc2tJbnZlcnQCAgABAAAAAAAPD2hhc1NlY29uZE1hdHJpeAICAAEAAAAAABAHbWF0cml4MgcCAAARBG1hc2sKAgAAEghtYXNrTWF0QQULAgAAEwhtYXNrTWF0QgULAgAAFAltYXNrUG93ZXIDAgAAFQttYXNrQ2hhbm5lbAUMAgAAFghfX2luaXRfXw4GAAAXBnZlcnRleA4GAAAYBWFwcGx5DgYAABkIZnJhZ21lbnQOBgAABAIWAAAFAgYEAgcFDAIIBQwFDAYEAgkFCgIDBQoFCgAAFwAABQEGBAIGBQwJAyoOBAoCAgUKAAADBgEKAgIFCgQAAwIEAwMBAwAAAAAAAAAAAwEDAAAAAAAA8D8DBQwFDAADGAIaBWNvbG9yBQwEAAAbA21hdAcEAAAFDAUBDQsCDAIGAQIaBQwCGwcFDAYBCQMqDgIKAhoFDJIABQsBAwAAAAAAAPA/AwUMAhsHBQwFDAAAARkAAAUBCwINAgUFCBwFY29sb3IFDAQAAAkDIQ4CAgoKAgMFCgUMAAgdAnV2BQsEAAAJAykOAgIDBQoBAwAAAAAAAPA/AwULAAgeAWsDBAAACQMIDgIJAx0OAgkDIQ4CAhEKCQMoDgIJAx0OAgIdBQsCEgULAwkDHQ4CAh0FCwITBQsDBQoFDAIVBQwDAhQDAwAIHwZjb2xvcjIFDAQAAAsCDwIJAhgOAgIcBQwCEAcFDAIcBQwFDAAGBAIHBQwLAg4CCQMYDgMCHwUMCQIYDgICHAUMAgsHBQwCHgMFDAkDGA4DCQIYDgICHAUMAgsHBQwCHwUMAh4DBQwFDAUMAAYEAgcFDAkCGA4CCQMhDgICCgoCAwUKBQwCCwcFDAUMAAA";
 h3d_pass__$Copy_ArrayCopyShader.SRC = "HXSLHmgzZC5wYXNzLl9Db3B5LkFycmF5Q29weVNoYWRlcgoBBWlucHV0DQECAghwb3NpdGlvbgUKAQEAAwJ1dgUKAQEAAQAABAVmbGlwWQMCAAAFBm91dHB1dA0CAgYIcG9zaXRpb24FDAQFAAcFY29sb3IFDAQFAAQAAAgKcGl4ZWxDb2xvcgUMBAAACQxjYWxjdWxhdGVkVVYFCgQAAAoHdGV4dHVyZQsCAAALBWxheWVyAQIAAAwIX19pbml0X18OBgAADQZ2ZXJ0ZXgOBgAADghmcmFnbWVudA4GAAADAgwAAAUCBgQCBwUMAggFDAUMBgQCCQUKAgMFCgUKAAANAAAFAQYEAgYFDAkDKg4ECgICBQoAAAMGAQoCAgUKBAADAgQDAwEDAAAAAAAAAAADAQMAAAAAAADwPwMFDAUMAAEOAAAFAQYEAggFDAkDIQ4CAgoLCQMpDgICCQUKCQMmDgECCwEDBQsFDAUMAA";
 h3d_pass__$Copy_CopyShader.SRC = "HXSLGWgzZC5wYXNzLl9Db3B5LkNvcHlTaGFkZXIJAQVpbnB1dA0BAgIIcG9zaXRpb24FCgEBAAMCdXYFCgEBAAEAAAQFZmxpcFkDAgAABQZvdXRwdXQNAgIGCHBvc2l0aW9uBQwEBQAHBWNvbG9yBQwEBQAEAAAICnBpeGVsQ29sb3IFDAQAAAkMY2FsY3VsYXRlZFVWBQoEAAAKB3RleHR1cmUKAgAACwhfX2luaXRfXw4GAAAMBnZlcnRleA4GAAANCGZyYWdtZW50DgYAAAMCCwAABQIGBAIHBQwCCAUMBQwGBAIJBQoCAwUKBQoAAAwAAAUBBgQCBgUMCQMqDgQKAgIFCgAAAwYBCgICBQoEAAMCBAMDAQMAAAAAAAAAAAMBAwAAAAAAAPA/AwUMBQwAAQ0AAAUBBgQCCAUMCQMhDgICCgoCCQUKBQwFDAA";
 h3d_pass__$CubeCopy_CubeCopyShader.SRC = "HXSLIWgzZC5wYXNzLl9DdWJlQ29weS5DdWJlQ29weVNoYWRlcgoBBWlucHV0DQECAghwb3NpdGlvbgUKAQEAAwJ1dgUKAQEAAQAABAVmbGlwWQMCAAAFBm91dHB1dA0CAgYIcG9zaXRpb24FDAQFAAcFY29sb3IFDAQFAAQAAAgKcGl4ZWxDb2xvcgUMBAAACQxjYWxjdWxhdGVkVVYFCgQAAAoHdGV4dHVyZQwCAAALA21hdAYCAAAMCF9faW5pdF9fDgYAAA0GdmVydGV4DgYAAA4IZnJhZ21lbnQOBgAAAwIMAAAFAgYEAgcFDAIIBQwFDAYEAgkFCgIDBQoFCgAADQAABQEGBAIGBQwJAyoOBAoCAgUKAAADBgEKAgIFCgQAAwIEAwMBAwAAAAAAAAAAAwEDAAAAAAAA8D8DBQwFDAABDgAABQIIDwJ1dgUKBAAABgMGAQIJBQoBAwAAAAAAAABAAwUKAQMAAAAAAADwPwMFCgAGBAIIBQwJAyEOAgIKDAkDHw4BBgEJAykOAgIPBQoBAwAAAAAAAPA/AwULAgsGBQsFCwUMBQwA";
