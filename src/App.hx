@@ -14,8 +14,8 @@ class App extends dn.Process {
 		jButtons = jBody.find("#buttons");
 		jOutput = jBody.find("#output");
 
-		hxd.Res.initEmbed();
-		var rdata = RandomParser.run( hxd.Res.test.entry.getText() );
+		var raw = FileManager.read("res/fallout.txt");
+		var rdata = RandomParser.run(raw);
 		var r = new Randomizer(rdata);
 		trace(r.draw("test"));
 	}

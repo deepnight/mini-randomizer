@@ -1,5 +1,5 @@
 (function ($global) { "use strict";
-var $hxClasses = {},$estr = function() { return js_Boot.__string_rec(this,''); },$hxEnums = $hxEnums || {},$_;
+var $estr = function() { return js_Boot.__string_rec(this,''); },$hxEnums = $hxEnums || {},$_;
 function $extend(from, fields) {
 	var proto = Object.create(from);
 	for (var name in fields) proto[name] = fields[name];
@@ -12,7 +12,6 @@ var dn_struct_FixedArray = function(name,maxSize) {
 	this.values = this1;
 	this.nalloc = 0;
 };
-$hxClasses["dn.struct.FixedArray"] = dn_struct_FixedArray;
 dn_struct_FixedArray.__name__ = "dn.struct.FixedArray";
 dn_struct_FixedArray.prototype = {
 	toString: function() {
@@ -56,16 +55,10 @@ dn_struct_FixedArray.prototype = {
 	}
 	,__class__: dn_struct_FixedArray
 };
-var haxe_IMap = function() { };
-$hxClasses["haxe.IMap"] = haxe_IMap;
-haxe_IMap.__name__ = "haxe.IMap";
-haxe_IMap.__isInterface__ = true;
 var haxe_ds_StringMap = function() {
 	this.h = Object.create(null);
 };
-$hxClasses["haxe.ds.StringMap"] = haxe_ds_StringMap;
 haxe_ds_StringMap.__name__ = "haxe.ds.StringMap";
-haxe_ds_StringMap.__interfaces__ = [haxe_IMap];
 haxe_ds_StringMap.prototype = {
 	__class__: haxe_ds_StringMap
 };
@@ -88,7 +81,6 @@ var dn_Process = function(parent) {
 	}
 	dn_Process.resizeAll(false);
 };
-$hxClasses["dn.Process"] = dn_Process;
 dn_Process.__name__ = "dn.Process";
 dn_Process._doPreUpdate = function(p,utmod) {
 	var tmp;
@@ -1055,12 +1047,11 @@ var App = function() {
 	this.jBody = $("body");
 	this.jButtons = this.jBody.find("#buttons");
 	this.jOutput = this.jBody.find("#output");
-	hxd_Res.set_loader(new hxd_res_Loader(new hxd_fs_EmbedFileSystem(haxe_Unserializer.run("oy8:test.txttg"))));
-	var rdata = RandomParser.run(hxd_Res.get_loader().loadCache("test.txt",hxd_res_Resource).entry.getText());
+	var raw = "#button Nouveau lieu | location \r\n#button Debug | location | 10\r\n#button Test | occupier | 5\r\n\r\n\r\n>location\r\n:ancientBuilding: :locationDetails: x3\r\n:outdoorLocation: :locationDetails:\r\n\r\n>locationDetails\r\n (:condition:)\\n  :locationFeature:\\n  :occupier:\\n  :loot:\r\n\r\n>ancientBuilding\r\nManoir x0.5\r\nBunker x0.3\r\nMaison\r\nImmeuble d'habitation\r\nCampement\r\nGymnase\r\nChâteau d'eau\r\nBureaux\r\nSupermarché x0.5\r\nRestaurant\r\nBar\r\nEcole\r\nCrèche\r\nEpicerie\r\nEntrepôt\r\nSalle de sport\r\nHôpital x0.5\r\nCabinet médical\r\nMagasin\r\nArmurier x0.3\r\nGare\r\nGarage\r\nStation service\r\nCabane\r\nMarché couvert\r\nPrison\r\nUsine\r\nLaboratoire\r\nLibrairie\r\nCommissariat\r\nChenil\r\nMusée\r\nBâtiment administratif\r\nBoîte de nuit\r\n\r\n>outdoorLocation\r\nTerrain de sport (:sport:)\r\nLac\r\nRoute\r\nAutoroute\r\nParc\r\nPlantation\r\nCimetière\r\nStation tramway\r\nAire de jeux\r\nChantier\r\nParking\r\nCratère\r\nCamion\r\nTrain\r\nMarécage\r\nForêt\r\nCarrière\r\nDéchetterie\r\nConvoi\r\nParc d'attraction\r\nEolienne\r\nPanneaux solaires\r\nStade\r\nSite d'un crash\r\nEpave d'un navire\r\n\r\n>sport\r\nGolf\r\nFootball\r\nBasketball\r\nTir x0.5\r\nNatation\r\nAthlétisme\r\nTennis\r\n\r\n>newBuilding\r\nPlace forte\r\nAvant-poste\r\nStockage\r\nHabitation\r\nAtelier\r\nAbri anti-atomique x0.5\r\n\r\n>condition\r\nStructure en bon état x0.2\r\nStructure ancienne x2\r\nStructure récemment rénovée x0.3\r\nStructure rasée x0.4\r\n\r\n>locationFeature\r\nRien de spécial x2\r\nIncendié x0.5\r\nBombardé\r\nIrradié x0.5\r\nPiégé\r\nDécoration étrange\r\nCamouflé\r\nAmbiance glauque\r\nBombe non-désarmée x0.1\r\nTransformé en :newBuilding:\r\n\r\n>occupier\r\nAucun occupant x2\r\nMonstres mineurs\r\nMonstre majeur\r\nVermine\r\nPillards [:presence:]\r\n:1-2: marchand(s): :trading:\r\nErmite :npcStatus: [:behaviour:, :presence:]\r\nPetite communauté :npcStatus: [:behaviour:]\r\nRobot :npcStatus: [:behaviour:, :presence:]\r\n\r\n>behaviour\r\nAmical\r\nAttitude neutre x4\r\nHostile (:hostility:) x2\r\n\r\n>hostility\r\nCannibale\r\nMéfiant\r\nTerritorial\r\nCache un secret\r\nPeur des PJs\r\n\r\n>npcStatus\r\n- x5\r\nAffamé\r\nAssoiffé\r\nMalade\r\nIrradié\r\nBlessé\r\nEstropié\r\nMourrant\r\nMort(s)\r\n\r\n>presence\r\nAbsent pour le moment\r\nPrésent x3\r\n\r\n>trading\r\nNourriture/Eau x2\r\nMunitions\r\nArmes\r\nArmures\r\nMods\r\n\r\n>loot\r\nBabiole\r\nObjet précieux\r\nNourriture\r\nEau\r\nArme\r\nArmure\r\nMod d'arme\r\nMod d'armure\r\nMunitions";
+	var rdata = RandomParser.run(raw);
 	var r = new Randomizer(rdata);
-	haxe_Log.trace(r.draw("test"),{ fileName : "src/App.hx", lineNumber : 20, className : "App", methodName : "new"});
+	haxe_Log.trace(r.draw("test"),{ fileName : "src/App.hx", lineNumber : 21, className : "App", methodName : "new"});
 };
-$hxClasses["App"] = App;
 App.__name__ = "App";
 App.__super__ = dn_Process;
 App.prototype = $extend(dn_Process.prototype,{
@@ -1083,10 +1074,6 @@ App.prototype = $extend(dn_Process.prototype,{
 	}
 	,__class__: App
 });
-var h3d_IDrawable = function() { };
-$hxClasses["h3d.IDrawable"] = h3d_IDrawable;
-h3d_IDrawable.__name__ = "h3d.IDrawable";
-h3d_IDrawable.__isInterface__ = true;
 var hxd_App = function() {
 	var _gthis = this;
 	var engine = h3d_Engine.CURRENT;
@@ -1103,9 +1090,7 @@ var hxd_App = function() {
 		});
 	}
 };
-$hxClasses["hxd.App"] = hxd_App;
 hxd_App.__name__ = "hxd.App";
-hxd_App.__interfaces__ = [h3d_IDrawable];
 hxd_App.staticHandler = function() {
 };
 hxd_App.prototype = {
@@ -1179,7 +1164,6 @@ hxd_App.prototype = {
 var Boot = function() {
 	hxd_App.call(this);
 };
-$hxClasses["Boot"] = Boot;
 Boot.__name__ = "Boot";
 Boot.main = function() {
 	new Boot();
@@ -1199,7 +1183,6 @@ Boot.prototype = $extend(hxd_App.prototype,{
 var EReg = function(r,opt) {
 	this.r = new RegExp(r,opt.split("u").join(""));
 };
-$hxClasses["EReg"] = EReg;
 EReg.__name__ = "EReg";
 EReg.prototype = {
 	match: function(s) {
@@ -1233,30 +1216,7 @@ EReg.prototype = {
 	,__class__: EReg
 };
 var HxOverrides = function() { };
-$hxClasses["HxOverrides"] = HxOverrides;
 HxOverrides.__name__ = "HxOverrides";
-HxOverrides.strDate = function(s) {
-	switch(s.length) {
-	case 8:
-		var k = s.split(":");
-		var d = new Date();
-		d["setTime"](0);
-		d["setUTCHours"](k[0]);
-		d["setUTCMinutes"](k[1]);
-		d["setUTCSeconds"](k[2]);
-		return d;
-	case 10:
-		var k = s.split("-");
-		return new Date(k[0],k[1] - 1,k[2],0,0,0);
-	case 19:
-		var k = s.split(" ");
-		var y = k[0].split("-");
-		var t = k[1].split(":");
-		return new Date(y[0],y[1] - 1,y[2],t[0],t[1],t[2]);
-	default:
-		throw haxe_Exception.thrown("Invalid date format : " + s);
-	}
-};
 HxOverrides.cca = function(s,index) {
 	var x = s.charCodeAt(index);
 	if(x != x) {
@@ -1288,7 +1248,6 @@ HxOverrides.now = function() {
 	return Date.now();
 };
 var Lambda = function() { };
-$hxClasses["Lambda"] = Lambda;
 Lambda.__name__ = "Lambda";
 Lambda.array = function(it) {
 	var a = [];
@@ -1301,7 +1260,6 @@ Lambda.array = function(it) {
 };
 Math.__name__ = "Math";
 var RandomParser = function() { };
-$hxClasses["RandomParser"] = RandomParser;
 RandomParser.__name__ = "RandomParser";
 RandomParser.run = function(raw) {
 	if(raw == null) {
@@ -1355,15 +1313,15 @@ RandomParser.run = function(raw) {
 	return rdata;
 };
 RandomParser.debugRandData = function(rdata) {
-	haxe_Log.trace("OPTIONS:",{ fileName : "src/RandomParser.hx", lineNumber : 81, className : "RandomParser", methodName : "debugRandData"});
+	haxe_Log.trace("OPTIONS:",{ fileName : "src/RandomParser.hx", lineNumber : 82, className : "RandomParser", methodName : "debugRandData"});
 	var _g = 0;
 	var _g1 = rdata.options;
 	while(_g < _g1.length) {
 		var o = _g1[_g];
 		++_g;
-		haxe_Log.trace("  " + o.opt + " => " + Std.string(o.args),{ fileName : "src/RandomParser.hx", lineNumber : 83, className : "RandomParser", methodName : "debugRandData"});
+		haxe_Log.trace("  " + o.opt + " => " + Std.string(o.args),{ fileName : "src/RandomParser.hx", lineNumber : 84, className : "RandomParser", methodName : "debugRandData"});
 	}
-	haxe_Log.trace("TABLES:",{ fileName : "src/RandomParser.hx", lineNumber : 84, className : "RandomParser", methodName : "debugRandData"});
+	haxe_Log.trace("TABLES:",{ fileName : "src/RandomParser.hx", lineNumber : 85, className : "RandomParser", methodName : "debugRandData"});
 	var h = rdata.tables.h;
 	var t_h = h;
 	var t_keys = Object.keys(h);
@@ -1384,7 +1342,7 @@ RandomParser.debugRandData = function(rdata) {
 			var x = e.probaMul * 100;
 			result[i] = e.raw + "[" + ((x > 0 ? x + .5 : x < 0 ? x - .5 : 0) | 0) + "%]";
 		}
-		haxe_Log.trace(tmp + result.join(", "),{ fileName : "src/RandomParser.hx", lineNumber : 86, className : "RandomParser", methodName : "debugRandData"});
+		haxe_Log.trace(tmp + result.join(", "),{ fileName : "src/RandomParser.hx", lineNumber : 87, className : "RandomParser", methodName : "debugRandData"});
 	}
 };
 RandomParser.cleanUp = function(str) {
@@ -1420,10 +1378,9 @@ var Randomizer = function(data) {
 		}
 	}
 };
-$hxClasses["Randomizer"] = Randomizer;
 Randomizer.__name__ = "Randomizer";
 Randomizer.error = function(msg) {
-	haxe_Log.trace("ERROR: " + msg,{ fileName : "src/Randomizer.hx", lineNumber : 24, className : "Randomizer", methodName : "error"});
+	haxe_Log.trace("ERROR: " + msg,{ fileName : "d:\\projects\\mini-randomizer\\src\\Randomizer.hx", lineNumber : 25, className : "Randomizer", methodName : "error"});
 };
 Randomizer.prototype = {
 	draw: function(key) {
@@ -1455,7 +1412,7 @@ Randomizer.prototype = {
 		var numberReg = new EReg("^([0-9]+)-([0-9]+)$","i");
 		while(refReg.match(out)) {
 			var k = refReg.matched(1);
-			haxe_Log.trace(k,{ fileName : "src/Randomizer.hx", lineNumber : 43, className : "Randomizer", methodName : "draw"});
+			haxe_Log.trace(k,{ fileName : "d:\\projects\\mini-randomizer\\src\\Randomizer.hx", lineNumber : 44, className : "Randomizer", methodName : "draw"});
 			if(numberReg.match(k)) {
 				var min = Std.parseInt(numberReg.matched(1));
 				var max = Std.parseInt(numberReg.matched(2));
@@ -1464,12 +1421,14 @@ Randomizer.prototype = {
 				out = refReg.matchedLeft() + this.draw(k) + refReg.matchedRight();
 			}
 		}
+		if(out == "-") {
+			out = "";
+		}
 		return out;
 	}
 	,__class__: Randomizer
 };
 var Reflect = function() { };
-$hxClasses["Reflect"] = Reflect;
 Reflect.__name__ = "Reflect";
 Reflect.field = function(o,field) {
 	try {
@@ -1515,7 +1474,6 @@ Reflect.isEnumValue = function(v) {
 	}
 };
 var Std = function() { };
-$hxClasses["Std"] = Std;
 Std.__name__ = "Std";
 Std.string = function(s) {
 	return js_Boot.__string_rec(s,"");
@@ -1550,13 +1508,11 @@ Std.random = function(x) {
 var StringBuf = function() {
 	this.b = "";
 };
-$hxClasses["StringBuf"] = StringBuf;
 StringBuf.__name__ = "StringBuf";
 StringBuf.prototype = {
 	__class__: StringBuf
 };
 var StringTools = function() { };
-$hxClasses["StringTools"] = StringTools;
 StringTools.__name__ = "StringTools";
 StringTools.htmlEscape = function(s,quotes) {
 	var buf_b = "";
@@ -1646,12 +1602,7 @@ StringTools.replace = function(s,sub,by) {
 	return s.split(sub).join(by);
 };
 var Type = function() { };
-$hxClasses["Type"] = Type;
 Type.__name__ = "Type";
-Type.createInstance = function(cl,args) {
-	var ctor = Function.prototype.bind.apply(cl,[null].concat(args));
-	return new (ctor);
-};
 Type.createEnum = function(e,constr,params) {
 	var f = Reflect.field(e,constr);
 	if(f == null) {
@@ -1742,7 +1693,6 @@ var dn_Cooldown = function(fps,maxSize) {
 	this.baseFps = fps;
 	this.changeMaxSizeAndReset(maxSize == null ? dn_Cooldown.DEFAULT_COUNT_LIMIT : maxSize);
 };
-$hxClasses["dn.Cooldown"] = dn_Cooldown;
 dn_Cooldown.__name__ = "dn.Cooldown";
 dn_Cooldown.prototype = {
 	changeMaxSizeAndReset: function(newMaxSize) {
@@ -1795,7 +1745,6 @@ dn_Cooldown.prototype = {
 };
 var dn__$Cooldown_CdInst = function() {
 };
-$hxClasses["dn._Cooldown.CdInst"] = dn__$Cooldown_CdInst;
 dn__$Cooldown_CdInst.__name__ = "dn._Cooldown.CdInst";
 dn__$Cooldown_CdInst.prototype = {
 	recycle: function() {
@@ -1812,7 +1761,6 @@ var dn__$Delayer_Task = function(id,t,cb) {
 	this.cb = cb;
 	this.id = id;
 };
-$hxClasses["dn._Delayer.Task"] = dn__$Delayer_Task;
 dn__$Delayer_Task.__name__ = "dn._Delayer.Task";
 dn__$Delayer_Task.prototype = {
 	__class__: dn__$Delayer_Task
@@ -1821,7 +1769,6 @@ var dn_Delayer = function(fps) {
 	this.fps = fps;
 	this.delays = [];
 };
-$hxClasses["dn.Delayer"] = dn_Delayer;
 dn_Delayer.__name__ = "dn.Delayer";
 dn_Delayer.prototype = {
 	destroy: function() {
@@ -1877,7 +1824,6 @@ var dn_Tween = function(tw) {
 	this.plays = 1;
 	this.pixelSnap = false;
 };
-$hxClasses["dn.Tween"] = dn_Tween;
 dn_Tween.__name__ = "dn.Tween";
 dn_Tween.prototype = {
 	set_type: function(t) {
@@ -2091,7 +2037,6 @@ var dn_Tweenie = function(fps) {
 	this.baseFps = fps;
 	this.allTweens = new dn_struct_FixedArray(null,512);
 };
-$hxClasses["dn.Tweenie"] = dn_Tweenie;
 dn_Tweenie.__name__ = "dn.Tweenie";
 dn_Tweenie.prototype = {
 	destroy: function() {
@@ -2115,9 +2060,7 @@ dn_Tweenie.prototype = {
 var haxe_ds_IntMap = function() {
 	this.h = { };
 };
-$hxClasses["haxe.ds.IntMap"] = haxe_ds_IntMap;
 haxe_ds_IntMap.__name__ = "haxe.ds.IntMap";
-haxe_ds_IntMap.__interfaces__ = [haxe_IMap];
 haxe_ds_IntMap.prototype = {
 	remove: function(key) {
 		if(!this.h.hasOwnProperty(key)) {
@@ -2153,7 +2096,6 @@ var dn_struct_RandList = function(rndFunc,arr) {
 		this.addArray(arr);
 	}
 };
-$hxClasses["dn.struct.RandList"] = dn_struct_RandList;
 dn_struct_RandList.__name__ = "dn.struct.RandList";
 dn_struct_RandList.prototype = {
 	add: function(elem,proba) {
@@ -2243,7 +2185,6 @@ var dn_struct_RecyclablePool = function(size,valueConstructor) {
 		this.pool[i] = valueConstructor();
 	}
 };
-$hxClasses["dn.struct.RecyclablePool"] = dn_struct_RecyclablePool;
 dn_struct_RecyclablePool.__name__ = "dn.struct.RecyclablePool";
 dn_struct_RecyclablePool.prototype = {
 	toString: function() {
@@ -2267,7 +2208,6 @@ dn_struct_RecyclablePool.prototype = {
 var dn_struct__$RecyclablePool_TestObject = function(id) {
 	this.id = id;
 };
-$hxClasses["dn.struct._RecyclablePool.TestObject"] = dn_struct__$RecyclablePool_TestObject;
 dn_struct__$RecyclablePool_TestObject.__name__ = "dn.struct._RecyclablePool.TestObject";
 dn_struct__$RecyclablePool_TestObject.prototype = {
 	toString: function() {
@@ -2288,7 +2228,6 @@ var h2d_col_Point = function(x,y) {
 	this.x = x;
 	this.y = y;
 };
-$hxClasses["h2d.col.Point"] = h2d_col_Point;
 h2d_col_Point.__name__ = "h2d.col.Point";
 h2d_col_Point.prototype = {
 	__class__: h2d_col_Point
@@ -2314,7 +2253,6 @@ var h2d_Object = function(parent) {
 		parent.addChild(this);
 	}
 };
-$hxClasses["h2d.Object"] = h2d_Object;
 h2d_Object.__name__ = "h2d.Object";
 h2d_Object.prototype = {
 	getBounds: function(relativeTo,out) {
@@ -3247,7 +3185,6 @@ var h2d_Drawable = function(parent) {
 	h2d_Object.call(this,parent);
 	this.color = new h3d_Vector(1,1,1,1);
 };
-$hxClasses["h2d.Drawable"] = h2d_Drawable;
 h2d_Drawable.__name__ = "h2d.Drawable";
 h2d_Drawable.__super__ = h2d_Object;
 h2d_Drawable.prototype = $extend(h2d_Object.prototype,{
@@ -3308,7 +3245,6 @@ var h2d_Camera = function(scene) {
 		scene.addCamera(this);
 	}
 };
-$hxClasses["h2d.Camera"] = h2d_Camera;
 h2d_Camera.__name__ = "h2d.Camera";
 h2d_Camera.prototype = {
 	layerVisible: function(layer) {
@@ -3380,7 +3316,6 @@ h2d_Camera.prototype = {
 var h3d_prim_Primitive = function() {
 	this.refCount = 0;
 };
-$hxClasses["h3d.prim.Primitive"] = h3d_prim_Primitive;
 h3d_prim_Primitive.__name__ = "h3d.prim.Primitive";
 h3d_prim_Primitive.prototype = {
 	getBounds: function() {
@@ -3436,13 +3371,6 @@ h3d_prim_Primitive.prototype = {
 	}
 	,__class__: h3d_prim_Primitive
 };
-var hxd_Interactive = function() { };
-$hxClasses["hxd.Interactive"] = hxd_Interactive;
-hxd_Interactive.__name__ = "hxd.Interactive";
-hxd_Interactive.__isInterface__ = true;
-hxd_Interactive.prototype = {
-	__class__: hxd_Interactive
-};
 var h2d_Interactive = function(width,height,parent,shape) {
 	this.shapeY = 0;
 	this.shapeX = 0;
@@ -3458,9 +3386,7 @@ var h2d_Interactive = function(width,height,parent,shape) {
 	this.height = height;
 	this.shape = shape;
 };
-$hxClasses["h2d.Interactive"] = h2d_Interactive;
 h2d_Interactive.__name__ = "h2d.Interactive";
-h2d_Interactive.__interfaces__ = [hxd_Interactive];
 h2d_Interactive.__super__ = h2d_Object;
 h2d_Interactive.prototype = $extend(h2d_Object.prototype,{
 	onAdd: function() {
@@ -3637,7 +3563,6 @@ var h2d_Layers = function(parent) {
 	this.layersIndexes = [];
 	this.layerCount = 0;
 };
-$hxClasses["h2d.Layers"] = h2d_Layers;
 h2d_Layers.__name__ = "h2d.Layers";
 h2d_Layers.__super__ = h2d_Object;
 h2d_Layers.prototype = $extend(h2d_Object.prototype,{
@@ -3722,7 +3647,6 @@ var h3d_impl_RenderContext = function() {
 	this.elapsedTime = 1. / hxd_System.getDefaultFrameRate();
 	this.textures = new h3d_impl_TextureCache(this);
 };
-$hxClasses["h3d.impl.RenderContext"] = h3d_impl_RenderContext;
 h3d_impl_RenderContext.__name__ = "h3d.impl.RenderContext";
 h3d_impl_RenderContext.prototype = {
 	__class__: h3d_impl_RenderContext
@@ -3751,7 +3675,6 @@ var h2d_RenderContext = function(scene) {
 	this.filterStack = [];
 	this.filterStackIndex = 0;
 };
-$hxClasses["h2d.RenderContext"] = h2d_RenderContext;
 h2d_RenderContext.__name__ = "h2d.RenderContext";
 h2d_RenderContext.__super__ = h3d_impl_RenderContext;
 h2d_RenderContext.prototype = $extend(h3d_impl_RenderContext.prototype,{
@@ -4970,13 +4893,6 @@ var h2d_ScaleMode = $hxEnums["h2d.ScaleMode"] = { __ename__:true,__constructs__:
 };
 h2d_ScaleMode.__constructs__ = [h2d_ScaleMode.Resize,h2d_ScaleMode.Stretch,h2d_ScaleMode.LetterBox,h2d_ScaleMode.Fixed,h2d_ScaleMode.Zoom,h2d_ScaleMode.AutoZoom];
 h2d_ScaleMode.__empty_constructs__ = [h2d_ScaleMode.Resize];
-var hxd_InteractiveScene = function() { };
-$hxClasses["hxd.InteractiveScene"] = hxd_InteractiveScene;
-hxd_InteractiveScene.__name__ = "hxd.InteractiveScene";
-hxd_InteractiveScene.__isInterface__ = true;
-hxd_InteractiveScene.prototype = {
-	__class__: hxd_InteractiveScene
-};
 var h2d_Scene = function() {
 	this.scaleMode = h2d_ScaleMode.Resize;
 	h2d_Layers.call(this,null);
@@ -5001,9 +4917,7 @@ var h2d_Scene = function() {
 	this.window = hxd_Window.getInstance();
 	this.posChanged = true;
 };
-$hxClasses["h2d.Scene"] = h2d_Scene;
 h2d_Scene.__name__ = "h2d.Scene";
-h2d_Scene.__interfaces__ = [hxd_InteractiveScene,h3d_IDrawable];
 h2d_Scene.__super__ = h2d_Layers;
 h2d_Scene.prototype = $extend(h2d_Layers.prototype,{
 	setEvents: function(events) {
@@ -5555,7 +5469,6 @@ var h2d_Tile = function(tex,x,y,w,h,dx,dy) {
 		this.setTexture(tex);
 	}
 };
-$hxClasses["h2d.Tile"] = h2d_Tile;
 h2d_Tile.__name__ = "h2d.Tile";
 h2d_Tile.fromColor = function(color,width,height,alpha) {
 	if(alpha == null) {
@@ -5587,22 +5500,13 @@ h2d_Tile.prototype = {
 	}
 	,__class__: h2d_Tile
 };
-var h2d_col_Collider = function() { };
-$hxClasses["h2d.col.Collider"] = h2d_col_Collider;
-h2d_col_Collider.__name__ = "h2d.col.Collider";
-h2d_col_Collider.__isInterface__ = true;
-h2d_col_Collider.prototype = {
-	__class__: h2d_col_Collider
-};
 var h2d_col_Bounds = function() {
 	this.xMin = 1e20;
 	this.yMin = 1e20;
 	this.xMax = -1e20;
 	this.yMax = -1e20;
 };
-$hxClasses["h2d.col.Bounds"] = h2d_col_Bounds;
 h2d_col_Bounds.__name__ = "h2d.col.Bounds";
-h2d_col_Bounds.__interfaces__ = [h2d_col_Collider];
 h2d_col_Bounds.prototype = {
 	contains: function(p) {
 		if(p.x >= this.xMin && p.x < this.xMax && p.y >= this.yMin) {
@@ -5620,7 +5524,6 @@ var h2d_filter_Filter = function() {
 	this.boundsExtend = 0.;
 	this.autoBounds = true;
 };
-$hxClasses["h2d.filter.Filter"] = h2d_filter_Filter;
 h2d_filter_Filter.__name__ = "h2d.filter.Filter";
 h2d_filter_Filter.prototype = {
 	get_enable: function() {
@@ -5673,7 +5576,6 @@ var h3d_Buffer = function(vertices,stride,flags) {
 		h3d_Engine.CURRENT.mem.allocBuffer(this,stride);
 	}
 };
-$hxClasses["h3d.Buffer"] = h3d_Buffer;
 h3d_Buffer.__name__ = "h3d.Buffer";
 h3d_Buffer.ofFloats = function(v,stride,flags) {
 	var nvert = v.pos / stride | 0;
@@ -5718,7 +5620,6 @@ var h3d_BufferOffset = function(buffer,offset) {
 	this.buffer = buffer;
 	this.offset = offset;
 };
-$hxClasses["h3d.BufferOffset"] = h3d_BufferOffset;
 h3d_BufferOffset.__name__ = "h3d.BufferOffset";
 h3d_BufferOffset.prototype = {
 	dispose: function() {
@@ -5766,7 +5667,6 @@ var h3d_Camera = function(fovY,zoom,screenRatio,zNear,zFar,rightHanded) {
 	this.frustum = new h3d_col_Frustum();
 	this.update();
 };
-$hxClasses["h3d.Camera"] = h3d_Camera;
 h3d_Camera.__name__ = "h3d.Camera";
 h3d_Camera.prototype = {
 	getInverseViewProj: function() {
@@ -6034,7 +5934,6 @@ var h3d__$Engine_TargetTmp = function(t,n,l,m) {
 	this.layer = l;
 	this.mipLevel = m;
 };
-$hxClasses["h3d._Engine.TargetTmp"] = h3d__$Engine_TargetTmp;
 h3d__$Engine_TargetTmp.__name__ = "h3d._Engine.TargetTmp";
 h3d__$Engine_TargetTmp.prototype = {
 	__class__: h3d__$Engine_TargetTmp
@@ -6057,7 +5956,6 @@ var h3d_Engine = function() {
 	this.driver = js_Browser.get_supported() ? new h3d_impl_GlDriver(this.antiAlias) : new h3d_impl_NullDriver();
 	h3d_Engine.CURRENT = this;
 };
-$hxClasses["h3d.Engine"] = h3d_Engine;
 h3d_Engine.__name__ = "h3d.Engine";
 h3d_Engine.prototype = {
 	init: function() {
@@ -6416,7 +6314,6 @@ var h3d_Indexes = function(count,is32) {
 	this.is32 = is32;
 	this.mem.allocIndexes(this);
 };
-$hxClasses["h3d.Indexes"] = h3d_Indexes;
 h3d_Indexes.__name__ = "h3d.Indexes";
 h3d_Indexes.alloc = function(i,startPos,length) {
 	if(length == null) {
@@ -6451,7 +6348,6 @@ h3d_Indexes.prototype = {
 };
 var h3d_Matrix = function() {
 };
-$hxClasses["h3d.Matrix"] = h3d_Matrix;
 h3d_Matrix.__name__ = "h3d.Matrix";
 h3d_Matrix.I = function() {
 	var m = new h3d_Matrix();
@@ -6735,7 +6631,6 @@ var h3d_Quat = function(x,y,z,w) {
 	this.z = z;
 	this.w = w;
 };
-$hxClasses["h3d.Quat"] = h3d_Quat;
 h3d_Quat.__name__ = "h3d.Quat";
 h3d_Quat.prototype = {
 	toMatrix: function(m) {
@@ -6789,13 +6684,11 @@ var h3d_Vector = function(x,y,z,w) {
 	this.z = z;
 	this.w = w;
 };
-$hxClasses["h3d.Vector"] = h3d_Vector;
 h3d_Vector.__name__ = "h3d.Vector";
 h3d_Vector.prototype = {
 	__class__: h3d_Vector
 };
 var h3d_anim_AnimatedObject = function() { };
-$hxClasses["h3d.anim.AnimatedObject"] = h3d_anim_AnimatedObject;
 h3d_anim_AnimatedObject.__name__ = "h3d.anim.AnimatedObject";
 var h3d_anim_Animation = function(name,frameCount,sampling) {
 	this.name = name;
@@ -6808,7 +6701,6 @@ var h3d_anim_Animation = function(name,frameCount,sampling) {
 	this.loop = true;
 	this.pause = false;
 };
-$hxClasses["h3d.anim.Animation"] = h3d_anim_Animation;
 h3d_anim_Animation.__name__ = "h3d.anim.Animation";
 h3d_anim_Animation.prototype = {
 	getPropValue: function(objectName,propName) {
@@ -6902,13 +6794,6 @@ h3d_anim_Animation.prototype = {
 	}
 	,__class__: h3d_anim_Animation
 };
-var h3d_col_Collider = function() { };
-$hxClasses["h3d.col.Collider"] = h3d_col_Collider;
-h3d_col_Collider.__name__ = "h3d.col.Collider";
-h3d_col_Collider.__isInterface__ = true;
-h3d_col_Collider.prototype = {
-	__class__: h3d_col_Collider
-};
 var h3d_col_Bounds = function() {
 	this.xMin = 1e20;
 	this.xMax = -1e20;
@@ -6917,9 +6802,7 @@ var h3d_col_Bounds = function() {
 	this.zMin = 1e20;
 	this.zMax = -1e20;
 };
-$hxClasses["h3d.col.Bounds"] = h3d_col_Bounds;
 h3d_col_Bounds.__name__ = "h3d.col.Bounds";
-h3d_col_Bounds.__interfaces__ = [h3d_col_Collider];
 h3d_col_Bounds.prototype = {
 	inFrustum: function(f,m) {
 		if(m != null) {
@@ -7343,7 +7226,6 @@ var h3d_col_Frustum = function(mvp) {
 		this.loadMatrix(mvp);
 	}
 };
-$hxClasses["h3d.col.Frustum"] = h3d_col_Frustum;
 h3d_col_Frustum.__name__ = "h3d.col.Frustum";
 h3d_col_Frustum.prototype = {
 	loadMatrix: function(mvp) {
@@ -7597,7 +7479,6 @@ h3d_col_Frustum.prototype = {
 };
 var h3d_col_Ray = function() {
 };
-$hxClasses["h3d.col.Ray"] = h3d_col_Ray;
 h3d_col_Ray.__name__ = "h3d.col.Ray";
 h3d_col_Ray.prototype = {
 	normalize: function() {
@@ -7622,7 +7503,6 @@ var h3d_col_Plane = function(nx,ny,nz,d) {
 	this.nz = nz;
 	this.d = d;
 };
-$hxClasses["h3d.col.Plane"] = h3d_col_Plane;
 h3d_col_Plane.__name__ = "h3d.col.Plane";
 h3d_col_Plane.prototype = {
 	__class__: h3d_col_Plane
@@ -7641,7 +7521,6 @@ var h3d_col_Point = function(x,y,z) {
 	this.y = y;
 	this.z = z;
 };
-$hxClasses["h3d.col.Point"] = h3d_col_Point;
 h3d_col_Point.__name__ = "h3d.col.Point";
 h3d_col_Point.prototype = {
 	__class__: h3d_col_Point
@@ -7714,7 +7593,6 @@ var h3d_scene_Object = function(parent) {
 		parent.addChild(this);
 	}
 };
-$hxClasses["h3d.scene.Object"] = h3d_scene_Object;
 h3d_scene_Object.__name__ = "h3d.scene.Object";
 h3d_scene_Object.prototype = {
 	set_cullingCollider: function(c) {
@@ -8218,9 +8096,7 @@ var h3d_col_Sphere = function(x,y,z,r) {
 	this.z = sz;
 	this.r = sr;
 };
-$hxClasses["h3d.col.Sphere"] = h3d_col_Sphere;
 h3d_col_Sphere.__name__ = "h3d.col.Sphere";
-h3d_col_Sphere.__interfaces__ = [h3d_col_Collider];
 h3d_col_Sphere.prototype = {
 	rayIntersection: function(r,bestMatch) {
 		var r2 = this.r * this.r;
@@ -8319,7 +8195,6 @@ var h3d_impl_InputNames = function(names) {
 	this.id = h3d_impl_InputNames.UID++;
 	this.names = names;
 };
-$hxClasses["h3d.impl.InputNames"] = h3d_impl_InputNames;
 h3d_impl_InputNames.__name__ = "h3d.impl.InputNames";
 h3d_impl_InputNames.get = function(names) {
 	var key = names.join("|");
@@ -8334,7 +8209,6 @@ h3d_impl_InputNames.prototype = {
 	__class__: h3d_impl_InputNames
 };
 var h3d_impl_Driver = function() { };
-$hxClasses["h3d.impl.Driver"] = h3d_impl_Driver;
 h3d_impl_Driver.__name__ = "h3d.impl.Driver";
 h3d_impl_Driver.prototype = {
 	hasFeature: function(f) {
@@ -8435,21 +8309,18 @@ var h3d_impl__$GlDriver_CompiledShader = function(s,vertex,shader) {
 	this.vertex = vertex;
 	this.shader = shader;
 };
-$hxClasses["h3d.impl._GlDriver.CompiledShader"] = h3d_impl__$GlDriver_CompiledShader;
 h3d_impl__$GlDriver_CompiledShader.__name__ = "h3d.impl._GlDriver.CompiledShader";
 h3d_impl__$GlDriver_CompiledShader.prototype = {
 	__class__: h3d_impl__$GlDriver_CompiledShader
 };
 var h3d_impl__$GlDriver_CompiledAttribute = function() {
 };
-$hxClasses["h3d.impl._GlDriver.CompiledAttribute"] = h3d_impl__$GlDriver_CompiledAttribute;
 h3d_impl__$GlDriver_CompiledAttribute.__name__ = "h3d.impl._GlDriver.CompiledAttribute";
 h3d_impl__$GlDriver_CompiledAttribute.prototype = {
 	__class__: h3d_impl__$GlDriver_CompiledAttribute
 };
 var h3d_impl__$GlDriver_CompiledProgram = function() {
 };
-$hxClasses["h3d.impl._GlDriver.CompiledProgram"] = h3d_impl__$GlDriver_CompiledProgram;
 h3d_impl__$GlDriver_CompiledProgram.__name__ = "h3d.impl._GlDriver.CompiledProgram";
 h3d_impl__$GlDriver_CompiledProgram.prototype = {
 	__class__: h3d_impl__$GlDriver_CompiledProgram
@@ -8547,7 +8418,6 @@ var h3d_impl_GlDriver = function(antiAlias) {
 	this.gl.pixelStorei(3333,1);
 	this.gl.pixelStorei(3317,1);
 };
-$hxClasses["h3d.impl.GlDriver"] = h3d_impl_GlDriver;
 h3d_impl_GlDriver.__name__ = "h3d.impl.GlDriver";
 h3d_impl_GlDriver.__super__ = h3d_impl_Driver;
 h3d_impl_GlDriver.prototype = $extend(h3d_impl_Driver.prototype,{
@@ -9874,7 +9744,6 @@ h3d_impl_GlDriver.prototype = $extend(h3d_impl_Driver.prototype,{
 var h3d_impl_InstanceBuffer = function() {
 	this.triCount = 0;
 };
-$hxClasses["h3d.impl.InstanceBuffer"] = h3d_impl_InstanceBuffer;
 h3d_impl_InstanceBuffer.__name__ = "h3d.impl.InstanceBuffer";
 h3d_impl_InstanceBuffer.prototype = {
 	__class__: h3d_impl_InstanceBuffer
@@ -9884,7 +9753,6 @@ var h3d_impl__$ManagedBuffer_FreeCell = function(pos,count,next) {
 	this.count = count;
 	this.next = next;
 };
-$hxClasses["h3d.impl._ManagedBuffer.FreeCell"] = h3d_impl__$ManagedBuffer_FreeCell;
 h3d_impl__$ManagedBuffer_FreeCell.__name__ = "h3d.impl._ManagedBuffer.FreeCell";
 h3d_impl__$ManagedBuffer_FreeCell.prototype = {
 	__class__: h3d_impl__$ManagedBuffer_FreeCell
@@ -9906,7 +9774,6 @@ var h3d_impl_ManagedBuffer = function(stride,size,flags) {
 	this.mem = h3d_Engine.CURRENT.mem;
 	this.mem.allocManaged(this);
 };
-$hxClasses["h3d.impl.ManagedBuffer"] = h3d_impl_ManagedBuffer;
 h3d_impl_ManagedBuffer.__name__ = "h3d.impl.ManagedBuffer";
 h3d_impl_ManagedBuffer.prototype = {
 	uploadVertexBuffer: function(start,vertices,buf,bufPos) {
@@ -10001,7 +9868,6 @@ var h3d_impl_MemoryManager = function(driver) {
 	this.usedMemory = 0;
 	this.driver = driver;
 };
-$hxClasses["h3d.impl.MemoryManager"] = h3d_impl_MemoryManager;
 h3d_impl_MemoryManager.__name__ = "h3d.impl.MemoryManager";
 h3d_impl_MemoryManager.prototype = {
 	init: function() {
@@ -10390,7 +10256,6 @@ h3d_impl_MemoryManager.prototype = {
 };
 var h3d_impl_NullDriver = function() {
 };
-$hxClasses["h3d.impl.NullDriver"] = h3d_impl_NullDriver;
 h3d_impl_NullDriver.__name__ = "h3d.impl.NullDriver";
 h3d_impl_NullDriver.__super__ = h3d_impl_Driver;
 h3d_impl_NullDriver.prototype = $extend(h3d_impl_Driver.prototype,{
@@ -10448,7 +10313,6 @@ var h3d_impl_TextureCache = function(ctx) {
 	this.defaultFormat = h3d_mat_Texture.nativeFormat;
 	this.defaultDepthBuffer = h3d_mat_DepthBuffer.getDefault();
 };
-$hxClasses["h3d.impl.TextureCache"] = h3d_impl_TextureCache;
 h3d_impl_TextureCache.__name__ = "h3d.impl.TextureCache";
 h3d_impl_TextureCache.prototype = {
 	begin: function() {
@@ -10513,7 +10377,6 @@ h3d_impl_TextureCache.prototype = {
 	,__class__: h3d_impl_TextureCache
 };
 var hxd_impl_AnyProps = function() { };
-$hxClasses["hxd.impl.AnyProps"] = hxd_impl_AnyProps;
 hxd_impl_AnyProps.__name__ = "hxd.impl.AnyProps";
 hxd_impl_AnyProps.prototype = {
 	set_props: function(p) {
@@ -10533,7 +10396,6 @@ var h3d_mat_BaseMaterial = function(shader) {
 		this.addPass(new h3d_mat_Pass("default",null)).addShader(shader);
 	}
 };
-$hxClasses["h3d.mat.BaseMaterial"] = h3d_mat_BaseMaterial;
 h3d_mat_BaseMaterial.__name__ = "h3d.mat.BaseMaterial";
 h3d_mat_BaseMaterial.__super__ = hxd_impl_AnyProps;
 h3d_mat_BaseMaterial.prototype = $extend(hxd_impl_AnyProps.prototype,{
@@ -10679,7 +10541,6 @@ var h3d_mat_TextureFlags = $hxEnums["h3d.mat.TextureFlags"] = { __ename__:true,_
 h3d_mat_TextureFlags.__constructs__ = [h3d_mat_TextureFlags.Target,h3d_mat_TextureFlags.Cube,h3d_mat_TextureFlags.MipMapped,h3d_mat_TextureFlags.ManualMipMapGen,h3d_mat_TextureFlags.IsNPOT,h3d_mat_TextureFlags.NoAlloc,h3d_mat_TextureFlags.Dynamic,h3d_mat_TextureFlags.AlphaPremultiplied,h3d_mat_TextureFlags.WasCleared,h3d_mat_TextureFlags.Loading,h3d_mat_TextureFlags.Serialize,h3d_mat_TextureFlags.IsArray,h3d_mat_TextureFlags.AsyncLoading];
 h3d_mat_TextureFlags.__empty_constructs__ = [h3d_mat_TextureFlags.Target,h3d_mat_TextureFlags.Cube,h3d_mat_TextureFlags.MipMapped,h3d_mat_TextureFlags.ManualMipMapGen,h3d_mat_TextureFlags.IsNPOT,h3d_mat_TextureFlags.NoAlloc,h3d_mat_TextureFlags.Dynamic,h3d_mat_TextureFlags.AlphaPremultiplied,h3d_mat_TextureFlags.WasCleared,h3d_mat_TextureFlags.Loading,h3d_mat_TextureFlags.Serialize,h3d_mat_TextureFlags.IsArray,h3d_mat_TextureFlags.AsyncLoading];
 var h3d_mat_Defaults = function() { };
-$hxClasses["h3d.mat.Defaults"] = h3d_mat_Defaults;
 h3d_mat_Defaults.__name__ = "h3d.mat.Defaults";
 h3d_mat_Defaults.get_shadowShader = function() {
 	var s = h3d_mat_Defaults.shadowShader;
@@ -10708,7 +10569,6 @@ var h3d_mat_DepthBuffer = function(width,height,format) {
 		this.alloc();
 	}
 };
-$hxClasses["h3d.mat.DepthBuffer"] = h3d_mat_DepthBuffer;
 h3d_mat_DepthBuffer.__name__ = "h3d.mat.DepthBuffer";
 h3d_mat_DepthBuffer.getDefault = function() {
 	return h3d_Engine.CURRENT.driver.getDefaultDepthBuffer();
@@ -10742,7 +10602,6 @@ var h3d_mat_Material = function(texture) {
 	h3d_mat_BaseMaterial.call(this,this.mshader);
 	this.set_texture(texture);
 };
-$hxClasses["h3d.mat.Material"] = h3d_mat_Material;
 h3d_mat_Material.__name__ = "h3d.mat.Material";
 h3d_mat_Material.__super__ = h3d_mat_BaseMaterial;
 h3d_mat_Material.prototype = $extend(h3d_mat_BaseMaterial.prototype,{
@@ -10864,7 +10723,6 @@ h3d_mat_Material.prototype = $extend(h3d_mat_BaseMaterial.prototype,{
 });
 var h3d_mat_MaterialDatabase = function() {
 };
-$hxClasses["h3d.mat.MaterialDatabase"] = h3d_mat_MaterialDatabase;
 h3d_mat_MaterialDatabase.__name__ = "h3d.mat.MaterialDatabase";
 h3d_mat_MaterialDatabase.prototype = {
 	__class__: h3d_mat_MaterialDatabase
@@ -10875,7 +10733,6 @@ var h3d_mat_MaterialSetup = function(name) {
 	}
 	this.name = name;
 };
-$hxClasses["h3d.mat.MaterialSetup"] = h3d_mat_MaterialSetup;
 h3d_mat_MaterialSetup.__name__ = "h3d.mat.MaterialSetup";
 h3d_mat_MaterialSetup.prototype = {
 	createRenderer: function() {
@@ -10906,7 +10763,6 @@ var h3d_mat_Pass = function(name,shaders,parent) {
 	this.set_blendOp(this.set_blendAlphaOp(h3d_mat_Operation.Add));
 	this.colorMask = 15;
 };
-$hxClasses["h3d.mat.Pass"] = h3d_mat_Pass;
 h3d_mat_Pass.__name__ = "h3d.mat.Pass";
 h3d_mat_Pass.prototype = {
 	setPassName: function(name) {
@@ -11135,7 +10991,6 @@ var h3d_mat_Stencil = function() {
 	this.setOp(h3d_mat_StencilOp.Keep,h3d_mat_StencilOp.Keep,h3d_mat_StencilOp.Keep);
 	this.setFunc(h3d_mat_Compare.Always);
 };
-$hxClasses["h3d.mat.Stencil"] = h3d_mat_Stencil;
 h3d_mat_Stencil.__name__ = "h3d.mat.Stencil";
 h3d_mat_Stencil.prototype = {
 	setFront: function(stfail,dpfail,pass) {
@@ -11274,7 +11129,6 @@ var h3d_mat_Texture = function(w,h,flags,format) {
 		this.alloc();
 	}
 };
-$hxClasses["h3d.mat.Texture"] = h3d_mat_Texture;
 h3d_mat_Texture.__name__ = "h3d.mat.Texture";
 h3d_mat_Texture.fromColor = function(color,alpha) {
 	if(alpha == null) {
@@ -11490,7 +11344,6 @@ var h3d_mat_TextureArray = function(w,h,layers,flags,format) {
 	flags.push(h3d_mat_TextureFlags.IsArray);
 	h3d_mat_Texture.call(this,w,h,flags,format);
 };
-$hxClasses["h3d.mat.TextureArray"] = h3d_mat_TextureArray;
 h3d_mat_TextureArray.__name__ = "h3d.mat.TextureArray";
 h3d_mat_TextureArray.__super__ = h3d_mat_Texture;
 h3d_mat_TextureArray.prototype = $extend(h3d_mat_Texture.prototype,{
@@ -11505,7 +11358,6 @@ h3d_mat_TextureArray.prototype = $extend(h3d_mat_Texture.prototype,{
 var h3d_pass_Base = function(name) {
 	this.name = name;
 };
-$hxClasses["h3d.pass.Base"] = h3d_pass_Base;
 h3d_pass_Base.__name__ = "h3d.pass.Base";
 h3d_pass_Base.prototype = {
 	setContext: function(ctx) {
@@ -11522,7 +11374,6 @@ var h3d_pass_ScreenFx = function(shader,output) {
 	this.pass.set_culling(h3d_mat_Face.None);
 	this.pass.depth(false,h3d_mat_Compare.Always);
 };
-$hxClasses["h3d.pass.ScreenFx"] = h3d_pass_ScreenFx;
 h3d_pass_ScreenFx.__name__ = "h3d.pass.ScreenFx";
 h3d_pass_ScreenFx.prototype = {
 	get_engine: function() {
@@ -11578,7 +11429,6 @@ var h3d_pass_Blur = function(radius,gain,linear,quality) {
 	this.set_gain(gain);
 	this.set_linear(linear);
 };
-$hxClasses["h3d.pass.Blur"] = h3d_pass_Blur;
 h3d_pass_Blur.__name__ = "h3d.pass.Blur";
 h3d_pass_Blur.__super__ = h3d_pass_ScreenFx;
 h3d_pass_Blur.prototype = $extend(h3d_pass_ScreenFx.prototype,{
@@ -11776,7 +11626,6 @@ var hxsl_Shader = function() {
 	this.priority = 0;
 	this.initialize();
 };
-$hxClasses["hxsl.Shader"] = hxsl_Shader;
 hxsl_Shader.__name__ = "hxsl.Shader";
 hxsl_Shader.prototype = {
 	initialize: function() {
@@ -11886,7 +11735,6 @@ var h3d_shader_ScreenShader = function() {
 	this.flipY__ = 0;
 	hxsl_Shader.call(this);
 };
-$hxClasses["h3d.shader.ScreenShader"] = h3d_shader_ScreenShader;
 h3d_shader_ScreenShader.__name__ = "h3d.shader.ScreenShader";
 h3d_shader_ScreenShader.__super__ = hxsl_Shader;
 h3d_shader_ScreenShader.prototype = $extend(hxsl_Shader.prototype,{
@@ -11918,7 +11766,6 @@ var h3d_pass__$Border_BorderShader = function() {
 	this.color__ = new h3d_Vector();
 	h3d_shader_ScreenShader.call(this);
 };
-$hxClasses["h3d.pass._Border.BorderShader"] = h3d_pass__$Border_BorderShader;
 h3d_pass__$Border_BorderShader.__name__ = "h3d.pass._Border.BorderShader";
 h3d_pass__$Border_BorderShader.__super__ = h3d_shader_ScreenShader;
 h3d_pass__$Border_BorderShader.prototype = $extend(h3d_shader_ScreenShader.prototype,{
@@ -12300,7 +12147,6 @@ var h3d_pass_Border = function(width,height,size) {
 	_this.z = z;
 	_this.w = w;
 };
-$hxClasses["h3d.pass.Border"] = h3d_pass_Border;
 h3d_pass_Border.__name__ = "h3d.pass.Border";
 h3d_pass_Border.__super__ = h3d_pass_ScreenFx;
 h3d_pass_Border.prototype = $extend(h3d_pass_ScreenFx.prototype,{
@@ -12319,7 +12165,6 @@ var h3d_pass_ColorMatrixShader = function() {
 	this.matrix__ = new h3d_Matrix();
 	h3d_shader_ScreenShader.call(this);
 };
-$hxClasses["h3d.pass.ColorMatrixShader"] = h3d_pass_ColorMatrixShader;
 h3d_pass_ColorMatrixShader.__name__ = "h3d.pass.ColorMatrixShader";
 h3d_pass_ColorMatrixShader.__super__ = h3d_shader_ScreenShader;
 h3d_pass_ColorMatrixShader.prototype = $extend(h3d_shader_ScreenShader.prototype,{
@@ -12463,7 +12308,6 @@ var h3d_pass__$Copy_ArrayCopyShader = function() {
 	this.layer__ = 0;
 	h3d_shader_ScreenShader.call(this);
 };
-$hxClasses["h3d.pass._Copy.ArrayCopyShader"] = h3d_pass__$Copy_ArrayCopyShader;
 h3d_pass__$Copy_ArrayCopyShader.__name__ = "h3d.pass._Copy.ArrayCopyShader";
 h3d_pass__$Copy_ArrayCopyShader.__super__ = h3d_shader_ScreenShader;
 h3d_pass__$Copy_ArrayCopyShader.prototype = $extend(h3d_shader_ScreenShader.prototype,{
@@ -12506,7 +12350,6 @@ h3d_pass__$Copy_ArrayCopyShader.prototype = $extend(h3d_shader_ScreenShader.prot
 var h3d_pass__$Copy_CopyShader = function() {
 	h3d_shader_ScreenShader.call(this);
 };
-$hxClasses["h3d.pass._Copy.CopyShader"] = h3d_pass__$Copy_CopyShader;
 h3d_pass__$Copy_CopyShader.__name__ = "h3d.pass._Copy.CopyShader";
 h3d_pass__$Copy_CopyShader.__super__ = h3d_shader_ScreenShader;
 h3d_pass__$Copy_CopyShader.prototype = $extend(h3d_shader_ScreenShader.prototype,{
@@ -12541,7 +12384,6 @@ h3d_pass__$Copy_CopyShader.prototype = $extend(h3d_shader_ScreenShader.prototype
 var h3d_pass_Copy = function() {
 	h3d_pass_ScreenFx.call(this,new h3d_pass__$Copy_CopyShader());
 };
-$hxClasses["h3d.pass.Copy"] = h3d_pass_Copy;
 h3d_pass_Copy.__name__ = "h3d.pass.Copy";
 h3d_pass_Copy.run = function(from,to,blend,pass,layer) {
 	var engine = h3d_Engine.CURRENT;
@@ -12589,7 +12431,6 @@ var h3d_pass__$CubeCopy_CubeCopyShader = function() {
 	this.mat__ = new h3d_Matrix();
 	h3d_shader_ScreenShader.call(this);
 };
-$hxClasses["h3d.pass._CubeCopy.CubeCopyShader"] = h3d_pass__$CubeCopy_CubeCopyShader;
 h3d_pass__$CubeCopy_CubeCopyShader.__name__ = "h3d.pass._CubeCopy.CubeCopyShader";
 h3d_pass__$CubeCopy_CubeCopyShader.__super__ = h3d_shader_ScreenShader;
 h3d_pass__$CubeCopy_CubeCopyShader.prototype = $extend(h3d_shader_ScreenShader.prototype,{
@@ -12635,7 +12476,6 @@ var h3d_pass_Default = function(name) {
 	this.manager = new h3d_pass_ShaderManager(this.getOutputs());
 	this.initGlobals();
 };
-$hxClasses["h3d.pass.Default"] = h3d_pass_Default;
 h3d_pass_Default.__name__ = "h3d.pass.Default";
 h3d_pass_Default.__super__ = h3d_pass_Base;
 h3d_pass_Default.prototype = $extend(h3d_pass_Base.prototype,{
@@ -12862,7 +12702,6 @@ var h3d_pass_Shadows = function(light) {
 	_this.constModified = true;
 	_this.isDepth__ = this.format == h3d_mat_Texture.nativeFormat;
 };
-$hxClasses["h3d.pass.Shadows"] = h3d_pass_Shadows;
 h3d_pass_Shadows.__name__ = "h3d.pass.Shadows";
 h3d_pass_Shadows.__super__ = h3d_pass_Default;
 h3d_pass_Shadows.prototype = $extend(h3d_pass_Default.prototype,{
@@ -13055,7 +12894,6 @@ var h3d_pass_DirShadowMap = function(light) {
 		this.depth = h3d_mat_DepthBuffer.getDefault();
 	}
 };
-$hxClasses["h3d.pass.DirShadowMap"] = h3d_pass_DirShadowMap;
 h3d_pass_DirShadowMap.__name__ = "h3d.pass.DirShadowMap";
 h3d_pass_DirShadowMap.__super__ = h3d_pass_Shadows;
 h3d_pass_DirShadowMap.prototype = $extend(h3d_pass_Shadows.prototype,{
@@ -14773,7 +14611,6 @@ var h3d_pass_DefaultShadowMap = function(size,format) {
 	this.shadowPowerId = hxsl_Globals.allocID("shadow.power");
 	this.shadowBiasId = hxsl_Globals.allocID("shadow.bias");
 };
-$hxClasses["h3d.pass.DefaultShadowMap"] = h3d_pass_DefaultShadowMap;
 h3d_pass_DefaultShadowMap.__name__ = "h3d.pass.DefaultShadowMap";
 h3d_pass_DefaultShadowMap.__super__ = h3d_pass_DirShadowMap;
 h3d_pass_DefaultShadowMap.prototype = $extend(h3d_pass_DirShadowMap.prototype,{
@@ -14792,7 +14629,6 @@ var h3d_pass__$HardwarePick_FixedColor = function() {
 	this.colorID__ = new h3d_Vector();
 	hxsl_Shader.call(this);
 };
-$hxClasses["h3d.pass._HardwarePick.FixedColor"] = h3d_pass__$HardwarePick_FixedColor;
 h3d_pass__$HardwarePick_FixedColor.__name__ = "h3d.pass._HardwarePick.FixedColor";
 h3d_pass__$HardwarePick_FixedColor.__super__ = hxsl_Shader;
 h3d_pass__$HardwarePick_FixedColor.prototype = $extend(hxsl_Shader.prototype,{
@@ -14831,7 +14667,6 @@ var h3d_pass_PassList = function(current) {
 	this.current = current;
 	this.discarded = this.lastDisc = null;
 };
-$hxClasses["h3d.pass.PassList"] = h3d_pass_PassList;
 h3d_pass_PassList.__name__ = "h3d.pass.PassList";
 h3d_pass_PassList.prototype = {
 	__class__: h3d_pass_PassList
@@ -14839,7 +14674,6 @@ h3d_pass_PassList.prototype = {
 var h3d_pass_PassObject = function() {
 	this.texture = 0;
 };
-$hxClasses["h3d.pass.PassObject"] = h3d_pass_PassObject;
 h3d_pass_PassObject.__name__ = "h3d.pass.PassObject";
 h3d_pass_PassObject.prototype = {
 	__class__: h3d_pass_PassObject
@@ -14850,7 +14684,6 @@ var h3d_pass_ShaderManager = function(output) {
 	this.currentOutput = new hxsl_ShaderList(null);
 	this.setOutput(output);
 };
-$hxClasses["h3d.pass.ShaderManager"] = h3d_pass_ShaderManager;
 h3d_pass_ShaderManager.__name__ = "h3d.pass.ShaderManager";
 h3d_pass_ShaderManager.prototype = {
 	setOutput: function(output) {
@@ -15520,7 +15353,6 @@ var h3d_pass_SortByMaterial = function() {
 	this.shaderIdMap = [];
 	this.textureIdMap = [];
 };
-$hxClasses["h3d.pass.SortByMaterial"] = h3d_pass_SortByMaterial;
 h3d_pass_SortByMaterial.__name__ = "h3d.pass.SortByMaterial";
 h3d_pass_SortByMaterial.prototype = {
 	sort: function(passes) {
@@ -15625,7 +15457,6 @@ h3d_pass_SortByMaterial.prototype = {
 var h3d_prim_MeshPrimitive = function() {
 	h3d_prim_Primitive.call(this);
 };
-$hxClasses["h3d.prim.MeshPrimitive"] = h3d_prim_MeshPrimitive;
 h3d_prim_MeshPrimitive.__name__ = "h3d.prim.MeshPrimitive";
 h3d_prim_MeshPrimitive.__super__ = h3d_prim_Primitive;
 h3d_prim_MeshPrimitive.prototype = $extend(h3d_prim_Primitive.prototype,{
@@ -15733,7 +15564,6 @@ var h3d_prim_Instanced = function() {
 	}
 	this.tmpBounds = new h3d_col_Bounds();
 };
-$hxClasses["h3d.prim.Instanced"] = h3d_prim_Instanced;
 h3d_prim_Instanced.__name__ = "h3d.prim.Instanced";
 h3d_prim_Instanced.__super__ = h3d_prim_MeshPrimitive;
 h3d_prim_Instanced.prototype = $extend(h3d_prim_MeshPrimitive.prototype,{
@@ -15804,7 +15634,6 @@ h3d_prim_Instanced.prototype = $extend(h3d_prim_MeshPrimitive.prototype,{
 var h3d_prim_Plane2D = function() {
 	h3d_prim_Primitive.call(this);
 };
-$hxClasses["h3d.prim.Plane2D"] = h3d_prim_Plane2D;
 h3d_prim_Plane2D.__name__ = "h3d.prim.Plane2D";
 h3d_prim_Plane2D.get = function() {
 	var engine = h3d_Engine.CURRENT;
@@ -16011,7 +15840,6 @@ var h3d_prim_RawPrimitive = function(inf,persist) {
 		this.onContextLost = null;
 	}
 };
-$hxClasses["h3d.prim.RawPrimitive"] = h3d_prim_RawPrimitive;
 h3d_prim_RawPrimitive.__name__ = "h3d.prim.RawPrimitive";
 h3d_prim_RawPrimitive.__super__ = h3d_prim_Primitive;
 h3d_prim_RawPrimitive.prototype = $extend(h3d_prim_Primitive.prototype,{
@@ -16054,7 +15882,6 @@ var h3d_scene_Mesh = function(primitive,material,parent) {
 	}
 	this.material = material;
 };
-$hxClasses["h3d.scene.Mesh"] = h3d_scene_Mesh;
 h3d_scene_Mesh.__name__ = "h3d.scene.Mesh";
 h3d_scene_Mesh.__super__ = h3d_scene_Object;
 h3d_scene_Mesh.prototype = $extend(h3d_scene_Object.prototype,{
@@ -16105,9 +15932,7 @@ var h3d_scene_Interactive = function(shape,parent) {
 	this.shape = shape;
 	this.set_cursor(hxd_Cursor.Button);
 };
-$hxClasses["h3d.scene.Interactive"] = h3d_scene_Interactive;
 h3d_scene_Interactive.__name__ = "h3d.scene.Interactive";
-h3d_scene_Interactive.__interfaces__ = [hxd_Interactive];
 h3d_scene_Interactive.__super__ = h3d_scene_Object;
 h3d_scene_Interactive.prototype = $extend(h3d_scene_Object.prototype,{
 	onAdd: function() {
@@ -16237,7 +16062,6 @@ var h3d_scene_Light = function(shader,parent) {
 	h3d_scene_Object.call(this,parent);
 	this.shader = shader;
 };
-$hxClasses["h3d.scene.Light"] = h3d_scene_Light;
 h3d_scene_Light.__name__ = "h3d.scene.Light";
 h3d_scene_Light.__super__ = h3d_scene_Object;
 h3d_scene_Light.prototype = $extend(h3d_scene_Object.prototype,{
@@ -16251,7 +16075,6 @@ h3d_scene_Light.prototype = $extend(h3d_scene_Object.prototype,{
 });
 var h3d_scene_LightSystem = function() {
 };
-$hxClasses["h3d.scene.LightSystem"] = h3d_scene_LightSystem;
 h3d_scene_LightSystem.__name__ = "h3d.scene.LightSystem";
 h3d_scene_LightSystem.prototype = {
 	initGlobals: function(globals) {
@@ -16279,7 +16102,6 @@ var h3d_scene__$RenderContext_SharedGlobal = function(gid,value) {
 	this.gid = gid;
 	this.value = value;
 };
-$hxClasses["h3d.scene._RenderContext.SharedGlobal"] = h3d_scene__$RenderContext_SharedGlobal;
 h3d_scene__$RenderContext_SharedGlobal.__name__ = "h3d.scene._RenderContext.SharedGlobal";
 h3d_scene__$RenderContext_SharedGlobal.prototype = {
 	__class__: h3d_scene__$RenderContext_SharedGlobal
@@ -16289,7 +16111,6 @@ var h3d_scene_RenderContext = function() {
 	this.cachedShaderList = [];
 	this.cachedPassObjects = [];
 };
-$hxClasses["h3d.scene.RenderContext"] = h3d_scene_RenderContext;
 h3d_scene_RenderContext.__name__ = "h3d.scene.RenderContext";
 h3d_scene_RenderContext.__super__ = h3d_impl_RenderContext;
 h3d_scene_RenderContext.prototype = $extend(h3d_impl_RenderContext.prototype,{
@@ -16382,7 +16203,6 @@ h3d_scene_RenderContext.prototype = $extend(h3d_impl_RenderContext.prototype,{
 var h3d_scene_PassObjects = function() {
 	this.passes = new h3d_pass_PassList();
 };
-$hxClasses["h3d.scene.PassObjects"] = h3d_scene_PassObjects;
 h3d_scene_PassObjects.__name__ = "h3d.scene.PassObjects";
 h3d_scene_PassObjects.prototype = {
 	__class__: h3d_scene_PassObjects
@@ -16404,7 +16224,6 @@ var h3d_scene_Renderer = function() {
 		_g1(frontToBack1,passes);
 	};
 };
-$hxClasses["h3d.scene.Renderer"] = h3d_scene_Renderer;
 h3d_scene_Renderer.__name__ = "h3d.scene.Renderer";
 h3d_scene_Renderer.__super__ = hxd_impl_AnyProps;
 h3d_scene_Renderer.prototype = $extend(hxd_impl_AnyProps.prototype,{
@@ -16634,9 +16453,7 @@ var h3d_scene_Scene = function(createRenderer,createLightSystem) {
 		this.lightSystem = h3d_mat_MaterialSetup.current.createLightSystem();
 	}
 };
-$hxClasses["h3d.scene.Scene"] = h3d_scene_Scene;
 h3d_scene_Scene.__name__ = "h3d.scene.Scene";
-h3d_scene_Scene.__interfaces__ = [hxd_InteractiveScene,h3d_IDrawable];
 h3d_scene_Scene.__super__ = h3d_scene_Object;
 h3d_scene_Scene.prototype = $extend(h3d_scene_Object.prototype,{
 	setEvents: function(events) {
@@ -17103,7 +16920,6 @@ var h3d_scene_fwd_Light = function(shader,parent) {
 	this.cullingDistance = -1;
 	h3d_scene_Light.call(this,shader,parent);
 };
-$hxClasses["h3d.scene.fwd.Light"] = h3d_scene_fwd_Light;
 h3d_scene_fwd_Light.__name__ = "h3d.scene.fwd.Light";
 h3d_scene_fwd_Light.__super__ = h3d_scene_Light;
 h3d_scene_fwd_Light.prototype = $extend(h3d_scene_Light.prototype,{
@@ -17117,7 +16933,6 @@ var h3d_scene_fwd_LightSystem = function() {
 	this.ambientShader = new h3d_shader_AmbientLight();
 	this.set_additiveLighting(true);
 };
-$hxClasses["h3d.scene.fwd.LightSystem"] = h3d_scene_fwd_LightSystem;
 h3d_scene_fwd_LightSystem.__name__ = "h3d.scene.fwd.LightSystem";
 h3d_scene_fwd_LightSystem.__super__ = h3d_scene_LightSystem;
 h3d_scene_fwd_LightSystem.prototype = $extend(h3d_scene_LightSystem.prototype,{
@@ -17354,7 +17169,6 @@ var h3d_scene_fwd_DepthPass = function() {
 	h3d_pass_Default.call(this,"depth");
 	this.depthMapId = hxsl_Globals.allocID("depthMap");
 };
-$hxClasses["h3d.scene.fwd.DepthPass"] = h3d_scene_fwd_DepthPass;
 h3d_scene_fwd_DepthPass.__name__ = "h3d.scene.fwd.DepthPass";
 h3d_scene_fwd_DepthPass.__super__ = h3d_pass_Default;
 h3d_scene_fwd_DepthPass.prototype = $extend(h3d_pass_Default.prototype,{
@@ -17375,7 +17189,6 @@ var h3d_scene_fwd_NormalPass = function() {
 	h3d_pass_Default.call(this,"normal");
 	this.normalMapId = hxsl_Globals.allocID("normalMap");
 };
-$hxClasses["h3d.scene.fwd.NormalPass"] = h3d_scene_fwd_NormalPass;
 h3d_scene_fwd_NormalPass.__name__ = "h3d.scene.fwd.NormalPass";
 h3d_scene_fwd_NormalPass.__super__ = h3d_pass_Default;
 h3d_scene_fwd_NormalPass.prototype = $extend(h3d_pass_Default.prototype,{
@@ -17400,7 +17213,6 @@ var h3d_scene_fwd_Renderer = function() {
 	this.defaultPass = new h3d_pass_Default("default");
 	this.allPasses = [this.defaultPass,this.depth,this.normal,this.shadow];
 };
-$hxClasses["h3d.scene.fwd.Renderer"] = h3d_scene_fwd_Renderer;
 h3d_scene_fwd_Renderer.__name__ = "h3d.scene.fwd.Renderer";
 h3d_scene_fwd_Renderer.__super__ = h3d_scene_Renderer;
 h3d_scene_fwd_Renderer.prototype = $extend(h3d_scene_Renderer.prototype,{
@@ -17426,7 +17238,6 @@ h3d_scene_fwd_Renderer.prototype = $extend(h3d_scene_Renderer.prototype,{
 var h3d_shader_AmbientLight = function() {
 	hxsl_Shader.call(this);
 };
-$hxClasses["h3d.shader.AmbientLight"] = h3d_shader_AmbientLight;
 h3d_shader_AmbientLight.__name__ = "h3d.shader.AmbientLight";
 h3d_shader_AmbientLight.__super__ = hxsl_Shader;
 h3d_shader_AmbientLight.prototype = $extend(hxsl_Shader.prototype,{
@@ -17468,7 +17279,6 @@ var h3d_shader_Base2d = function() {
 	this.zValue__ = 0;
 	hxsl_Shader.call(this);
 };
-$hxClasses["h3d.shader.Base2d"] = h3d_shader_Base2d;
 h3d_shader_Base2d.__name__ = "h3d.shader.Base2d";
 h3d_shader_Base2d.__super__ = hxsl_Shader;
 h3d_shader_Base2d.prototype = $extend(hxsl_Shader.prototype,{
@@ -17669,7 +17479,6 @@ var h3d_shader_BaseMesh = function() {
 	this.specularPower__ = 50;
 	this.specularAmount__ = 1;
 };
-$hxClasses["h3d.shader.BaseMesh"] = h3d_shader_BaseMesh;
 h3d_shader_BaseMesh.__name__ = "h3d.shader.BaseMesh";
 h3d_shader_BaseMesh.__super__ = hxsl_Shader;
 h3d_shader_BaseMesh.prototype = $extend(hxsl_Shader.prototype,{
@@ -17737,7 +17546,6 @@ var h3d_shader_Blur = function() {
 	this.cameraInverseViewProj__ = new h3d_Matrix();
 	h3d_shader_ScreenShader.call(this);
 };
-$hxClasses["h3d.shader.Blur"] = h3d_shader_Blur;
 h3d_shader_Blur.__name__ = "h3d.shader.Blur";
 h3d_shader_Blur.__super__ = h3d_shader_ScreenShader;
 h3d_shader_Blur.prototype = $extend(h3d_shader_ScreenShader.prototype,{
@@ -17941,7 +17749,6 @@ var h3d_shader_ShaderBuffers = function(s) {
 	}
 	this.buffers = tmp;
 };
-$hxClasses["h3d.shader.ShaderBuffers"] = h3d_shader_ShaderBuffers;
 h3d_shader_ShaderBuffers.__name__ = "h3d.shader.ShaderBuffers";
 h3d_shader_ShaderBuffers.prototype = {
 	grow: function(s) {
@@ -17970,7 +17777,6 @@ var h3d_shader_Buffers = function(s) {
 	this.vertex = new h3d_shader_ShaderBuffers(s.vertex);
 	this.fragment = new h3d_shader_ShaderBuffers(s.fragment);
 };
-$hxClasses["h3d.shader.Buffers"] = h3d_shader_Buffers;
 h3d_shader_Buffers.__name__ = "h3d.shader.Buffers";
 h3d_shader_Buffers.prototype = {
 	__class__: h3d_shader_Buffers
@@ -17987,7 +17793,6 @@ var h3d_shader_ColorAdd = function(color) {
 	_this.z = (color & 255) / 255;
 	_this.w = (color >>> 24) / 255;
 };
-$hxClasses["h3d.shader.ColorAdd"] = h3d_shader_ColorAdd;
 h3d_shader_ColorAdd.__name__ = "h3d.shader.ColorAdd";
 h3d_shader_ColorAdd.__super__ = hxsl_Shader;
 h3d_shader_ColorAdd.prototype = $extend(hxsl_Shader.prototype,{
@@ -18024,7 +17829,6 @@ var h3d_shader_ColorKey = function(v) {
 	_this.z = (v & 255) / 255;
 	_this.w = (v >>> 24) / 255;
 };
-$hxClasses["h3d.shader.ColorKey"] = h3d_shader_ColorKey;
 h3d_shader_ColorKey.__name__ = "h3d.shader.ColorKey";
 h3d_shader_ColorKey.__super__ = hxsl_Shader;
 h3d_shader_ColorKey.prototype = $extend(hxsl_Shader.prototype,{
@@ -18058,7 +17862,6 @@ var h3d_shader_ColorMatrix = function(m) {
 		this.matrix__.identity();
 	}
 };
-$hxClasses["h3d.shader.ColorMatrix"] = h3d_shader_ColorMatrix;
 h3d_shader_ColorMatrix.__name__ = "h3d.shader.ColorMatrix";
 h3d_shader_ColorMatrix.__super__ = hxsl_Shader;
 h3d_shader_ColorMatrix.prototype = $extend(hxsl_Shader.prototype,{
@@ -18095,7 +17898,6 @@ var h3d_shader_DirShadow = function() {
 	hxsl_Shader.call(this);
 	this.set_pcfQuality(1);
 };
-$hxClasses["h3d.shader.DirShadow"] = h3d_shader_DirShadow;
 h3d_shader_DirShadow.__name__ = "h3d.shader.DirShadow";
 h3d_shader_DirShadow.__super__ = hxsl_Shader;
 h3d_shader_DirShadow.prototype = $extend(hxsl_Shader.prototype,{
@@ -18262,7 +18064,6 @@ var h3d_shader_GenTexture = function() {
 	this.mode__ = 0;
 	h3d_shader_ScreenShader.call(this);
 };
-$hxClasses["h3d.shader.GenTexture"] = h3d_shader_GenTexture;
 h3d_shader_GenTexture.__name__ = "h3d.shader.GenTexture";
 h3d_shader_GenTexture.__super__ = h3d_shader_ScreenShader;
 h3d_shader_GenTexture.prototype = $extend(h3d_shader_ScreenShader.prototype,{
@@ -18321,7 +18122,6 @@ var h3d_shader_LineShader = function(width,lengthScale) {
 	this.width__ = width;
 	this.lengthScale__ = lengthScale;
 };
-$hxClasses["h3d.shader.LineShader"] = h3d_shader_LineShader;
 h3d_shader_LineShader.__name__ = "h3d.shader.LineShader";
 h3d_shader_LineShader.__super__ = hxsl_Shader;
 h3d_shader_LineShader.prototype = $extend(hxsl_Shader.prototype,{
@@ -18366,7 +18166,6 @@ h3d_shader_LineShader.prototype = $extend(hxsl_Shader.prototype,{
 var h3d_shader_MinMaxShader = function() {
 	h3d_shader_ScreenShader.call(this);
 };
-$hxClasses["h3d.shader.MinMaxShader"] = h3d_shader_MinMaxShader;
 h3d_shader_MinMaxShader.__name__ = "h3d.shader.MinMaxShader";
 h3d_shader_MinMaxShader.__super__ = h3d_shader_ScreenShader;
 h3d_shader_MinMaxShader.prototype = $extend(h3d_shader_ScreenShader.prototype,{
@@ -18422,7 +18221,6 @@ var h3d_shader_CubeMinMaxShader = function() {
 	this.mat__ = new h3d_Matrix();
 	h3d_shader_ScreenShader.call(this);
 };
-$hxClasses["h3d.shader.CubeMinMaxShader"] = h3d_shader_CubeMinMaxShader;
 h3d_shader_CubeMinMaxShader.__name__ = "h3d.shader.CubeMinMaxShader";
 h3d_shader_CubeMinMaxShader.__super__ = h3d_shader_ScreenShader;
 h3d_shader_CubeMinMaxShader.prototype = $extend(h3d_shader_ScreenShader.prototype,{
@@ -18486,7 +18284,6 @@ var h3d_shader_NormalMap = function(texture) {
 	hxsl_Shader.call(this);
 	this.texture__ = texture;
 };
-$hxClasses["h3d.shader.NormalMap"] = h3d_shader_NormalMap;
 h3d_shader_NormalMap.__name__ = "h3d.shader.NormalMap";
 h3d_shader_NormalMap.__super__ = hxsl_Shader;
 h3d_shader_NormalMap.prototype = $extend(hxsl_Shader.prototype,{
@@ -18514,7 +18311,6 @@ h3d_shader_NormalMap.prototype = $extend(hxsl_Shader.prototype,{
 var h3d_shader_Shadow = function() {
 	hxsl_Shader.call(this);
 };
-$hxClasses["h3d.shader.Shadow"] = h3d_shader_Shadow;
 h3d_shader_Shadow.__name__ = "h3d.shader.Shadow";
 h3d_shader_Shadow.__super__ = hxsl_Shader;
 h3d_shader_Shadow.prototype = $extend(hxsl_Shader.prototype,{
@@ -18537,7 +18333,6 @@ var h3d_shader_SignedDistanceField = function() {
 	this.channel__ = 0;
 	hxsl_Shader.call(this);
 };
-$hxClasses["h3d.shader.SignedDistanceField"] = h3d_shader_SignedDistanceField;
 h3d_shader_SignedDistanceField.__name__ = "h3d.shader.SignedDistanceField";
 h3d_shader_SignedDistanceField.__super__ = hxsl_Shader;
 h3d_shader_SignedDistanceField.prototype = $extend(hxsl_Shader.prototype,{
@@ -18613,7 +18408,6 @@ var h3d_shader_SkinBase = function() {
 	this.constModified = true;
 	this.MaxBones__ = 34;
 };
-$hxClasses["h3d.shader.SkinBase"] = h3d_shader_SkinBase;
 h3d_shader_SkinBase.__name__ = "h3d.shader.SkinBase";
 h3d_shader_SkinBase.__super__ = hxsl_Shader;
 h3d_shader_SkinBase.prototype = $extend(hxsl_Shader.prototype,{
@@ -18669,7 +18463,6 @@ h3d_shader_SkinBase.prototype = $extend(hxsl_Shader.prototype,{
 var h3d_shader_Skin = function() {
 	h3d_shader_SkinBase.call(this);
 };
-$hxClasses["h3d.shader.Skin"] = h3d_shader_Skin;
 h3d_shader_Skin.__name__ = "h3d.shader.Skin";
 h3d_shader_Skin.__super__ = h3d_shader_SkinBase;
 h3d_shader_Skin.prototype = $extend(h3d_shader_SkinBase.prototype,{
@@ -18705,7 +18498,6 @@ h3d_shader_Skin.prototype = $extend(h3d_shader_SkinBase.prototype,{
 var h3d_shader_SkinTangent = function() {
 	h3d_shader_SkinBase.call(this);
 };
-$hxClasses["h3d.shader.SkinTangent"] = h3d_shader_SkinTangent;
 h3d_shader_SkinTangent.__name__ = "h3d.shader.SkinTangent";
 h3d_shader_SkinTangent.__super__ = h3d_shader_SkinBase;
 h3d_shader_SkinTangent.prototype = $extend(h3d_shader_SkinBase.prototype,{
@@ -18742,7 +18534,6 @@ var h3d_shader_SpecularTexture = function(tex) {
 	hxsl_Shader.call(this);
 	this.texture__ = tex;
 };
-$hxClasses["h3d.shader.SpecularTexture"] = h3d_shader_SpecularTexture;
 h3d_shader_SpecularTexture.__name__ = "h3d.shader.SpecularTexture";
 h3d_shader_SpecularTexture.__super__ = hxsl_Shader;
 h3d_shader_SpecularTexture.prototype = $extend(hxsl_Shader.prototype,{
@@ -18773,7 +18564,6 @@ var h3d_shader_Texture = function(tex) {
 	this.texture__ = tex;
 	this.killAlphaThreshold__ = h3d_mat_Defaults.defaultKillAlphaThreshold;
 };
-$hxClasses["h3d.shader.Texture"] = h3d_shader_Texture;
 h3d_shader_Texture.__name__ = "h3d.shader.Texture";
 h3d_shader_Texture.__super__ = hxsl_Shader;
 h3d_shader_Texture.prototype = $extend(hxsl_Shader.prototype,{
@@ -18890,7 +18680,6 @@ var h3d_shader_UVDelta = function(dx,dy,sx,sy) {
 	_this.z = 0.;
 	_this.w = 1.;
 };
-$hxClasses["h3d.shader.UVDelta"] = h3d_shader_UVDelta;
 h3d_shader_UVDelta.__name__ = "h3d.shader.UVDelta";
 h3d_shader_UVDelta.__super__ = hxsl_Shader;
 h3d_shader_UVDelta.prototype = $extend(hxsl_Shader.prototype,{
@@ -18928,7 +18717,6 @@ h3d_shader_UVDelta.prototype = $extend(hxsl_Shader.prototype,{
 var h3d_shader_VertexColorAlpha = function() {
 	hxsl_Shader.call(this);
 };
-$hxClasses["h3d.shader.VertexColorAlpha"] = h3d_shader_VertexColorAlpha;
 h3d_shader_VertexColorAlpha.__name__ = "h3d.shader.VertexColorAlpha";
 h3d_shader_VertexColorAlpha.__super__ = hxsl_Shader;
 h3d_shader_VertexColorAlpha.prototype = $extend(hxsl_Shader.prototype,{
@@ -19011,7 +18799,6 @@ var h3d_shader_VolumeDecal = function(objectWidth,objectHeight) {
 	_this.z = 0.;
 	_this.w = 1.;
 };
-$hxClasses["h3d.shader.VolumeDecal"] = h3d_shader_VolumeDecal;
 h3d_shader_VolumeDecal.__name__ = "h3d.shader.VolumeDecal";
 h3d_shader_VolumeDecal.__super__ = hxsl_Shader;
 h3d_shader_VolumeDecal.prototype = $extend(hxsl_Shader.prototype,{
@@ -19067,7 +18854,6 @@ h3d_shader_VolumeDecal.prototype = $extend(hxsl_Shader.prototype,{
 	,__class__: h3d_shader_VolumeDecal
 });
 var haxe_EntryPoint = function() { };
-$hxClasses["haxe.EntryPoint"] = haxe_EntryPoint;
 haxe_EntryPoint.__name__ = "haxe.EntryPoint";
 haxe_EntryPoint.processEvents = function() {
 	while(true) {
@@ -19103,7 +18889,6 @@ var haxe_Exception = function(message,previous,native) {
 	this.__previousException = previous;
 	this.__nativeException = native != null ? native : this;
 };
-$hxClasses["haxe.Exception"] = haxe_Exception;
 haxe_Exception.__name__ = "haxe.Exception";
 haxe_Exception.caught = function(value) {
 	if(((value) instanceof haxe_Exception)) {
@@ -19141,7 +18926,6 @@ haxe_Exception.prototype = $extend(Error.prototype,{
 	,__class__: haxe_Exception
 });
 var haxe_Log = function() { };
-$hxClasses["haxe.Log"] = haxe_Log;
 haxe_Log.__name__ = "haxe.Log";
 haxe_Log.formatOutput = function(v,infos) {
 	var str = Std.string(v);
@@ -19172,13 +18956,11 @@ var haxe_MainEvent = function(f,p) {
 	this.priority = p;
 	this.nextRun = -Infinity;
 };
-$hxClasses["haxe.MainEvent"] = haxe_MainEvent;
 haxe_MainEvent.__name__ = "haxe.MainEvent";
 haxe_MainEvent.prototype = {
 	__class__: haxe_MainEvent
 };
 var haxe_MainLoop = function() { };
-$hxClasses["haxe.MainLoop"] = haxe_MainLoop;
 haxe_MainLoop.__name__ = "haxe.MainLoop";
 haxe_MainLoop.hasEvents = function() {
 	var p = haxe_MainLoop.pending;
@@ -19295,31 +19077,12 @@ haxe_MainLoop.tick = function() {
 	}
 	return wait;
 };
-var haxe_Resource = function() { };
-$hxClasses["haxe.Resource"] = haxe_Resource;
-haxe_Resource.__name__ = "haxe.Resource";
-haxe_Resource.getBytes = function(name) {
-	var _g = 0;
-	var _g1 = haxe_Resource.content;
-	while(_g < _g1.length) {
-		var x = _g1[_g];
-		++_g;
-		if(x.name == name) {
-			if(x.str != null) {
-				return haxe_io_Bytes.ofString(x.str);
-			}
-			return haxe_crypto_Base64.decode(x.data);
-		}
-	}
-	return null;
-};
 var haxe_Timer = function(time_ms) {
 	var me = this;
 	this.id = setInterval(function() {
 		me.run();
 	},time_ms);
 };
-$hxClasses["haxe.Timer"] = haxe_Timer;
 haxe_Timer.__name__ = "haxe.Timer";
 haxe_Timer.delay = function(f,time_ms) {
 	var t = new haxe_Timer(time_ms);
@@ -19341,360 +19104,10 @@ haxe_Timer.prototype = {
 	}
 	,__class__: haxe_Timer
 };
-var haxe__$Unserializer_DefaultResolver = function() {
-};
-$hxClasses["haxe._Unserializer.DefaultResolver"] = haxe__$Unserializer_DefaultResolver;
-haxe__$Unserializer_DefaultResolver.__name__ = "haxe._Unserializer.DefaultResolver";
-haxe__$Unserializer_DefaultResolver.prototype = {
-	resolveClass: function(name) {
-		return $hxClasses[name];
-	}
-	,resolveEnum: function(name) {
-		return $hxEnums[name];
-	}
-	,__class__: haxe__$Unserializer_DefaultResolver
-};
-var haxe_Unserializer = function(buf) {
-	this.buf = buf;
-	this.length = this.buf.length;
-	this.pos = 0;
-	this.scache = [];
-	this.cache = [];
-	var r = haxe_Unserializer.DEFAULT_RESOLVER;
-	if(r == null) {
-		r = new haxe__$Unserializer_DefaultResolver();
-		haxe_Unserializer.DEFAULT_RESOLVER = r;
-	}
-	this.resolver = r;
-};
-$hxClasses["haxe.Unserializer"] = haxe_Unserializer;
-haxe_Unserializer.__name__ = "haxe.Unserializer";
-haxe_Unserializer.initCodes = function() {
-	var codes = [];
-	var _g = 0;
-	var _g1 = haxe_Unserializer.BASE64.length;
-	while(_g < _g1) {
-		var i = _g++;
-		codes[haxe_Unserializer.BASE64.charCodeAt(i)] = i;
-	}
-	return codes;
-};
-haxe_Unserializer.run = function(v) {
-	return new haxe_Unserializer(v).unserialize();
-};
-haxe_Unserializer.prototype = {
-	readDigits: function() {
-		var k = 0;
-		var s = false;
-		var fpos = this.pos;
-		while(true) {
-			var c = this.buf.charCodeAt(this.pos);
-			if(c != c) {
-				break;
-			}
-			if(c == 45) {
-				if(this.pos != fpos) {
-					break;
-				}
-				s = true;
-				this.pos++;
-				continue;
-			}
-			if(c < 48 || c > 57) {
-				break;
-			}
-			k = k * 10 + (c - 48);
-			this.pos++;
-		}
-		if(s) {
-			k *= -1;
-		}
-		return k;
-	}
-	,readFloat: function() {
-		var p1 = this.pos;
-		while(true) {
-			var c = this.buf.charCodeAt(this.pos);
-			if(c != c) {
-				break;
-			}
-			if(c >= 43 && c < 58 || c == 101 || c == 69) {
-				this.pos++;
-			} else {
-				break;
-			}
-		}
-		return parseFloat(HxOverrides.substr(this.buf,p1,this.pos - p1));
-	}
-	,unserializeObject: function(o) {
-		while(true) {
-			if(this.pos >= this.length) {
-				throw haxe_Exception.thrown("Invalid object");
-			}
-			if(this.buf.charCodeAt(this.pos) == 103) {
-				break;
-			}
-			var k = this.unserialize();
-			if(typeof(k) != "string") {
-				throw haxe_Exception.thrown("Invalid object key");
-			}
-			var v = this.unserialize();
-			o[k] = v;
-		}
-		this.pos++;
-	}
-	,unserializeEnum: function(edecl,tag) {
-		if(this.buf.charCodeAt(this.pos++) != 58) {
-			throw haxe_Exception.thrown("Invalid enum format");
-		}
-		var nargs = this.readDigits();
-		if(nargs == 0) {
-			return Type.createEnum(edecl,tag);
-		}
-		var args = [];
-		while(nargs-- > 0) args.push(this.unserialize());
-		return Type.createEnum(edecl,tag,args);
-	}
-	,unserialize: function() {
-		switch(this.buf.charCodeAt(this.pos++)) {
-		case 65:
-			var name = this.unserialize();
-			var cl = this.resolver.resolveClass(name);
-			if(cl == null) {
-				throw haxe_Exception.thrown("Class not found " + name);
-			}
-			return cl;
-		case 66:
-			var name = this.unserialize();
-			var e = this.resolver.resolveEnum(name);
-			if(e == null) {
-				throw haxe_Exception.thrown("Enum not found " + name);
-			}
-			return e;
-		case 67:
-			var name = this.unserialize();
-			var cl = this.resolver.resolveClass(name);
-			if(cl == null) {
-				throw haxe_Exception.thrown("Class not found " + name);
-			}
-			var o = Object.create(cl.prototype);
-			this.cache.push(o);
-			o.hxUnserialize(this);
-			if(this.buf.charCodeAt(this.pos++) != 103) {
-				throw haxe_Exception.thrown("Invalid custom data");
-			}
-			return o;
-		case 77:
-			var h = new haxe_ds_ObjectMap();
-			this.cache.push(h);
-			var buf = this.buf;
-			while(this.buf.charCodeAt(this.pos) != 104) {
-				var s = this.unserialize();
-				h.set(s,this.unserialize());
-			}
-			this.pos++;
-			return h;
-		case 82:
-			var n = this.readDigits();
-			if(n < 0 || n >= this.scache.length) {
-				throw haxe_Exception.thrown("Invalid string reference");
-			}
-			return this.scache[n];
-		case 97:
-			var buf = this.buf;
-			var a = [];
-			this.cache.push(a);
-			while(true) {
-				var c = this.buf.charCodeAt(this.pos);
-				if(c == 104) {
-					this.pos++;
-					break;
-				}
-				if(c == 117) {
-					this.pos++;
-					var n = this.readDigits();
-					a[a.length + n - 1] = null;
-				} else {
-					a.push(this.unserialize());
-				}
-			}
-			return a;
-		case 98:
-			var h = new haxe_ds_StringMap();
-			this.cache.push(h);
-			var buf = this.buf;
-			while(this.buf.charCodeAt(this.pos) != 104) {
-				var s = this.unserialize();
-				var value = this.unserialize();
-				h.h[s] = value;
-			}
-			this.pos++;
-			return h;
-		case 99:
-			var name = this.unserialize();
-			var cl = this.resolver.resolveClass(name);
-			if(cl == null) {
-				throw haxe_Exception.thrown("Class not found " + name);
-			}
-			var o = Object.create(cl.prototype);
-			this.cache.push(o);
-			this.unserializeObject(o);
-			return o;
-		case 100:
-			return this.readFloat();
-		case 102:
-			return false;
-		case 105:
-			return this.readDigits();
-		case 106:
-			var name = this.unserialize();
-			var edecl = this.resolver.resolveEnum(name);
-			if(edecl == null) {
-				throw haxe_Exception.thrown("Enum not found " + name);
-			}
-			this.pos++;
-			var index = this.readDigits();
-			var _this = edecl.__constructs__;
-			var result = new Array(_this.length);
-			var _g = 0;
-			var _g1 = _this.length;
-			while(_g < _g1) {
-				var i = _g++;
-				result[i] = _this[i]._hx_name;
-			}
-			var tag = result[index];
-			if(tag == null) {
-				throw haxe_Exception.thrown("Unknown enum index " + name + "@" + index);
-			}
-			var e = this.unserializeEnum(edecl,tag);
-			this.cache.push(e);
-			return e;
-		case 107:
-			return NaN;
-		case 108:
-			var l = new haxe_ds_List();
-			this.cache.push(l);
-			var buf = this.buf;
-			while(this.buf.charCodeAt(this.pos) != 104) l.add(this.unserialize());
-			this.pos++;
-			return l;
-		case 109:
-			return -Infinity;
-		case 110:
-			return null;
-		case 111:
-			var o = { };
-			this.cache.push(o);
-			this.unserializeObject(o);
-			return o;
-		case 112:
-			return Infinity;
-		case 113:
-			var h = new haxe_ds_IntMap();
-			this.cache.push(h);
-			var buf = this.buf;
-			var c = this.buf.charCodeAt(this.pos++);
-			while(c == 58) {
-				var i = this.readDigits();
-				var value = this.unserialize();
-				h.h[i] = value;
-				c = this.buf.charCodeAt(this.pos++);
-			}
-			if(c != 104) {
-				throw haxe_Exception.thrown("Invalid IntMap format");
-			}
-			return h;
-		case 114:
-			var n = this.readDigits();
-			if(n < 0 || n >= this.cache.length) {
-				throw haxe_Exception.thrown("Invalid reference");
-			}
-			return this.cache[n];
-		case 115:
-			var len = this.readDigits();
-			var buf = this.buf;
-			if(this.buf.charCodeAt(this.pos++) != 58 || this.length - this.pos < len) {
-				throw haxe_Exception.thrown("Invalid bytes length");
-			}
-			var codes = haxe_Unserializer.CODES;
-			if(codes == null) {
-				codes = haxe_Unserializer.initCodes();
-				haxe_Unserializer.CODES = codes;
-			}
-			var i = this.pos;
-			var rest = len & 3;
-			var size = (len >> 2) * 3 + (rest >= 2 ? rest - 1 : 0);
-			var max = i + (len - rest);
-			var bytes = new haxe_io_Bytes(new ArrayBuffer(size));
-			var bpos = 0;
-			while(i < max) {
-				var c1 = codes[buf.charCodeAt(i++)];
-				var c2 = codes[buf.charCodeAt(i++)];
-				bytes.b[bpos++] = c1 << 2 | c2 >> 4;
-				var c3 = codes[buf.charCodeAt(i++)];
-				bytes.b[bpos++] = c2 << 4 | c3 >> 2;
-				var c4 = codes[buf.charCodeAt(i++)];
-				bytes.b[bpos++] = c3 << 6 | c4;
-			}
-			if(rest >= 2) {
-				var c1 = codes[buf.charCodeAt(i++)];
-				var c2 = codes[buf.charCodeAt(i++)];
-				bytes.b[bpos++] = c1 << 2 | c2 >> 4;
-				if(rest == 3) {
-					var c3 = codes[buf.charCodeAt(i++)];
-					bytes.b[bpos++] = c2 << 4 | c3 >> 2;
-				}
-			}
-			this.pos += len;
-			this.cache.push(bytes);
-			return bytes;
-		case 116:
-			return true;
-		case 118:
-			var d;
-			if(this.buf.charCodeAt(this.pos) >= 48 && this.buf.charCodeAt(this.pos) <= 57 && this.buf.charCodeAt(this.pos + 1) >= 48 && this.buf.charCodeAt(this.pos + 1) <= 57 && this.buf.charCodeAt(this.pos + 2) >= 48 && this.buf.charCodeAt(this.pos + 2) <= 57 && this.buf.charCodeAt(this.pos + 3) >= 48 && this.buf.charCodeAt(this.pos + 3) <= 57 && this.buf.charCodeAt(this.pos + 4) == 45) {
-				d = HxOverrides.strDate(HxOverrides.substr(this.buf,this.pos,19));
-				this.pos += 19;
-			} else {
-				d = new Date(this.readFloat());
-			}
-			this.cache.push(d);
-			return d;
-		case 119:
-			var name = this.unserialize();
-			var edecl = this.resolver.resolveEnum(name);
-			if(edecl == null) {
-				throw haxe_Exception.thrown("Enum not found " + name);
-			}
-			var e = this.unserializeEnum(edecl,this.unserialize());
-			this.cache.push(e);
-			return e;
-		case 120:
-			throw haxe_Exception.thrown(this.unserialize());
-		case 121:
-			var len = this.readDigits();
-			if(this.buf.charCodeAt(this.pos++) != 58 || this.length - this.pos < len) {
-				throw haxe_Exception.thrown("Invalid string length");
-			}
-			var s = HxOverrides.substr(this.buf,this.pos,len);
-			this.pos += len;
-			s = decodeURIComponent(s.split("+").join(" "));
-			this.scache.push(s);
-			return s;
-		case 122:
-			return 0;
-		default:
-		}
-		this.pos--;
-		throw haxe_Exception.thrown("Invalid char " + this.buf.charAt(this.pos) + " at position " + this.pos);
-	}
-	,__class__: haxe_Unserializer
-};
 var haxe_ValueException = function(value,previous,native) {
 	haxe_Exception.call(this,String(value),previous,native);
 	this.value = value;
 };
-$hxClasses["haxe.ValueException"] = haxe_ValueException;
 haxe_ValueException.__name__ = "haxe.ValueException";
 haxe_ValueException.__super__ = haxe_Exception;
 haxe_ValueException.prototype = $extend(haxe_Exception.prototype,{
@@ -19710,7 +19123,6 @@ var haxe_io_Bytes = function(data) {
 	data.hxBytes = this;
 	data.bytes = this.b;
 };
-$hxClasses["haxe.io.Bytes"] = haxe_io_Bytes;
 haxe_io_Bytes.__name__ = "haxe.io.Bytes";
 haxe_io_Bytes.ofString = function(s,encoding) {
 	if(encoding == haxe_io_Encoding.RawNative) {
@@ -19836,9 +19248,6 @@ haxe_io_Bytes.prototype = {
 		}
 		return s;
 	}
-	,toString: function() {
-		return this.getString(0,this.length);
-	}
 	,__class__: haxe_io_Bytes
 };
 var haxe_io_Encoding = $hxEnums["haxe.io.Encoding"] = { __ename__:true,__constructs__:null
@@ -19848,7 +19257,6 @@ var haxe_io_Encoding = $hxEnums["haxe.io.Encoding"] = { __ename__:true,__constru
 haxe_io_Encoding.__constructs__ = [haxe_io_Encoding.UTF8,haxe_io_Encoding.RawNative];
 haxe_io_Encoding.__empty_constructs__ = [haxe_io_Encoding.UTF8,haxe_io_Encoding.RawNative];
 var haxe_crypto_Base64 = function() { };
-$hxClasses["haxe.crypto.Base64"] = haxe_crypto_Base64;
 haxe_crypto_Base64.__name__ = "haxe.crypto.Base64";
 haxe_crypto_Base64.decode = function(str,complement) {
 	if(complement == null) {
@@ -19869,7 +19277,6 @@ var haxe_crypto_BaseCode = function(base) {
 	this.base = base;
 	this.nbits = nbits;
 };
-$hxClasses["haxe.crypto.BaseCode"] = haxe_crypto_BaseCode;
 haxe_crypto_BaseCode.__name__ = "haxe.crypto.BaseCode";
 haxe_crypto_BaseCode.prototype = {
 	initTable: function() {
@@ -19919,7 +19326,6 @@ haxe_crypto_BaseCode.prototype = {
 };
 var haxe_crypto_Md5 = function() {
 };
-$hxClasses["haxe.crypto.Md5"] = haxe_crypto_Md5;
 haxe_crypto_Md5.__name__ = "haxe.crypto.Md5";
 haxe_crypto_Md5.encode = function(s) {
 	var m = new haxe_crypto_Md5();
@@ -20093,7 +19499,6 @@ haxe_crypto_Md5.prototype = {
 	,__class__: haxe_crypto_Md5
 };
 var haxe_ds_ArraySort = function() { };
-$hxClasses["haxe.ds.ArraySort"] = haxe_ds_ArraySort;
 haxe_ds_ArraySort.__name__ = "haxe.ds.ArraySort";
 haxe_ds_ArraySort.sort = function(a,cmp) {
 	haxe_ds_ArraySort.rec(a,cmp,0,a.length);
@@ -20223,9 +19628,7 @@ haxe_ds_ArraySort.swap = function(a,i,j) {
 };
 var haxe_ds_BalancedTree = function() {
 };
-$hxClasses["haxe.ds.BalancedTree"] = haxe_ds_BalancedTree;
 haxe_ds_BalancedTree.__name__ = "haxe.ds.BalancedTree";
-haxe_ds_BalancedTree.__interfaces__ = [haxe_IMap];
 haxe_ds_BalancedTree.prototype = {
 	set: function(key,value) {
 		this.root = this.setLoop(key,value,this.root);
@@ -20312,7 +19715,6 @@ var haxe_ds_TreeNode = function(l,k,v,r,h) {
 		this._height = h;
 	}
 };
-$hxClasses["haxe.ds.TreeNode"] = haxe_ds_TreeNode;
 haxe_ds_TreeNode.__name__ = "haxe.ds.TreeNode";
 haxe_ds_TreeNode.prototype = {
 	__class__: haxe_ds_TreeNode
@@ -20320,9 +19722,7 @@ haxe_ds_TreeNode.prototype = {
 var haxe_ds_EnumValueMap = function() {
 	haxe_ds_BalancedTree.call(this);
 };
-$hxClasses["haxe.ds.EnumValueMap"] = haxe_ds_EnumValueMap;
 haxe_ds_EnumValueMap.__name__ = "haxe.ds.EnumValueMap";
-haxe_ds_EnumValueMap.__interfaces__ = [haxe_IMap];
 haxe_ds_EnumValueMap.__super__ = haxe_ds_BalancedTree;
 haxe_ds_EnumValueMap.prototype = $extend(haxe_ds_BalancedTree.prototype,{
 	compare: function(k1,k2) {
@@ -20367,7 +19767,6 @@ haxe_ds_EnumValueMap.prototype = $extend(haxe_ds_BalancedTree.prototype,{
 var haxe_ds_List = function() {
 	this.length = 0;
 };
-$hxClasses["haxe.ds.List"] = haxe_ds_List;
 haxe_ds_List.__name__ = "haxe.ds.List";
 haxe_ds_List.prototype = {
 	add: function(item) {
@@ -20415,7 +19814,6 @@ var haxe_ds__$List_ListNode = function(item,next) {
 	this.item = item;
 	this.next = next;
 };
-$hxClasses["haxe.ds._List.ListNode"] = haxe_ds__$List_ListNode;
 haxe_ds__$List_ListNode.__name__ = "haxe.ds._List.ListNode";
 haxe_ds__$List_ListNode.prototype = {
 	__class__: haxe_ds__$List_ListNode
@@ -20423,9 +19821,7 @@ haxe_ds__$List_ListNode.prototype = {
 var haxe_ds_ObjectMap = function() {
 	this.h = { __keys__ : { }};
 };
-$hxClasses["haxe.ds.ObjectMap"] = haxe_ds_ObjectMap;
 haxe_ds_ObjectMap.__name__ = "haxe.ds.ObjectMap";
-haxe_ds_ObjectMap.__interfaces__ = [haxe_IMap];
 haxe_ds_ObjectMap.prototype = {
 	set: function(key,value) {
 		var id = key.__id__;
@@ -20463,7 +19859,6 @@ var haxe_exceptions_PosException = function(message,previous,pos) {
 		this.posInfos = pos;
 	}
 };
-$hxClasses["haxe.exceptions.PosException"] = haxe_exceptions_PosException;
 haxe_exceptions_PosException.__name__ = "haxe.exceptions.PosException";
 haxe_exceptions_PosException.__super__ = haxe_Exception;
 haxe_exceptions_PosException.prototype = $extend(haxe_Exception.prototype,{
@@ -20478,14 +19873,12 @@ var haxe_exceptions_NotImplementedException = function(message,previous,pos) {
 	}
 	haxe_exceptions_PosException.call(this,message,previous,pos);
 };
-$hxClasses["haxe.exceptions.NotImplementedException"] = haxe_exceptions_NotImplementedException;
 haxe_exceptions_NotImplementedException.__name__ = "haxe.exceptions.NotImplementedException";
 haxe_exceptions_NotImplementedException.__super__ = haxe_exceptions_PosException;
 haxe_exceptions_NotImplementedException.prototype = $extend(haxe_exceptions_PosException.prototype,{
 	__class__: haxe_exceptions_NotImplementedException
 });
 var haxe_io_Input = function() { };
-$hxClasses["haxe.io.Input"] = haxe_io_Input;
 haxe_io_Input.__name__ = "haxe.io.Input";
 haxe_io_Input.prototype = {
 	readByte: function() {
@@ -20569,7 +19962,6 @@ var haxe_io_BytesInput = function(b,pos,len) {
 	this.len = len;
 	this.totlen = len;
 };
-$hxClasses["haxe.io.BytesInput"] = haxe_io_BytesInput;
 haxe_io_BytesInput.__name__ = "haxe.io.BytesInput";
 haxe_io_BytesInput.__super__ = haxe_io_Input;
 haxe_io_BytesInput.prototype = $extend(haxe_io_Input.prototype,{
@@ -20606,7 +19998,6 @@ haxe_io_BytesInput.prototype = $extend(haxe_io_Input.prototype,{
 });
 var haxe_io_Eof = function() {
 };
-$hxClasses["haxe.io.Eof"] = haxe_io_Eof;
 haxe_io_Eof.__name__ = "haxe.io.Eof";
 haxe_io_Eof.prototype = {
 	toString: function() {
@@ -20623,7 +20014,6 @@ var haxe_io_Error = $hxEnums["haxe.io.Error"] = { __ename__:true,__constructs__:
 haxe_io_Error.__constructs__ = [haxe_io_Error.Blocked,haxe_io_Error.Overflow,haxe_io_Error.OutsideBounds,haxe_io_Error.Custom];
 haxe_io_Error.__empty_constructs__ = [haxe_io_Error.Blocked,haxe_io_Error.Overflow,haxe_io_Error.OutsideBounds];
 var haxe_io_FPHelper = function() { };
-$hxClasses["haxe.io.FPHelper"] = haxe_io_FPHelper;
 haxe_io_FPHelper.__name__ = "haxe.io.FPHelper";
 haxe_io_FPHelper.i64ToDouble = function(low,high) {
 	haxe_io_FPHelper.helper.setInt32(0,low,true);
@@ -20634,7 +20024,6 @@ var haxe_iterators_ArrayIterator = function(array) {
 	this.current = 0;
 	this.array = array;
 };
-$hxClasses["haxe.iterators.ArrayIterator"] = haxe_iterators_ArrayIterator;
 haxe_iterators_ArrayIterator.__name__ = "haxe.iterators.ArrayIterator";
 haxe_iterators_ArrayIterator.prototype = {
 	hasNext: function() {
@@ -20684,7 +20073,6 @@ var haxe_macro_Unop = $hxEnums["haxe.macro.Unop"] = { __ename__:true,__construct
 haxe_macro_Unop.__constructs__ = [haxe_macro_Unop.OpIncrement,haxe_macro_Unop.OpDecrement,haxe_macro_Unop.OpNot,haxe_macro_Unop.OpNeg,haxe_macro_Unop.OpNegBits,haxe_macro_Unop.OpSpread];
 haxe_macro_Unop.__empty_constructs__ = [haxe_macro_Unop.OpIncrement,haxe_macro_Unop.OpDecrement,haxe_macro_Unop.OpNot,haxe_macro_Unop.OpNeg,haxe_macro_Unop.OpNegBits,haxe_macro_Unop.OpSpread];
 var haxe_rtti_Meta = function() { };
-$hxClasses["haxe.rtti.Meta"] = haxe_rtti_Meta;
 haxe_rtti_Meta.__name__ = "haxe.rtti.Meta";
 haxe_rtti_Meta.getType = function(t) {
 	var meta = haxe_rtti_Meta.getMeta(t);
@@ -20705,7 +20093,6 @@ var hxd_BitmapData = function(width,height) {
 		this.ctx = canvas.getContext("2d",null);
 	}
 };
-$hxClasses["hxd.BitmapData"] = hxd_BitmapData;
 hxd_BitmapData.__name__ = "hxd.BitmapData";
 hxd_BitmapData.prototype = {
 	__class__: hxd_BitmapData
@@ -20730,7 +20117,6 @@ var hxd_CustomCursor = function(frames,speed,offsetX,offsetY) {
 	this.frameTime = 0;
 	this.frameIndex = 0;
 };
-$hxClasses["hxd.CustomCursor"] = hxd_CustomCursor;
 hxd_CustomCursor.__name__ = "hxd.CustomCursor";
 hxd_CustomCursor.prototype = {
 	reset: function() {
@@ -20786,7 +20172,6 @@ var hxd_Event = function(k,x,y) {
 	this.relX = x;
 	this.relY = y;
 };
-$hxClasses["hxd.Event"] = hxd_Event;
 hxd_Event.__name__ = "hxd.Event";
 hxd_Event.prototype = {
 	__class__: hxd_Event
@@ -20797,7 +20182,6 @@ hxd__$FloatBuffer_Float32Expand._new = function(length) {
 	return this1;
 };
 var hxd_Key = function() { };
-$hxClasses["hxd.Key"] = hxd_Key;
 hxd_Key.__name__ = "hxd.Key";
 hxd_Key.initialize = function() {
 	if(hxd_Key.initDone) {
@@ -20867,7 +20251,6 @@ var hxd_Pixels = function(width,height,bytes,format,offset) {
 	var this1 = i;
 	this.flags = this1;
 };
-$hxClasses["hxd.Pixels"] = hxd_Pixels;
 hxd_Pixels.__name__ = "hxd.Pixels";
 hxd_Pixels.calcDataSize = function(width,height,format) {
 	if(format._hx_index == 21) {
@@ -21201,19 +20584,6 @@ hxd_Pixels.prototype = {
 	}
 	,__class__: hxd_Pixels
 };
-var hxd_Res = function() { };
-$hxClasses["hxd.Res"] = hxd_Res;
-hxd_Res.__name__ = "hxd.Res";
-hxd_Res.get_loader = function() {
-	var l = hxd_res_Loader.currentInstance;
-	if(l == null) {
-		throw haxe_Exception.thrown("Resource loader not initialized: call to hxd.Res.initXXX() required");
-	}
-	return l;
-};
-hxd_Res.set_loader = function(l) {
-	return hxd_res_Loader.currentInstance = l;
-};
 var hxd_SceneEvents = function($window) {
 	this.defaultCursor = hxd_Cursor.Default;
 	this.mouseCheckMove = true;
@@ -21238,7 +20608,6 @@ var hxd_SceneEvents = function($window) {
 	this.window = $window;
 	$window.addEventTarget($bind(this,this.onEvent));
 };
-$hxClasses["hxd.SceneEvents"] = hxd_SceneEvents;
 hxd_SceneEvents.__name__ = "hxd.SceneEvents";
 hxd_SceneEvents.prototype = {
 	onRemove: function(i) {
@@ -21618,7 +20987,6 @@ var hxd_SystemValue = $hxEnums["hxd.SystemValue"] = { __ename__:true,__construct
 hxd_SystemValue.__constructs__ = [hxd_SystemValue.IsTouch,hxd_SystemValue.IsWindowed,hxd_SystemValue.IsMobile];
 hxd_SystemValue.__empty_constructs__ = [hxd_SystemValue.IsTouch,hxd_SystemValue.IsWindowed,hxd_SystemValue.IsMobile];
 var hxd_Timer = function() { };
-$hxClasses["hxd.Timer"] = hxd_Timer;
 hxd_Timer.__name__ = "hxd.Timer";
 hxd_Timer.update = function() {
 	hxd_Timer.frameCount++;
@@ -21730,7 +21098,6 @@ var hxd_Window = function(canvas,globalEvents) {
 	this.curW = this.get_width();
 	this.curH = this.get_height();
 };
-$hxClasses["hxd.Window"] = hxd_Window;
 hxd_Window.__name__ = "hxd.Window";
 hxd_Window.getInstance = function() {
 	if(hxd_Window.inst == null) {
@@ -22000,7 +21367,6 @@ hxd_Window.prototype = {
 	,__class__: hxd_Window
 };
 var js_Browser = function() { };
-$hxClasses["js.Browser"] = js_Browser;
 js_Browser.__name__ = "js.Browser";
 js_Browser.get_supported = function() {
 	if(typeof(window) != "undefined" && typeof(window.location) != "undefined") {
@@ -22010,7 +21376,6 @@ js_Browser.get_supported = function() {
 	}
 };
 var hxd_System = function() { };
-$hxClasses["hxd.System"] = hxd_System;
 hxd_System.__name__ = "hxd.System";
 hxd_System.setLoop = function(f) {
 	if(!hxd_System.loopInit) {
@@ -22142,105 +21507,9 @@ var hxd_DisplayMode = $hxEnums["hxd.DisplayMode"] = { __ename__:true,__construct
 };
 hxd_DisplayMode.__constructs__ = [hxd_DisplayMode.Windowed,hxd_DisplayMode.Borderless,hxd_DisplayMode.Fullscreen,hxd_DisplayMode.FullscreenResize];
 hxd_DisplayMode.__empty_constructs__ = [hxd_DisplayMode.Windowed,hxd_DisplayMode.Borderless,hxd_DisplayMode.Fullscreen,hxd_DisplayMode.FullscreenResize];
-var hxd_fs_FileEntry = function() { };
-$hxClasses["hxd.fs.FileEntry"] = hxd_fs_FileEntry;
-hxd_fs_FileEntry.__name__ = "hxd.fs.FileEntry";
-hxd_fs_FileEntry.prototype = {
-	getBytes: function() {
-		return null;
-	}
-	,getText: function() {
-		return this.getBytes().toString();
-	}
-	,get_path: function() {
-		throw haxe_Exception.thrown("path() not implemented");
-	}
-	,__class__: hxd_fs_FileEntry
-};
-var hxd_fs_FileSystem = function() { };
-$hxClasses["hxd.fs.FileSystem"] = hxd_fs_FileSystem;
-hxd_fs_FileSystem.__name__ = "hxd.fs.FileSystem";
-hxd_fs_FileSystem.__isInterface__ = true;
-hxd_fs_FileSystem.prototype = {
-	__class__: hxd_fs_FileSystem
-};
-var hxd_fs__$EmbedFileSystem_EmbedEntry = function(fs,name,relPath,data) {
-	this.fs = fs;
-	this.name = name;
-	this.relPath = relPath;
-	this.data = data;
-};
-$hxClasses["hxd.fs._EmbedFileSystem.EmbedEntry"] = hxd_fs__$EmbedFileSystem_EmbedEntry;
-hxd_fs__$EmbedFileSystem_EmbedEntry.__name__ = "hxd.fs._EmbedFileSystem.EmbedEntry";
-hxd_fs__$EmbedFileSystem_EmbedEntry.__super__ = hxd_fs_FileEntry;
-hxd_fs__$EmbedFileSystem_EmbedEntry.prototype = $extend(hxd_fs_FileEntry.prototype,{
-	init: function() {
-		if(this.bytes == null) {
-			this.bytes = haxe_Resource.getBytes(this.data);
-			if(this.bytes == null) {
-				throw haxe_Exception.thrown("Missing resource " + this.data);
-			}
-		}
-	}
-	,getBytes: function() {
-		if(this.bytes == null) {
-			this.init();
-		}
-		return this.bytes;
-	}
-	,get_path: function() {
-		if(this.relPath == ".") {
-			return "<root>";
-		} else {
-			return this.relPath;
-		}
-	}
-	,__class__: hxd_fs__$EmbedFileSystem_EmbedEntry
-});
-var hxd_fs_EmbedFileSystem = function(root) {
-	this.root = root;
-};
-$hxClasses["hxd.fs.EmbedFileSystem"] = hxd_fs_EmbedFileSystem;
-hxd_fs_EmbedFileSystem.__name__ = "hxd.fs.EmbedFileSystem";
-hxd_fs_EmbedFileSystem.__interfaces__ = [hxd_fs_FileSystem];
-hxd_fs_EmbedFileSystem.resolve = function(path) {
-	return "R_" + path.replace(hxd_fs_EmbedFileSystem.invalidChars.r,"_");
-};
-hxd_fs_EmbedFileSystem.prototype = {
-	splitPath: function(path) {
-		if(path == ".") {
-			return [];
-		} else {
-			return path.split("/");
-		}
-	}
-	,exists: function(path) {
-		var r = this.root;
-		var _g = 0;
-		var _g1 = this.splitPath(path);
-		while(_g < _g1.length) {
-			var p = _g1[_g];
-			++_g;
-			r = Reflect.field(r,p);
-			if(r == null) {
-				return false;
-			}
-		}
-		return true;
-	}
-	,get: function(path) {
-		if(!this.exists(path)) {
-			throw haxe_Exception.thrown(new hxd_fs_NotFound(path));
-		}
-		var id = hxd_fs_EmbedFileSystem.resolve(path);
-		return new hxd_fs__$EmbedFileSystem_EmbedEntry(this,path.split("/").pop(),path,id);
-	}
-	,__class__: hxd_fs_EmbedFileSystem
-};
 var hxd_fs_NotFound = function(path) {
 	this.path = path;
 };
-$hxClasses["hxd.fs.NotFound"] = hxd_fs_NotFound;
 hxd_fs_NotFound.__name__ = "hxd.fs.NotFound";
 hxd_fs_NotFound.prototype = {
 	toString: function() {
@@ -22250,7 +21519,6 @@ hxd_fs_NotFound.prototype = {
 };
 var hxd_impl_Allocator = function() {
 };
-$hxClasses["hxd.impl.Allocator"] = hxd_impl_Allocator;
 hxd_impl_Allocator.__name__ = "hxd.impl.Allocator";
 hxd_impl_Allocator.get = function() {
 	if(hxd_impl_Allocator.inst == null) {
@@ -22262,40 +21530,6 @@ hxd_impl_Allocator.prototype = {
 	onContextLost: function() {
 	}
 	,__class__: hxd_impl_Allocator
-};
-var hxd_res_Resource = function(entry) {
-	this.entry = entry;
-};
-$hxClasses["hxd.res.Resource"] = hxd_res_Resource;
-hxd_res_Resource.__name__ = "hxd.res.Resource";
-hxd_res_Resource.prototype = {
-	toString: function() {
-		return this.entry.get_path();
-	}
-	,__class__: hxd_res_Resource
-};
-var hxd_res_Loader = function(fs) {
-	this.fs = fs;
-	this.cache = new haxe_ds_StringMap();
-};
-$hxClasses["hxd.res.Loader"] = hxd_res_Loader;
-hxd_res_Loader.__name__ = "hxd.res.Loader";
-hxd_res_Loader.prototype = {
-	loadCache: function(path,c) {
-		var res = this.cache.h[path];
-		if(res == null) {
-			var entry = this.fs.get(path);
-			var old = hxd_res_Loader.currentInstance;
-			hxd_res_Loader.currentInstance = this;
-			res = Type.createInstance(c,[entry]);
-			hxd_res_Loader.currentInstance = old;
-			this.cache.h[path] = res;
-		} else if((js_Boot.__downcastCheck(res,c) ? res : null) == null) {
-			throw haxe_Exception.thrown(path + " has been reintrepreted from " + Std.string(js_Boot.getClass(res)) + " to " + Std.string(c));
-		}
-		return res;
-	}
-	,__class__: hxd_res_Loader
 };
 var hxsl_Type = $hxEnums["hxsl.Type"] = { __ename__:true,__constructs__:null
 	,TVoid: {_hx_name:"TVoid",_hx_index:0,__enum__:"hxsl.Type",toString:$estr}
@@ -22337,7 +21571,6 @@ var hxsl_Error = function(msg,pos) {
 	this.msg = msg;
 	this.pos = pos;
 };
-$hxClasses["hxsl.Error"] = hxsl_Error;
 hxsl_Error.__name__ = "hxsl.Error";
 hxsl_Error.t = function(msg,pos) {
 	throw haxe_Exception.thrown(new hxsl_Error(msg,pos));
@@ -22510,7 +21743,6 @@ var hxsl_TExprDef = $hxEnums["hxsl.TExprDef"] = { __ename__:true,__constructs__:
 hxsl_TExprDef.__constructs__ = [hxsl_TExprDef.TConst,hxsl_TExprDef.TVar,hxsl_TExprDef.TGlobal,hxsl_TExprDef.TParenthesis,hxsl_TExprDef.TBlock,hxsl_TExprDef.TBinop,hxsl_TExprDef.TUnop,hxsl_TExprDef.TVarDecl,hxsl_TExprDef.TCall,hxsl_TExprDef.TSwiz,hxsl_TExprDef.TIf,hxsl_TExprDef.TDiscard,hxsl_TExprDef.TReturn,hxsl_TExprDef.TFor,hxsl_TExprDef.TContinue,hxsl_TExprDef.TBreak,hxsl_TExprDef.TArray,hxsl_TExprDef.TArrayDecl,hxsl_TExprDef.TSwitch,hxsl_TExprDef.TWhile,hxsl_TExprDef.TMeta];
 hxsl_TExprDef.__empty_constructs__ = [hxsl_TExprDef.TDiscard,hxsl_TExprDef.TContinue,hxsl_TExprDef.TBreak];
 var hxsl_Tools = function() { };
-$hxClasses["hxsl.Tools"] = hxsl_Tools;
 hxsl_Tools.__name__ = "hxsl.Tools";
 hxsl_Tools.allocVarId = function() {
 	return ++hxsl_Tools.UID;
@@ -23210,7 +22442,6 @@ hxsl_Tools.size = function(t) {
 	}
 };
 var hxsl_Tools2 = function() { };
-$hxClasses["hxsl.Tools2"] = hxsl_Tools2;
 hxsl_Tools2.__name__ = "hxsl.Tools2";
 hxsl_Tools2.toString = function(g) {
 	var n = $hxEnums[g.__enum__].__constructs__[g._hx_index]._hx_name;
@@ -23220,7 +22451,6 @@ var hxsl_BatchShader = function() {
 	this.Batch_Count__ = 0;
 	hxsl_Shader.call(this);
 };
-$hxClasses["hxsl.BatchShader"] = hxsl_BatchShader;
 hxsl_BatchShader.__name__ = "hxsl.BatchShader";
 hxsl_BatchShader.__super__ = hxsl_Shader;
 hxsl_BatchShader.prototype = $extend(hxsl_Shader.prototype,{
@@ -23277,7 +22507,6 @@ var hxsl_SearchMap = function() {
 	this.minId = 0;
 	this.nexts = [];
 };
-$hxClasses["hxsl.SearchMap"] = hxsl_SearchMap;
 hxsl_SearchMap.__name__ = "hxsl.SearchMap";
 hxsl_SearchMap.prototype = {
 	set: function(id,s) {
@@ -23310,7 +22539,6 @@ var hxsl_Cache = function() {
 	this.batchShaders = new haxe_ds_ObjectMap();
 	this.byID = new haxe_ds_StringMap();
 };
-$hxClasses["hxsl.Cache"] = hxsl_Cache;
 hxsl_Cache.__name__ = "hxsl.Cache";
 hxsl_Cache.get = function() {
 	var c = hxsl_Cache.INST;
@@ -23826,7 +23054,6 @@ hxsl_Channel.__empty_constructs__ = [hxsl_Channel.Unknown,hxsl_Channel.R,hxsl_Ch
 var hxsl_Clone = function() {
 	this.varMap = new haxe_ds_IntMap();
 };
-$hxClasses["hxsl.Clone"] = hxsl_Clone;
 hxsl_Clone.__name__ = "hxsl.Clone";
 hxsl_Clone.shaderData = function(s) {
 	return new hxsl_Clone().shader(s);
@@ -23952,14 +23179,12 @@ var hxsl__$Dce_VarDeps = function(v) {
 	this.used = false;
 	this.deps = new haxe_ds_IntMap();
 };
-$hxClasses["hxsl._Dce.VarDeps"] = hxsl__$Dce_VarDeps;
 hxsl__$Dce_VarDeps.__name__ = "hxsl._Dce.VarDeps";
 hxsl__$Dce_VarDeps.prototype = {
 	__class__: hxsl__$Dce_VarDeps
 };
 var hxsl_Dce = function() {
 };
-$hxClasses["hxsl.Dce"] = hxsl_Dce;
 hxsl_Dce.__name__ = "hxsl.Dce";
 hxsl_Dce.prototype = {
 	dce: function(vertex,fragment) {
@@ -24815,7 +24040,6 @@ var hxsl_Eval = function() {
 	this.funMap = new haxe_ds_ObjectMap();
 	this.constants = new haxe_ds_IntMap();
 };
-$hxClasses["hxsl.Eval"] = hxsl_Eval;
 hxsl_Eval.__name__ = "hxsl.Eval";
 hxsl_Eval.prototype = {
 	setConstant: function(v,c) {
@@ -26838,7 +26062,6 @@ var hxsl__$Flatten_Alloc = function(g,t,pos,size) {
 	this.pos = pos;
 	this.size = size;
 };
-$hxClasses["hxsl._Flatten.Alloc"] = hxsl__$Flatten_Alloc;
 hxsl__$Flatten_Alloc.__name__ = "hxsl._Flatten.Alloc";
 hxsl__$Flatten_Alloc.prototype = {
 	__class__: hxsl__$Flatten_Alloc
@@ -26851,7 +26074,6 @@ hxsl_ARead.__constructs__ = [hxsl_ARead.AIndex,hxsl_ARead.AOffset];
 hxsl_ARead.__empty_constructs__ = [];
 var hxsl_Flatten = function() {
 };
-$hxClasses["hxsl.Flatten"] = hxsl_Flatten;
 hxsl_Flatten.__name__ = "hxsl.Flatten";
 hxsl_Flatten.prototype = {
 	flatten: function(s,kind,constsToGlobal) {
@@ -27919,7 +27141,6 @@ var hxsl_Globals = function() {
 	this.channels = [];
 	this.map = new haxe_ds_IntMap();
 };
-$hxClasses["hxsl.Globals"] = hxsl_Globals;
 hxsl_Globals.__name__ = "hxsl.Globals";
 hxsl_Globals.allocID = function(path) {
 	if(hxsl_Globals.MAP == null) {
@@ -27962,7 +27183,6 @@ hxsl_Globals.prototype = {
 	,__class__: hxsl_Globals
 };
 var js_Boot = function() { };
-$hxClasses["js.Boot"] = js_Boot;
 js_Boot.__name__ = "js.Boot";
 js_Boot.getClass = function(o) {
 	if(o == null) {
@@ -28073,38 +27293,6 @@ js_Boot.__string_rec = function(o,s) {
 		return String(o);
 	}
 };
-js_Boot.__interfLoop = function(cc,cl) {
-	if(cc == null) {
-		return false;
-	}
-	if(cc == cl) {
-		return true;
-	}
-	var intf = cc.__interfaces__;
-	if(intf != null) {
-		var _g = 0;
-		var _g1 = intf.length;
-		while(_g < _g1) {
-			var i = _g++;
-			var i1 = intf[i];
-			if(i1 == cl || js_Boot.__interfLoop(i1,cl)) {
-				return true;
-			}
-		}
-	}
-	return js_Boot.__interfLoop(cc.__super__,cl);
-};
-js_Boot.__downcastCheck = function(o,cl) {
-	if(!((o) instanceof cl)) {
-		if(cl.__isInterface__) {
-			return js_Boot.__interfLoop(js_Boot.getClass(o),cl);
-		} else {
-			return false;
-		}
-	} else {
-		return true;
-	}
-};
 js_Boot.__nativeClassName = function(o) {
 	var name = js_Boot.__toStr.call(o).slice(8,-1);
 	if(name == "Object" || name == "Function" || name == "Math" || name == "JSON") {
@@ -28122,7 +27310,6 @@ var hxsl_GlslOut = function() {
 	this.varNames = new haxe_ds_IntMap();
 	this.allNames = new haxe_ds_StringMap();
 };
-$hxClasses["hxsl.GlslOut"] = hxsl_GlslOut;
 hxsl_GlslOut.__name__ = "hxsl.GlslOut";
 hxsl_GlslOut.prototype = {
 	decl: function(s) {
@@ -29631,7 +28818,6 @@ hxsl_GlslOut.prototype = {
 };
 var hxsl__$Linker_AllocatedVar = function() {
 };
-$hxClasses["hxsl._Linker.AllocatedVar"] = hxsl__$Linker_AllocatedVar;
 hxsl__$Linker_AllocatedVar.__name__ = "hxsl._Linker.AllocatedVar";
 hxsl__$Linker_AllocatedVar.prototype = {
 	__class__: hxsl__$Linker_AllocatedVar
@@ -29645,7 +28831,6 @@ var hxsl__$Linker_ShaderInfos = function(n,v) {
 	this.read = new haxe_ds_IntMap();
 	this.write = new haxe_ds_IntMap();
 };
-$hxClasses["hxsl._Linker.ShaderInfos"] = hxsl__$Linker_ShaderInfos;
 hxsl__$Linker_ShaderInfos.__name__ = "hxsl._Linker.ShaderInfos";
 hxsl__$Linker_ShaderInfos.prototype = {
 	__class__: hxsl__$Linker_ShaderInfos
@@ -29657,7 +28842,6 @@ var hxsl_Linker = function(batchMode) {
 	this.debugDepth = 0;
 	this.batchMode = batchMode;
 };
-$hxClasses["hxsl.Linker"] = hxsl_Linker;
 hxsl_Linker.__name__ = "hxsl.Linker";
 hxsl_Linker.prototype = {
 	error: function(msg,p) {
@@ -30388,7 +29572,6 @@ var hxsl_Printer = function(varId) {
 	}
 	this.varId = varId;
 };
-$hxClasses["hxsl.Printer"] = hxsl_Printer;
 hxsl_Printer.__name__ = "hxsl.Printer";
 hxsl_Printer.opStr = function(op) {
 	switch(op._hx_index) {
@@ -30947,7 +30130,6 @@ var hxsl_AllocParam = function(name,pos,instance,index,type) {
 	this.index = index;
 	this.type = type;
 };
-$hxClasses["hxsl.AllocParam"] = hxsl_AllocParam;
 hxsl_AllocParam.__name__ = "hxsl.AllocParam";
 hxsl_AllocParam.prototype = {
 	__class__: hxsl_AllocParam
@@ -30958,14 +30140,12 @@ var hxsl_AllocGlobal = function(pos,path,type) {
 	this.gid = hxsl_Globals.allocID(path);
 	this.type = type;
 };
-$hxClasses["hxsl.AllocGlobal"] = hxsl_AllocGlobal;
 hxsl_AllocGlobal.__name__ = "hxsl.AllocGlobal";
 hxsl_AllocGlobal.prototype = {
 	__class__: hxsl_AllocGlobal
 };
 var hxsl_RuntimeShaderData = function() {
 };
-$hxClasses["hxsl.RuntimeShaderData"] = hxsl_RuntimeShaderData;
 hxsl_RuntimeShaderData.__name__ = "hxsl.RuntimeShaderData";
 hxsl_RuntimeShaderData.prototype = {
 	__class__: hxsl_RuntimeShaderData
@@ -30974,7 +30154,6 @@ var hxsl_ShaderInstanceDesc = function(shader,bits) {
 	this.shader = shader;
 	this.bits = bits;
 };
-$hxClasses["hxsl.ShaderInstanceDesc"] = hxsl_ShaderInstanceDesc;
 hxsl_ShaderInstanceDesc.__name__ = "hxsl.ShaderInstanceDesc";
 hxsl_ShaderInstanceDesc.prototype = {
 	__class__: hxsl_ShaderInstanceDesc
@@ -30982,14 +30161,12 @@ hxsl_ShaderInstanceDesc.prototype = {
 var hxsl_RuntimeShader = function() {
 	this.id = hxsl_RuntimeShader.UID++;
 };
-$hxClasses["hxsl.RuntimeShader"] = hxsl_RuntimeShader;
 hxsl_RuntimeShader.__name__ = "hxsl.RuntimeShader";
 hxsl_RuntimeShader.prototype = {
 	__class__: hxsl_RuntimeShader
 };
 var hxsl_Serializer = function() {
 };
-$hxClasses["hxsl.Serializer"] = hxsl_Serializer;
 hxsl_Serializer.__name__ = "hxsl.Serializer";
 hxsl_Serializer.prototype = {
 	readVarInt: function() {
@@ -31351,7 +30528,6 @@ var hxsl_ShaderList = function(s,n) {
 	this.s = s;
 	this.next = n;
 };
-$hxClasses["hxsl.ShaderList"] = hxsl_ShaderList;
 hxsl_ShaderList.__name__ = "hxsl.ShaderList";
 hxsl_ShaderList.addSort = function(s,shaders) {
 	var prev = null;
@@ -31394,7 +30570,6 @@ var hxsl_ShaderInstance = function(shader) {
 	this.shader = shader;
 	this.params = new haxe_ds_IntMap();
 };
-$hxClasses["hxsl.ShaderInstance"] = hxsl_ShaderInstance;
 hxsl_ShaderInstance.__name__ = "hxsl.ShaderInstance";
 hxsl_ShaderInstance.prototype = {
 	__class__: hxsl_ShaderInstance
@@ -31403,7 +30578,6 @@ var hxsl_ShaderGlobal = function(v,gid) {
 	this.v = v;
 	this.globalId = gid;
 };
-$hxClasses["hxsl.ShaderGlobal"] = hxsl_ShaderGlobal;
 hxsl_ShaderGlobal.__name__ = "hxsl.ShaderGlobal";
 hxsl_ShaderGlobal.prototype = {
 	__class__: hxsl_ShaderGlobal
@@ -31413,7 +30587,6 @@ var hxsl_ShaderConst = function(v,pos,bits) {
 	this.pos = pos;
 	this.bits = bits;
 };
-$hxClasses["hxsl.ShaderConst"] = hxsl_ShaderConst;
 hxsl_ShaderConst.__name__ = "hxsl.ShaderConst";
 hxsl_ShaderConst.prototype = {
 	__class__: hxsl_ShaderConst
@@ -31436,7 +30609,6 @@ var hxsl_SharedShader = function(src) {
 	this.data = hxsl_SharedShader.compactMem(this.data);
 	this.initialize();
 };
-$hxClasses["hxsl.SharedShader"] = hxsl_SharedShader;
 hxsl_SharedShader.__name__ = "hxsl.SharedShader";
 hxsl_SharedShader.compactMem = function(mem) {
 	return mem;
@@ -31560,14 +30732,12 @@ var hxsl__$Splitter_VarProps = function(v) {
 	this.read = 0;
 	this.write = 0;
 };
-$hxClasses["hxsl._Splitter.VarProps"] = hxsl__$Splitter_VarProps;
 hxsl__$Splitter_VarProps.__name__ = "hxsl._Splitter.VarProps";
 hxsl__$Splitter_VarProps.prototype = {
 	__class__: hxsl__$Splitter_VarProps
 };
 var hxsl_Splitter = function() {
 };
-$hxClasses["hxsl.Splitter"] = hxsl_Splitter;
 hxsl_Splitter.__name__ = "hxsl.Splitter";
 hxsl_Splitter.prototype = {
 	split: function(s) {
@@ -31955,7 +31125,6 @@ hxsl_Splitter.prototype = {
 	,__class__: hxsl_Splitter
 };
 var js_html__$CanvasElement_CanvasUtil = function() { };
-$hxClasses["js.html._CanvasElement.CanvasUtil"] = js_html__$CanvasElement_CanvasUtil;
 js_html__$CanvasElement_CanvasUtil.__name__ = "js.html._CanvasElement.CanvasUtil";
 js_html__$CanvasElement_CanvasUtil.getContextWebGL = function(canvas,attribs) {
 	var name = "webgl";
@@ -31977,15 +31146,10 @@ $global.$haxeUID |= 0;
 if(typeof(performance) != "undefined" ? typeof(performance.now) == "function" : false) {
 	HxOverrides.now = performance.now.bind(performance);
 }
-$hxClasses["Math"] = Math;
 if( String.fromCodePoint == null ) String.fromCodePoint = function(c) { return c < 0x10000 ? String.fromCharCode(c) : String.fromCharCode((c>>10)+0xD7C0)+String.fromCharCode((c&0x3FF)+0xDC00); }
-String.prototype.__class__ = $hxClasses["String"] = String;
+String.prototype.__class__ = String;
 String.__name__ = "String";
-$hxClasses["Array"] = Array;
 Array.__name__ = "Array";
-Date.prototype.__class__ = $hxClasses["Date"] = Date;
-Date.__name__ = "Date";
-haxe_Resource.content = [{ name : "R_test_txt", data : "I2J1dHRvbiBOZXcgbG9jYXRpb24gfCBsb2NhdGlvbg0KI2J1dHRvbiBCdWlsZGluZyB8IGFuY2llbnRCdWlsZGluZyB8IDEwDQoNCj5sb2NhdGlvbg0KWzpjb25kaXRpb246XSA6YW5jaWVudEJ1aWxkaW5nOiBcbiAgOnNwZWNpYWxTdGF0ZToNCg0KPmFuY2llbnRCdWlsZGluZw0KTWFub2lyIHgwLjUNCkJ1bmtlciB4MC4zDQpCdXJlYXV4DQpTdXBlcm1hcmNow6kgeDAuNQ0KUmVzdGF1cmFudA0KQmFyDQpFY29sZQ0KQ3LDqGNoZQ0KRXBpY2VyaWUNCkVudHJlcMO0dA0KU2FsbGUgZGUgc3BvcnQNCkjDtHBpdGFsIHgwLjUNCkNhYmluZXQgbcOpZGljYWwNCk1hZ2FzaW4gZGUgc3BvcnQNCkFybXVyaWVyIHgwLjMNCg0KPm5ld0J1aWxkaW5nDQpQbGFjZSBmb3J0ZQ0KQXZhbnQgcG9zdGUNClN0b2NrYWdlDQoNCj5jb25kaXRpb24NCkJvbiDDqXRhdCB4MC4yDQpBbmNpZW4geDINClLDqWNlbW1lbnQgcsOpbm92w6kgeDAuMw0KUmFzw6kgeDAuNA0KDQo+c3BlY2lhbFN0YXRlDQpJbm5vY2N1cMOpDQpJbmNlbmRpw6kNClJhZGlhdGlvbnMgeDAuNQ0KUGnDqGdlcw0KQm9tYmUgbm9uLWTDqXNhcm3DqWUgeDAuMQ0KT2NjdXDDqSBwYXIgOm1vYnM6DQpUcmFuc2Zvcm3DqSBlbiA6bmV3QnVpbGRpbmc6DQoNCj5tb2JzDQptb25zdHJlcyBtaW5ldXJzDQptb25zdHJlIG1hamV1cg0KdmVybWluZQ0KcGlsbGFyZHMgWzpwcmVzZW5jZTpdDQo6MS0zOiBtYXJjaGFuZChzKQ0KZXJtaXRlIFs6cHJlc2VuY2U6XQ0KDQo+cHJlc2VuY2UNCkFic2VudA0KUHLDqXNlbnQNCk1vcnQocyk"}];
 haxe_ds_ObjectMap.count = 0;
 haxe_MainLoop.add(hxd_System.updateCursor,-1);
 js_Boot.__toStr = ({ }).toString;
@@ -32082,8 +31246,6 @@ h3d_shader_VertexColorAlpha.SRC = "HXSLG2gzZC5zaGFkZXIuVmVydGV4Q29sb3JBbHBoYQQBB
 h3d_shader_VolumeDecal.SRC = "HXSLFmgzZC5zaGFkZXIuVm9sdW1lRGVjYWwYAQZjYW1lcmENAQoCBHZpZXcHAAEAAwRwcm9qBwABAAQIcG9zaXRpb24FCwABAAUIcHJvakZsaXADAAEABghwcm9qRGlhZwULAAEABwh2aWV3UHJvagcAAQAID2ludmVyc2VWaWV3UHJvagcAAQAJBXpOZWFyAwABAAoEekZhcgMAAQALA2RpcgULAwEAAAAADAZnbG9iYWwNAgQNBHRpbWUDAAwADglwaXhlbFNpemUFCgAMAA8JbW9kZWxWaWV3BwAMAQMQEG1vZGVsVmlld0ludmVyc2UHAAwBAwAAABEFaW5wdXQNAwISCHBvc2l0aW9uBQsBEQATBm5vcm1hbAULAREAAQAAFAZvdXRwdXQNBAUVCHBvc2l0aW9uBQwEFAAWBWNvbG9yBQwEFAAXBWRlcHRoAwQUABgGbm9ybWFsBQsEFAAZCXdvcmxkRGlzdAMEFAAEAAAaEHJlbGF0aXZlUG9zaXRpb24FCwQAABsTdHJhbnNmb3JtZWRQb3NpdGlvbgULBAAAHBhwaXhlbFRyYW5zZm9ybWVkUG9zaXRpb24FCwQAAB0RdHJhbnNmb3JtZWROb3JtYWwFCwQAAB4RcHJvamVjdGVkUG9zaXRpb24FDAQAAB8KcGl4ZWxDb2xvcgUMBAAAIAVkZXB0aAMEAAAhCHNjcmVlblVWBQoEAAAiCXNwZWNQb3dlcgMEAAAjCXNwZWNDb2xvcgULBAAAJAl3b3JsZERpc3QDBAAAJQhkZXB0aE1hcBEBAAAAJgVzY2FsZQUKAgAAJwZub3JtYWwFCwIAACgHdGFuZ2VudAULAgAAKQppc0NlbnRlcmVkAgIAAQAAAAAAKgxjYWxjdWxhdGVkVVYFCgQAACsSdHJhbnNmb3JtZWRUYW5nZW50BQwEAAAsDl9faW5pdF9fdmVydGV4DgYAAC0IZnJhZ21lbnQOBgAAAgIsAAAFAgYEAh0FCwkDHw4BBAYBAicFCwkDMg4BAg8HBgULBQsFCwULBgQCKwUMCQMqDgIJAx8OAQQGAQIoBQsJAzIOAQIPBwYFCwULBQsBAwAAAAAAAPA/AwUMBQwAAS0AAAUJCC4GbWF0cml4BwQAAAYBAggHAhAHBwAILwlzY3JlZW5Qb3MFCgQAAAYCCgIeBQwRAAUKCgIeBQwMAAMFCgAIMANydXYFDAQAAAkDKg4DAi8FCgkDPw4CAiURAQkDOg4BAi8FCgUKAwEDAAAAAAAA8D8DBQwACDEEd3BvcwUMBAAABgECMAUMAi4HBQwACDIEcHBvcwUMBAAABgECMAUMAggHBQwABgQCHAULBgIKAjIFDJIABQsKAjIFDAwAAwULBQsGBAIqBQoGAQImBQoEBgIKAjEFDBEABQoKAjEFDAwAAwUKBQoFCgUKCwIpAgaAAioFCgEDAAAAAAAA4D8DBQoAAAsGCQkDFQ4CCQMVDgIKAioFCgAAAwoCKgUKBAADAwkDFQ4CBgMBAwAAAAAAAPA/AwoCKgUKAAADAwYDAQMAAAAAAADwPwMKAioFCgQAAwMDAwEDAAAAAAAAAAADAgwAAAAA";
 haxe_EntryPoint.pending = [];
 haxe_EntryPoint.threadCount = 0;
-haxe_Unserializer.DEFAULT_RESOLVER = new haxe__$Unserializer_DefaultResolver();
-haxe_Unserializer.BASE64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789%:";
 haxe_crypto_Base64.CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 haxe_crypto_Base64.BYTES = haxe_io_Bytes.ofString(haxe_crypto_Base64.CHARS);
 haxe_io_FPHelper.helper = new DataView(new ArrayBuffer(8));
@@ -32101,7 +31263,6 @@ hxd_Timer.currentDT = 1 / hxd_Timer.wantedFPS;
 hxd_System.setCursor = hxd_System.setNativeCursor;
 hxd_System.loopInit = false;
 hxd_System.fpsLimit = -1;
-hxd_fs_EmbedFileSystem.invalidChars = new EReg("[^A-Za-z0-9_]","g");
 hxsl_Tools.UID = 0;
 hxsl_Tools.SWIZ = hxsl_Component.__empty_constructs__.slice();
 hxsl_Tools.MAX_CHANNELS_BITS = 3;

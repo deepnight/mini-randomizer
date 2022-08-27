@@ -53,6 +53,10 @@ class Randomizer {
 				out = refReg.matchedLeft() + draw(k) + refReg.matchedRight();
 			}
 		}
+
+		if( out=="-" )
+			out = "";
+
 		return out;
 	}
 }

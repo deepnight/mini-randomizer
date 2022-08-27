@@ -1,0 +1,165 @@
+#button Nouveau lieu | location 
+#button Debug | location | 10
+#button Test | occupier | 5
+
+
+>location
+:ancientBuilding: :locationDetails: x3
+:outdoorLocation: :locationDetails:
+
+>locationDetails
+ (:condition:)\n  :locationFeature:\n  :occupier:\n  :loot:
+
+>ancientBuilding
+Manoir x0.5
+Bunker x0.3
+Maison
+Immeuble d'habitation
+Campement
+Gymnase
+Château d'eau
+Bureaux
+Supermarché x0.5
+Restaurant
+Bar
+Ecole
+Crèche
+Epicerie
+Entrepôt
+Salle de sport
+Hôpital x0.5
+Cabinet médical
+Magasin
+Armurier x0.3
+Gare
+Garage
+Station service
+Cabane
+Marché couvert
+Prison
+Usine
+Laboratoire
+Librairie
+Commissariat
+Chenil
+Musée
+Bâtiment administratif
+Boîte de nuit
+
+>outdoorLocation
+Terrain de sport (:sport:)
+Lac
+Route
+Autoroute
+Parc
+Plantation
+Cimetière
+Station tramway
+Aire de jeux
+Chantier
+Parking
+Cratère
+Camion
+Train
+Marécage
+Forêt
+Carrière
+Déchetterie
+Convoi
+Parc d'attraction
+Eolienne
+Panneaux solaires
+Stade
+Site d'un crash
+Epave d'un navire
+
+>sport
+Golf
+Football
+Basketball
+Tir x0.5
+Natation
+Athlétisme
+Tennis
+
+>newBuilding
+Place forte
+Avant-poste
+Stockage
+Habitation
+Atelier
+Abri anti-atomique x0.5
+
+>condition
+Structure en bon état x0.2
+Structure ancienne x2
+Structure récemment rénovée x0.3
+Structure rasée x0.4
+
+>locationFeature
+Rien de spécial x2
+Incendié x0.5
+Bombardé
+Irradié x0.5
+Piégé
+Décoration étrange
+Camouflé
+Ambiance glauque
+Bombe non-désarmée x0.1
+Transformé en :newBuilding:
+
+>occupier
+Aucun occupant x2
+Monstres mineurs
+Monstre majeur
+Vermine
+Pillards [:presence:]
+:1-2: marchand(s): :trading:
+Ermite :npcStatus: [:behaviour:, :presence:]
+Petite communauté :npcStatus: [:behaviour:]
+Robot :npcStatus: [:behaviour:, :presence:]
+
+>behaviour
+Amical
+Attitude neutre x4
+Hostile (:hostility:) x2
+
+>hostility
+Cannibale
+Méfiant
+Territorial
+Cache un secret
+Peur des PJs
+
+>npcStatus
+- x5
+Affamé
+Assoiffé
+Malade
+Irradié
+Blessé
+Estropié
+Mourrant
+Mort(s)
+
+>presence
+Absent pour le moment
+Présent x3
+
+>trading
+Nourriture/Eau x2
+Munitions
+Armes
+Armures
+Mods
+
+>loot
+Babiole
+Objet précieux
+Nourriture
+Eau
+Arme
+Armure
+Mod d'arme
+Mod d'armure
+Munitions

@@ -14,22 +14,6 @@ h2 {
   text-align: center;
 }
 
-#footer {
-  padding-top: 16px;
-  width: 800px;
-  margin: auto;
-  text-align: right;
-  opacity: 0.7;
-}
-#footer p {
-  margin: 0;
-  font-size: 8pt;
-}
-#footer a {
-  display: inline-block;
-  white-space: nowrap;
-}
-
 #notif {
   background-color: black;
   color: white;
@@ -45,13 +29,51 @@ h2 {
   visibility: hidden;
 }
 
-.buttons {
+#site {
+  max-width: 500px;
+  padding: 4px;
+  margin: auto;
+  margin-top: 16px;
+  border-radius: 3px;
+  border: 1px solid lightgray;
+}
+@media (max-width: 500px) {
+  #site {
+    margin: 0;
+    border: none;
+  }
+}
+
+#buttons {
   display: flex;
 }
-.buttons button {
-  margin: 0;
+#buttons button {
+  flex: 1 0 auto;
+  margin: 1px;
+  padding: 1em;
+  color: gray;
+  text-transform: uppercase;
   white-space: nowrap;
-  height: 3em;
+  border: 1px solid lightgray;
+  border-bottom: 2px solid lightgray;
   cursor: pointer;
+}
+#buttons button:hover {
+  color: white;
+  background-color: gray;
+  border-color: black;
+}
+
+#output {
+  padding: 16px;
+}
+#output .entry pre {
+  margin: 0;
+  white-space: pre-wrap;
+}
+#output .entry + .entry {
+  padding-top: 10px;
+  margin-top: 10px;
+  border-top: 1px dashed gray;
 }
 /*# sourceMappingURL=style.css.map */

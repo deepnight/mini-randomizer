@@ -11,10 +11,10 @@ typedef RandTableEntry = {
 	Inspired by RandomGen from Orteil (https://orteil.dashnet.org/randomgen/)
 **/
 class RandomParser {
-	static var OPTION_REG = ~/^#([a-z0-9_-]+)([ \t]+(.+)|)/i;
-	static var KEY_REG = ~/^[ \t]*>[ \t]*([a-z0-9_-]+)[ \t]*/i;
-	static var REF_REG = ~/:([a-z0-9_-]+):/i;
-	static var PROBA_MUL_REG = ~/[ \t]+x([0-9.]+)[ \t]*$/i;
+	public static var OPTION_REG = ~/^#([a-z0-9_-]+)([ \t]+(.+)|)/i;
+	public static var KEY_REG = ~/^[ \t]*>[ \t]*([a-z0-9_-]+)[ \t]*/i;
+	public static var REF_REG = ~/:([a-z0-9_-]+):/i;
+	public static var PROBA_MUL_REG = ~/[ \t]+x([0-9.]+)[ \t]*$/i;
 
 	public static function run(raw:String) : Null<RandData> {
 		if( raw==null )
@@ -72,6 +72,7 @@ class RandomParser {
 			}
 		}
 
+		// TODO check data: invalid keys
 		debugRandData(rdata);
 
 		return rdata;
