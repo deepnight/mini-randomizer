@@ -7,5 +7,5 @@ ren redist\js scrambler
 
 echo.
 echo Updating GitHub site...
-rmdir /Q/S htdocs
-xcopy redist\scrambler htdocs\ /S /Y /Q
+rmdir /Q/S docs
+xcopy redist\scrambler docs\ /S /Y /Q
