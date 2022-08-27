@@ -4,7 +4,7 @@ class Boot extends hxd.App {
 	}
 	override function init() {
 		super.init();
-		new Main();
+		new App();
 	}
 
 	override function update(dt:Float) {

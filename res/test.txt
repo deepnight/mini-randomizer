@@ -1,19 +1,55 @@
-#button test | Go!
+#button New location | location
+#button Building | ancientBuilding | 10
 
->test
-:building: (:state:)
+>location
+[:condition:] :ancientBuilding: \n  :specialState:
 
->building
-Manoir
-Bunker
+>ancientBuilding
+Manoir x0.5
+Bunker x0.3
 Bureaux
-Supermarché
+Supermarché x0.5
+Restaurant
+Bar
 Ecole
+Crèche
 Epicerie
 Entrepôt
+Salle de sport
+Hôpital x0.5
+Cabinet médical
+Magasin de sport
+Armurier x0.3
 
->state
+>newBuilding
+Place forte
+Avant poste
+Stockage
+
+>condition
 Bon état x0.2
-Ancien
-Ruines
-Dévasté x0.4
+Ancien x2
+Récemment rénové x0.3
+Rasé x0.4
+
+>specialState
+Innoccupé
+Incendié
+Radiations x0.5
+Pièges
+Bombe non-désarmée x0.1
+Occupé par :mobs:
+Transformé en :newBuilding:
+
+>mobs
+monstres mineurs
+monstre majeur
+vermine
+pillards [:presence:]
+:1-3: marchand(s)
+ermite [:presence:]
+
+>presence
+Absent
+Présent
+Mort(s)
