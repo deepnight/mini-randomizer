@@ -42,6 +42,14 @@ h2 {
     margin: 0;
     border: none;
   }
+  #site #buttons {
+    bottom: 4px;
+    width: calc(100% - 8px);
+    position: fixed;
+  }
+  #site #buttons button {
+    min-height: 4em;
+  }
 }
 
 #buttons {
@@ -66,6 +74,7 @@ h2 {
 
 #output {
   padding: 16px;
+  padding-bottom: 4em;
 }
 #output .entry pre {
   margin: 0;
