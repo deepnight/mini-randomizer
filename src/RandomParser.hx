@@ -1,37 +1,59 @@
-typedef RandTable = Array<RandTableEntry>;
+typedef RandData = {
+	var tables: Map<String, Array<RandTableEntry>>;
+	var options: Array<{ opt:String, args:Array<String> }>;
+}
 typedef RandTableEntry = {
 	var raw : String;
 	var probaMul : Float;
 }
 
+/**
+	Inspired by RandomGen from Orteil (https://orteil.dashnet.org/randomgen/)
+**/
 class RandomParser {
 	static var OPTION_REG = ~/^#([a-z0-9_-]+)([ \t]+(.+)|)/i;
 	static var KEY_REG = ~/^[ \t]*>[ \t]*([a-z0-9_-]+)[ \t]*/i;
-	static var KEYREF_REG = ~/:([a-z0-9_-]+):/i;
+	static var REF_REG = ~/:([a-z0-9_-]+):/i;
 	static var PROBA_MUL_REG = ~/[ \t]+x([0-9.]+)[ \t]*$/i;
 
-	public var tables : Map<String, RandTable> = new Map();
+	public static function run(raw:String) : Null<RandData> {
+		if( raw==null )
+			return null;
 
-	public function new(raw:String) {
+		var rdata : RandData = {
+			tables: new Map(),
+			options: [],
+		}
+
 		var lines = raw.split("\n");
 		var curKey : Null<String> = null;
+
 		for( l in lines ) {
-			l = StringTools.replace(l, "\r", "");
-			l = StringTools.trim(l);
+			l = cleanUp(l);
 			if( l.length==0 )
 				continue;
 
 			// Option
 			if( OPTION_REG.match(l) ) {
-				setOption( OPTION_REG.matched(1), OPTION_REG.matched(3) );
+				var o = OPTION_REG.matched(1);
+				var rawArgs = OPTION_REG.matched(3);
+				var args = [];
+				if( rawArgs!=null )
+					for(a in rawArgs.split("|"))
+						args.push( cleanUp(a) );
+
+				rdata.options.push({
+					opt: o,
+					args: args,
+				});
 				continue;
 			}
 
 			if( KEY_REG.match(l) ) {
 				// New table key
 				curKey = KEY_REG.matched(1);
-				if( !tables.exists(curKey) )
-					tables.set(curKey, []);
+				if( !rdata.tables.exists(curKey) )
+					rdata.tables.set(curKey, []);
 			}
 			else if( curKey!=null ) {
 				var probaMul = 1.;
@@ -43,18 +65,34 @@ class RandomParser {
 					l = PROBA_MUL_REG.matchedLeft();
 				}
 				// Store table entry
-				tables.get(curKey).push({
+				rdata.tables.get(curKey).push({
 					raw: l,
 					probaMul: probaMul,
 				});
 			}
 		}
 
-		for(t in tables.keyValueIterator())
-			trace(t.key+" => "+t.value.map(e->e.raw+"["+M.round(e.probaMul*100)+"%]").join(", "));
+		debugRandData(rdata);
+
+		return rdata;
 	}
 
-	function setOption(opt:String, ?arg:String) {
-		trace('Found option $opt:$arg');
+	public static function debugRandData(rdata:RandData) {
+		trace("OPTIONS:");
+		for(o in rdata.options)
+			trace("  "+o.opt+" => "+o.args);
+		trace("TABLES:");
+		for(t in rdata.tables.keyValueIterator())
+			trace("  "+t.key+" => "+t.value.map(e->e.raw+"["+M.round(e.probaMul*100)+"%]").join(", "));
+	}
+
+	static function cleanUp(str:String) {
+		str = StringTools.replace(str, "\r", "");
+		str = StringTools.trim(str);
+		return str;
+	}
+
+	static function error(msg:String) {
+		trace('ERROR: $msg');
 	}
 }

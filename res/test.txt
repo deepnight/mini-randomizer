@@ -1,16 +1,19 @@
-#start test
+#button test | Go!
 
 >test
-:place:, :state:
+:building: (:state:)
 
->place
+>building
+Manoir
+Bunker
+Bureaux
 Supermarché
 Ecole
 Epicerie
 Entrepôt
 
 >state
-bon état x2
-ancien
-en ruines
-dévasté(e) x0.5
+Bon état x0.2
+Ancien
+Ruines
+Dévasté x0.4

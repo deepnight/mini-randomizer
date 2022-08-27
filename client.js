@@ -146,6 +146,13 @@ EReg.prototype = {
 		}
 		return HxOverrides.substr(this.r.s,0,this.r.m.index);
 	}
+	,matchedRight: function() {
+		if(this.r.m == null) {
+			throw haxe_Exception.thrown("No string matched");
+		}
+		var sz = this.r.m.index + this.r.m[0].length;
+		return HxOverrides.substr(this.r.s,sz,this.r.s.length - sz);
+	}
 	,__class__: EReg
 };
 var HxOverrides = function() { };
@@ -1262,7 +1269,9 @@ var Main = function() {
 	dn_Process.call(this);
 	this.jBody = $("body");
 	hxd_Res.set_loader(new hxd_res_Loader(new hxd_fs_EmbedFileSystem(haxe_Unserializer.run("oy8:test.txttg"))));
-	new RandomParser(hxd_Res.get_loader().loadCache("test.txt",hxd_res_Resource).entry.getText());
+	var rdata = RandomParser.run(hxd_Res.get_loader().loadCache("test.txt",hxd_res_Resource).entry.getText());
+	var r = new Randomizer(rdata);
+	haxe_Log.trace(r.draw("test"),{ fileName : "src/Main.hx", lineNumber : 12, className : "Main", methodName : "new"});
 };
 $hxClasses["Main"] = Main;
 Main.__name__ = "Main";
@@ -1274,27 +1283,44 @@ Main.prototype = $extend(dn_Process.prototype,{
 	,__class__: Main
 });
 Math.__name__ = "Math";
-var RandomParser = function(raw) {
-	this.tables = new haxe_ds_StringMap();
+var RandomParser = function() { };
+$hxClasses["RandomParser"] = RandomParser;
+RandomParser.__name__ = "RandomParser";
+RandomParser.run = function(raw) {
+	if(raw == null) {
+		return null;
+	}
+	var rdata = { tables : new haxe_ds_StringMap(), options : []};
 	var lines = raw.split("\n");
 	var curKey = null;
 	var _g = 0;
 	while(_g < lines.length) {
 		var l = lines[_g];
 		++_g;
-		l = StringTools.replace(l,"\r","");
-		l = StringTools.trim(l);
+		l = RandomParser.cleanUp(l);
 		if(l.length == 0) {
 			continue;
 		}
 		if(RandomParser.OPTION_REG.match(l)) {
-			this.setOption(RandomParser.OPTION_REG.matched(1),RandomParser.OPTION_REG.matched(3));
+			var o = RandomParser.OPTION_REG.matched(1);
+			var rawArgs = RandomParser.OPTION_REG.matched(3);
+			var args = [];
+			if(rawArgs != null) {
+				var _g1 = 0;
+				var _g2 = rawArgs.split("|");
+				while(_g1 < _g2.length) {
+					var a = _g2[_g1];
+					++_g1;
+					args.push(RandomParser.cleanUp(a));
+				}
+			}
+			rdata.options.push({ opt : o, args : args});
 			continue;
 		}
 		if(RandomParser.KEY_REG.match(l)) {
 			curKey = RandomParser.KEY_REG.matched(1);
-			if(!Object.prototype.hasOwnProperty.call(this.tables.h,curKey)) {
-				this.tables.h[curKey] = [];
+			if(!Object.prototype.hasOwnProperty.call(rdata.tables.h,curKey)) {
+				rdata.tables.h[curKey] = [];
 			}
 		} else if(curKey != null) {
 			var probaMul = 1.;
@@ -1305,10 +1331,23 @@ var RandomParser = function(raw) {
 				}
 				l = RandomParser.PROBA_MUL_REG.matchedLeft();
 			}
-			this.tables.h[curKey].push({ raw : l, probaMul : probaMul});
+			rdata.tables.h[curKey].push({ raw : l, probaMul : probaMul});
 		}
 	}
-	var h = this.tables.h;
+	RandomParser.debugRandData(rdata);
+	return rdata;
+};
+RandomParser.debugRandData = function(rdata) {
+	haxe_Log.trace("OPTIONS:",{ fileName : "src/RandomParser.hx", lineNumber : 81, className : "RandomParser", methodName : "debugRandData"});
+	var _g = 0;
+	var _g1 = rdata.options;
+	while(_g < _g1.length) {
+		var o = _g1[_g];
+		++_g;
+		haxe_Log.trace("  " + o.opt + " => " + Std.string(o.args),{ fileName : "src/RandomParser.hx", lineNumber : 83, className : "RandomParser", methodName : "debugRandData"});
+	}
+	haxe_Log.trace("TABLES:",{ fileName : "src/RandomParser.hx", lineNumber : 84, className : "RandomParser", methodName : "debugRandData"});
+	var h = rdata.tables.h;
 	var t_h = h;
 	var t_keys = Object.keys(h);
 	var t_length = t_keys.length;
@@ -1317,7 +1356,7 @@ var RandomParser = function(raw) {
 		var key = t_keys[t_current++];
 		var t_key = key;
 		var t_value = t_h[key];
-		var tmp = t_key + " => ";
+		var tmp = "  " + t_key + " => ";
 		var _this = t_value;
 		var result = new Array(_this.length);
 		var _g = 0;
@@ -1328,16 +1367,53 @@ var RandomParser = function(raw) {
 			var x = e.probaMul * 100;
 			result[i] = e.raw + "[" + ((x > 0 ? x + .5 : x < 0 ? x - .5 : 0) | 0) + "%]";
 		}
-		haxe_Log.trace(tmp + result.join(", "),{ fileName : "src/RandomParser.hx", lineNumber : 54, className : "RandomParser", methodName : "new"});
+		haxe_Log.trace(tmp + result.join(", "),{ fileName : "src/RandomParser.hx", lineNumber : 86, className : "RandomParser", methodName : "debugRandData"});
 	}
 };
-$hxClasses["RandomParser"] = RandomParser;
-RandomParser.__name__ = "RandomParser";
-RandomParser.prototype = {
-	setOption: function(opt,arg) {
-		haxe_Log.trace("Found option " + opt + ":" + arg,{ fileName : "src/RandomParser.hx", lineNumber : 58, className : "RandomParser", methodName : "setOption"});
+RandomParser.cleanUp = function(str) {
+	str = StringTools.replace(str,"\r","");
+	str = StringTools.trim(str);
+	return str;
+};
+var Randomizer = function(data) {
+	this.data = data;
+};
+$hxClasses["Randomizer"] = Randomizer;
+Randomizer.__name__ = "Randomizer";
+Randomizer.prototype = {
+	draw: function(key) {
+		if(!Object.prototype.hasOwnProperty.call(this.data.tables.h,key)) {
+			return "<ERR: " + key + ">";
+		}
+		var table = this.data.tables.h[key];
+		var rlist = new dn_struct_RandList();
+		var _g = 0;
+		while(_g < table.length) {
+			var e = table[_g];
+			++_g;
+			var x = e.probaMul * 100;
+			var tmp;
+			if(x > .0) {
+				var t = x + .5 | 0;
+				tmp = t < x ? t + 1 : t;
+			} else if(x < .0) {
+				var t1 = x - .5 | 0;
+				tmp = t1 < x ? t1 + 1 : t1;
+			} else {
+				tmp = 0;
+			}
+			rlist.add(e,tmp);
+		}
+		var entry = rlist.draw();
+		var out = entry.raw;
+		var refReg = new EReg(":([a-z0-9_-]+):","i");
+		while(refReg.match(out)) {
+			var k = refReg.matched(1);
+			out = refReg.matchedLeft() + this.draw(k) + refReg.matchedRight();
+		}
+		return out;
 	}
-	,__class__: RandomParser
+	,__class__: Randomizer
 };
 var Reflect = function() { };
 $hxClasses["Reflect"] = Reflect;
@@ -1936,6 +2012,125 @@ dn_Tweenie.prototype = {
 		}
 	}
 	,__class__: dn_Tweenie
+};
+var haxe_ds_IntMap = function() {
+	this.h = { };
+};
+$hxClasses["haxe.ds.IntMap"] = haxe_ds_IntMap;
+haxe_ds_IntMap.__name__ = "haxe.ds.IntMap";
+haxe_ds_IntMap.__interfaces__ = [haxe_IMap];
+haxe_ds_IntMap.prototype = {
+	remove: function(key) {
+		if(!this.h.hasOwnProperty(key)) {
+			return false;
+		}
+		delete(this.h[key]);
+		return true;
+	}
+	,keys: function() {
+		var a = [];
+		for( var key in this.h ) if(this.h.hasOwnProperty(key)) a.push(+key);
+		return new haxe_iterators_ArrayIterator(a);
+	}
+	,iterator: function() {
+		return { ref : this.h, it : this.keys(), hasNext : function() {
+			return this.it.hasNext();
+		}, next : function() {
+			var i = this.it.next();
+			return this.ref[i];
+		}};
+	}
+	,__class__: haxe_ds_IntMap
+};
+var dn_struct_RandList = function(rndFunc,arr) {
+	if(rndFunc != null) {
+		this.defaultRandom = rndFunc;
+	} else {
+		this.defaultRandom = Std.random;
+	}
+	this.totalProba = 0;
+	this.drawList = [];
+	if(arr != null) {
+		this.addArray(arr);
+	}
+};
+$hxClasses["dn.struct.RandList"] = dn_struct_RandList;
+dn_struct_RandList.__name__ = "dn.struct.RandList";
+dn_struct_RandList.prototype = {
+	add: function(elem,proba) {
+		if(proba == null) {
+			proba = 1;
+		}
+		if(proba <= 0) {
+			return this;
+		}
+		var _g = 0;
+		var _g1 = this.drawList;
+		while(_g < _g1.length) {
+			var e = _g1[_g];
+			++_g;
+			if(e.value == elem) {
+				e.proba += proba;
+				this.totalProba += proba;
+				return this;
+			}
+		}
+		this.drawList.push({ proba : proba, value : elem});
+		this.totalProba += proba;
+		return this;
+	}
+	,addArray: function(arr,proba) {
+		if(proba == null) {
+			proba = 1;
+		}
+		var _g = 0;
+		var _g1 = arr.length;
+		while(_g < _g1) {
+			var i = _g++;
+			var e = arr[i];
+			if(this.contains(e)) {
+				continue;
+			}
+			var n = 1;
+			var _g2 = i + 1;
+			var _g3 = arr.length;
+			while(_g2 < _g3) {
+				var j = _g2++;
+				if(arr[j] == e) {
+					++n;
+				}
+			}
+			this.add(e,n * proba);
+		}
+	}
+	,contains: function(search) {
+		var _g = 0;
+		var _g1 = this.drawList;
+		while(_g < _g1.length) {
+			var e = _g1[_g];
+			++_g;
+			if(e.value == search) {
+				return true;
+			}
+		}
+		return false;
+	}
+	,draw: function(rndFunc) {
+		var n = rndFunc == null ? this.defaultRandom(this.totalProba) : rndFunc(this.totalProba);
+		var accu = 0;
+		var _g = 0;
+		var _g1 = this.drawList;
+		while(_g < _g1.length) {
+			var e = _g1[_g];
+			++_g;
+			if(n < accu + e.proba) {
+				return e.value;
+			}
+			accu += e.proba;
+		}
+		return null;
+	}
+	,__class__: dn_struct_RandList
 };
 var dn_struct_RecyclablePool = function(size,valueConstructor) {
 	this.nalloc = 0;
@@ -10919,35 +11114,6 @@ h3d_mat_Stencil.prototype = {
 	}
 	,__class__: h3d_mat_Stencil
 };
-var haxe_ds_IntMap = function() {
-	this.h = { };
-};
-$hxClasses["haxe.ds.IntMap"] = haxe_ds_IntMap;
-haxe_ds_IntMap.__name__ = "haxe.ds.IntMap";
-haxe_ds_IntMap.__interfaces__ = [haxe_IMap];
-haxe_ds_IntMap.prototype = {
-	remove: function(key) {
-		if(!this.h.hasOwnProperty(key)) {
-			return false;
-		}
-		delete(this.h[key]);
-		return true;
-	}
-	,keys: function() {
-		var a = [];
-		for( var key in this.h ) if(this.h.hasOwnProperty(key)) a.push(+key);
-		return new haxe_iterators_ArrayIterator(a);
-	}
-	,iterator: function() {
-		return { ref : this.h, it : this.keys(), hasNext : function() {
-			return this.it.hasNext();
-		}, next : function() {
-			var i = this.it.next();
-			return this.ref[i];
-		}};
-	}
-	,__class__: haxe_ds_IntMap
-};
 var hxd_PixelFormat = $hxEnums["hxd.PixelFormat"] = { __ename__:true,__constructs__:null
 	,ARGB: {_hx_name:"ARGB",_hx_index:0,__enum__:"hxd.PixelFormat",toString:$estr}
 	,BGRA: {_hx_name:"BGRA",_hx_index:1,__enum__:"hxd.PixelFormat",toString:$estr}
@@ -12044,6 +12210,155 @@ h3d_pass_Border.prototype = $extend(h3d_pass_ScreenFx.prototype,{
 		this.primitive.dispose();
 	}
 	,__class__: h3d_pass_Border
+});
+var h3d_pass_ColorMatrixShader = function() {
+	this.maskChannel__ = new h3d_Vector();
+	this.maskPower__ = 0;
+	this.maskMatB__ = new h3d_Vector();
+	this.maskMatA__ = new h3d_Vector();
+	this.matrix2__ = new h3d_Matrix();
+	this.matrix__ = new h3d_Matrix();
+	h3d_shader_ScreenShader.call(this);
+};
+$hxClasses["h3d.pass.ColorMatrixShader"] = h3d_pass_ColorMatrixShader;
+h3d_pass_ColorMatrixShader.__name__ = "h3d.pass.ColorMatrixShader";
+h3d_pass_ColorMatrixShader.__super__ = h3d_shader_ScreenShader;
+h3d_pass_ColorMatrixShader.prototype = $extend(h3d_shader_ScreenShader.prototype,{
+	get_texture: function() {
+		return this.texture__;
+	}
+	,set_texture: function(_v) {
+		return this.texture__ = _v;
+	}
+	,get_matrix: function() {
+		return this.matrix__;
+	}
+	,set_matrix: function(_v) {
+		return this.matrix__ = _v;
+	}
+	,get_useAlpha: function() {
+		return this.useAlpha__;
+	}
+	,set_useAlpha: function(_v) {
+		this.constModified = true;
+		return this.useAlpha__ = _v;
+	}
+	,get_useMask: function() {
+		return this.useMask__;
+	}
+	,set_useMask: function(_v) {
+		this.constModified = true;
+		return this.useMask__ = _v;
+	}
+	,get_maskInvert: function() {
+		return this.maskInvert__;
+	}
+	,set_maskInvert: function(_v) {
+		this.constModified = true;
+		return this.maskInvert__ = _v;
+	}
+	,get_hasSecondMatrix: function() {
+		return this.hasSecondMatrix__;
+	}
+	,set_hasSecondMatrix: function(_v) {
+		this.constModified = true;
+		return this.hasSecondMatrix__ = _v;
+	}
+	,get_matrix2: function() {
+		return this.matrix2__;
+	}
+	,set_matrix2: function(_v) {
+		return this.matrix2__ = _v;
+	}
+	,get_mask: function() {
+		return this.mask__;
+	}
+	,set_mask: function(_v) {
+		return this.mask__ = _v;
+	}
+	,get_maskMatA: function() {
+		return this.maskMatA__;
+	}
+	,set_maskMatA: function(_v) {
+		return this.maskMatA__ = _v;
+	}
+	,get_maskMatB: function() {
+		return this.maskMatB__;
+	}
+	,set_maskMatB: function(_v) {
+		return this.maskMatB__ = _v;
+	}
+	,get_maskPower: function() {
+		return this.maskPower__;
+	}
+	,set_maskPower: function(_v) {
+		return this.maskPower__ = _v;
+	}
+	,get_maskChannel: function() {
+		return this.maskChannel__;
+	}
+	,set_maskChannel: function(_v) {
+		return this.maskChannel__ = _v;
+	}
+	,updateConstants: function(globals) {
+		this.constBits = 0;
+		if(this.useAlpha__) {
+			this.constBits |= 1;
+		}
+		if(this.useMask__) {
+			this.constBits |= 2;
+		}
+		if(this.maskInvert__) {
+			this.constBits |= 4;
+		}
+		if(this.hasSecondMatrix__) {
+			this.constBits |= 8;
+		}
+		this.updateConstantsFinal(globals);
+	}
+	,getParamValue: function(index) {
+		switch(index) {
+		case 0:
+			return this.flipY__;
+		case 1:
+			return this.texture__;
+		case 2:
+			return this.matrix__;
+		case 3:
+			return this.useAlpha__;
+		case 4:
+			return this.useMask__;
+		case 5:
+			return this.maskInvert__;
+		case 6:
+			return this.hasSecondMatrix__;
+		case 7:
+			return this.matrix2__;
+		case 8:
+			return this.mask__;
+		case 9:
+			return this.maskMatA__;
+		case 10:
+			return this.maskMatB__;
+		case 11:
+			return this.maskPower__;
+		case 12:
+			return this.maskChannel__;
+		default:
+		}
+		return null;
+	}
+	,getParamFloatValue: function(index) {
+		switch(index) {
+		case 0:
+			return this.flipY__;
+		case 11:
+			return this.maskPower__;
+		default:
+		}
+		return 0.;
+	}
+	,__class__: h3d_pass_ColorMatrixShader
 });
 var h3d_pass__$Copy_ArrayCopyShader = function() {
 	this.layer__ = 0;
@@ -31571,7 +31886,7 @@ $hxClasses["Array"] = Array;
 Array.__name__ = "Array";
 Date.prototype.__class__ = $hxClasses["Date"] = Date;
 Date.__name__ = "Date";
-haxe_Resource.content = [{ name : "R_test_txt", data : "I3N0YXJ0IHRlc3QNCg0KPnRlc3QNCjpwbGFjZTosIDpzdGF0ZToNCg0KPnBsYWNlDQpTdXBlcm1hcmNow6kNCkVjb2xlDQpFcGljZXJpZQ0KRW50cmVww7R0DQoNCj5zdGF0ZQ0KYm9uIMOpdGF0IHgyDQphbmNpZW4NCmVuIHJ1aW5lcw0KZMOpdmFzdMOpKGUpIHgwLjU"}];
+haxe_Resource.content = [{ name : "R_test_txt", data : "I2J1dHRvbiB0ZXN0IHwgR28hDQoNCj50ZXN0DQo6YnVpbGRpbmc6ICg6c3RhdGU6KQ0KDQo+YnVpbGRpbmcNCk1hbm9pcg0KQnVua2VyDQpCdXJlYXV4DQpTdXBlcm1hcmNow6kNCkVjb2xlDQpFcGljZXJpZQ0KRW50cmVww7R0DQoNCj5zdGF0ZQ0KQm9uIMOpdGF0IHgwLjINCkFuY2llbg0KUnVpbmVzDQpEw6l2YXN0w6kgeDAuNA"}];
 haxe_ds_ObjectMap.count = 0;
 haxe_MainLoop.add(hxd_System.updateCursor,-1);
 js_Boot.__toStr = ({ }).toString;
@@ -31637,6 +31952,7 @@ h3d_mat_Texture.nativeFormat = hxd_PixelFormat.RGBA;
 h3d_pass_Blur.__meta__ = { obj : { ignore : ["shader"]}};
 h3d_shader_ScreenShader.SRC = "HXSLF2gzZC5zaGFkZXIuU2NyZWVuU2hhZGVyBwEFaW5wdXQNAQICCHBvc2l0aW9uBQoBAQADAnV2BQoBAQABAAAEBWZsaXBZAwIAAAUGb3V0cHV0DQICBghwb3NpdGlvbgUMBAUABwVjb2xvcgUMBAUABAAACApwaXhlbENvbG9yBQwEAAAJDGNhbGN1bGF0ZWRVVgUKBAAACghfX2luaXRfXw4GAAALBnZlcnRleA4GAAACAgoAAAUCBgQCBwUMAggFDAUMBgQCCQUKAgMFCgUKAAALAAAFAQYEAgYFDAkDKg4ECgICBQoAAAMGAQoCAgUKBAADAgQDAwEDAAAAAAAAAAADAQMAAAAAAADwPwMFDAUMAA";
 h3d_pass__$Border_BorderShader.SRC = "HXSLHWgzZC5wYXNzLl9Cb3JkZXIuQm9yZGVyU2hhZGVyCQEFaW5wdXQNAQICCHBvc2l0aW9uBQoBAQADAnV2BQoBAQABAAAEBWZsaXBZAwIAAAUGb3V0cHV0DQICBghwb3NpdGlvbgUMBAUABwVjb2xvcgUMBAUABAAACApwaXhlbENvbG9yBQwEAAAJDGNhbGN1bGF0ZWRVVgUKBAAACgVjb2xvcgUMAgAACwhfX2luaXRfXw4GAAAMBnZlcnRleA4GAAANCGZyYWdtZW50DgYAAAMCCwAABQIGBAIHBQwCCAUMBQwGBAIJBQoCAwUKBQoAAAwAAAUBBgQCBgUMCQMqDgQKAgIFCgAAAwYBCgICBQoEAAMCBAMDAQMAAAAAAAAAAAMBAwAAAAAAAPA/AwUMBQwAAQ0AAAUBBgQCCAUMAgoFDAUMAA";
+h3d_pass_ColorMatrixShader.SRC = "HXSLGmgzZC5wYXNzLkNvbG9yTWF0cml4U2hhZGVyFQEFaW5wdXQNAQICCHBvc2l0aW9uBQoBAQADAnV2BQoBAQABAAAEBWZsaXBZAwIAAAUGb3V0cHV0DQICBghwb3NpdGlvbgUMBAUABwVjb2xvcgUMBAUABAAACApwaXhlbENvbG9yBQwEAAAJDGNhbGN1bGF0ZWRVVgUKBAAACgd0ZXh0dXJlCgIAAAsGbWF0cml4BwIAAAwIdXNlQWxwaGECAgABAAAAAAANB3VzZU1hc2sCAgABAAAAAAAOCm1hc2tJbnZlcnQCAgABAAAAAAAPD2hhc1NlY29uZE1hdHJpeAICAAEAAAAAABAHbWF0cml4MgcCAAARBG1hc2sKAgAAEghtYXNrTWF0QQULAgAAEwhtYXNrTWF0QgULAgAAFAltYXNrUG93ZXIDAgAAFQttYXNrQ2hhbm5lbAUMAgAAFghfX2luaXRfXw4GAAAXBnZlcnRleA4GAAAYBWFwcGx5DgYAABkIZnJhZ21lbnQOBgAABAIWAAAFAgYEAgcFDAIIBQwFDAYEAgkFCgIDBQoFCgAAFwAABQEGBAIGBQwJAyoOBAoCAgUKAAADBgEKAgIFCgQAAwIEAwMBAwAAAAAAAAAAAwEDAAAAAAAA8D8DBQwFDAADGAIaBWNvbG9yBQwEAAAbA21hdAcEAAAFDAUBDQsCDAIGAQIaBQwCGwcFDAYBCQMqDgIKAhoFDJIABQsBAwAAAAAAAPA/AwUMAhsHBQwFDAAAARkAAAUBCwINAgUFCBwFY29sb3IFDAQAAAkDIQ4CAgoKAgMFCgUMAAgdAnV2BQsEAAAJAykOAgIDBQoBAwAAAAAAAPA/AwULAAgeAWsDBAAACQMIDgIJAx0OAgkDIQ4CAhEKCQMoDgIJAx0OAgIdBQsCEgULAwkDHQ4CAh0FCwITBQsDBQoFDAIVBQwDAhQDAwAIHwZjb2xvcjIFDAQAAAsCDwIJAhgOAgIcBQwCEAcFDAIcBQwFDAAGBAIHBQwLAg4CCQMYDgMCHwUMCQIYDgICHAUMAgsHBQwCHgMFDAkDGA4DCQIYDgICHAUMAgsHBQwCHwUMAh4DBQwFDAUMAAYEAgcFDAkCGA4CCQMhDgICCgoCAwUKBQwCCwcFDAUMAAA";
 h3d_pass__$Copy_ArrayCopyShader.SRC = "HXSLHmgzZC5wYXNzLl9Db3B5LkFycmF5Q29weVNoYWRlcgoBBWlucHV0DQECAghwb3NpdGlvbgUKAQEAAwJ1dgUKAQEAAQAABAVmbGlwWQMCAAAFBm91dHB1dA0CAgYIcG9zaXRpb24FDAQFAAcFY29sb3IFDAQFAAQAAAgKcGl4ZWxDb2xvcgUMBAAACQxjYWxjdWxhdGVkVVYFCgQAAAoHdGV4dHVyZQsCAAALBWxheWVyAQIAAAwIX19pbml0X18OBgAADQZ2ZXJ0ZXgOBgAADghmcmFnbWVudA4GAAADAgwAAAUCBgQCBwUMAggFDAUMBgQCCQUKAgMFCgUKAAANAAAFAQYEAgYFDAkDKg4ECgICBQoAAAMGAQoCAgUKBAADAgQDAwEDAAAAAAAAAAADAQMAAAAAAADwPwMFDAUMAAEOAAAFAQYEAggFDAkDIQ4CAgoLCQMpDgICCQUKCQMmDgECCwEDBQsFDAUMAA";
 h3d_pass__$Copy_CopyShader.SRC = "HXSLGWgzZC5wYXNzLl9Db3B5LkNvcHlTaGFkZXIJAQVpbnB1dA0BAgIIcG9zaXRpb24FCgEBAAMCdXYFCgEBAAEAAAQFZmxpcFkDAgAABQZvdXRwdXQNAgIGCHBvc2l0aW9uBQwEBQAHBWNvbG9yBQwEBQAEAAAICnBpeGVsQ29sb3IFDAQAAAkMY2FsY3VsYXRlZFVWBQoEAAAKB3RleHR1cmUKAgAACwhfX2luaXRfXw4GAAAMBnZlcnRleA4GAAANCGZyYWdtZW50DgYAAAMCCwAABQIGBAIHBQwCCAUMBQwGBAIJBQoCAwUKBQoAAAwAAAUBBgQCBgUMCQMqDgQKAgIFCgAAAwYBCgICBQoEAAMCBAMDAQMAAAAAAAAAAAMBAwAAAAAAAPA/AwUMBQwAAQ0AAAUBBgQCCAUMCQMhDgICCgoCCQUKBQwFDAA";
 h3d_pass__$CubeCopy_CubeCopyShader.SRC = "HXSLIWgzZC5wYXNzLl9DdWJlQ29weS5DdWJlQ29weVNoYWRlcgoBBWlucHV0DQECAghwb3NpdGlvbgUKAQEAAwJ1dgUKAQEAAQAABAVmbGlwWQMCAAAFBm91dHB1dA0CAgYIcG9zaXRpb24FDAQFAAcFY29sb3IFDAQFAAQAAAgKcGl4ZWxDb2xvcgUMBAAACQxjYWxjdWxhdGVkVVYFCgQAAAoHdGV4dHVyZQwCAAALA21hdAYCAAAMCF9faW5pdF9fDgYAAA0GdmVydGV4DgYAAA4IZnJhZ21lbnQOBgAAAwIMAAAFAgYEAgcFDAIIBQwFDAYEAgkFCgIDBQoFCgAADQAABQEGBAIGBQwJAyoOBAoCAgUKAAADBgEKAgIFCgQAAwIEAwMBAwAAAAAAAAAAAwEDAAAAAAAA8D8DBQwFDAABDgAABQIIDwJ1dgUKBAAABgMGAQIJBQoBAwAAAAAAAABAAwUKAQMAAAAAAADwPwMFCgAGBAIIBQwJAyEOAgIKDAkDHw4BBgEJAykOAgIPBQoBAwAAAAAAAPA/AwULAgsGBQsFCwUMBQwA";

@@ -7,7 +7,9 @@ class Main extends dn.Process {
 
 		jBody = new J("body");
 		hxd.Res.initEmbed();
-		new RandomParser( hxd.Res.test.entry.getText() );
+		var rdata = RandomParser.run( hxd.Res.test.entry.getText() );
+		var r = new Randomizer(rdata);
+		trace(r.draw("test"));
 	}
 
 	function notify(str:String) {
