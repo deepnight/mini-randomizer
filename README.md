@@ -1,18 +1,14 @@
-# Simple word scrambler
+# RPG randomizer
 
 ## About
 
-A very simple word scrambler created for a teacher friend of mine.
+A simple tool to generate things for tabletop RPGs. For example, it can be used to generate random locations in a post-apocalyptic, random encounters or loots.
 
-**Note**: the app is only in French, but very easy to translate or adapt to your needs.
+This tool was inspired by *RandomGen* from Orteil (https://orteil.dashnet.org/randomgen/). Fun fact: I developed a very similar tech years ago, for the hacking game "Intrusion" (https://deepnight.net/games/motion-twin/intrusion/), to generate file contents in hacked computers.
 
-[Online version](https://deepnight.github.io/mini-scrambler/) |
-[Download ZIP](https://github.com/deepnight/mini-scrambler/releases/latest)
+[Online demo](https://deepnight.github.io/mini-randomizer/) |
 
+## File format
 
-## Usage
-1. Type words in the left column,
-2. Hit "Scramble" button,
-3. Get your scrambled words in the right column.
-
+Coming soon
 
