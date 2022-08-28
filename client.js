@@ -55,13 +55,6 @@ dn_struct_FixedArray.prototype = {
 	}
 	,__class__: dn_struct_FixedArray
 };
-var haxe_ds_StringMap = function() {
-	this.h = Object.create(null);
-};
-haxe_ds_StringMap.__name__ = "haxe.ds.StringMap";
-haxe_ds_StringMap.prototype = {
-	__class__: haxe_ds_StringMap
-};
 var dn_Process = function(parent) {
 	this.tmpProfilerTimes = new haxe_ds_StringMap();
 	this._initOnceDone = false;
@@ -1047,7 +1040,7 @@ var App = function() {
 	this.jBody = $("body");
 	this.jButtons = this.jBody.find("#buttons");
 	this.jOutput = this.jBody.find("#output");
-	var raw = "#button Nouveau lieu | location\r\n#button Debug | location | 10\r\n#button Test | occupier | 5\r\n\r\n\r\n>location\r\n:ancientBuilding: :locationDetails:\r\n:outdoorLocation: :locationDetails:\r\n\r\n>locationDetails\r\n (:condition:)\\n  :locationFeature:\\n  :occupier:\\n  :loot:\r\n\r\n>ancientBuilding\r\nManoir x0.5\r\nBunker x0.3\r\nMaison\r\nImmeuble d'habitation\r\nCampement\r\nGymnase\r\nChâteau d'eau\r\nBureaux\r\nSupermarché x0.5\r\nRestaurant\r\nBar\r\nEcole\r\nCrèche\r\nEpicerie\r\nEntrepôt\r\nSalle de sport\r\nHôpital x0.5\r\nCabinet médical\r\nMagasin\r\nArmurier x0.3\r\nGare\r\nGarage\r\nStation service\r\nCabane\r\nMarché couvert\r\nPrison\r\nUsine\r\nLaboratoire\r\nLibrairie\r\nCommissariat\r\nChenil\r\nMusée\r\nBâtiment administratif\r\nBoîte de nuit\r\n\r\n>outdoorLocation\r\nTerrain de sport (:sport:)\r\nLac\r\nRoute\r\nAutoroute\r\nParc\r\nPlantation\r\nCimetière\r\nStation tramway\r\nAire de jeux\r\nChantier\r\nParking\r\nCratère\r\nCamion\r\nTrain\r\nMarécage\r\nForêt\r\nCarrière\r\nDéchetterie\r\nConvoi\r\nParc d'attraction\r\nEolienne\r\nPanneaux solaires\r\nStade\r\nSite d'un crash\r\nEpave d'un navire\r\n\r\n>sport\r\nGolf\r\nFootball\r\nBasketball\r\nTir x0.5\r\nNatation\r\nAthlétisme\r\nTennis\r\n\r\n>newBuilding\r\nPlace forte\r\nAvant-poste\r\nStockage\r\nHabitation\r\nAtelier\r\nAbri anti-atomique x0.5\r\n\r\n>condition\r\nStructure en bon état x0.2\r\nStructure ancienne x2\r\nStructure récemment rénovée x0.3\r\nStructure rasée x0.4\r\n\r\n>locationFeature\r\nRien de spécial x2\r\nIncendié x0.5\r\nBombardé\r\nIrradié x0.5\r\nPiégé\r\nDécoration étrange\r\nCamouflé\r\nAmbiance glauque\r\nBombe non-désarmée x0.1\r\nTransformé en :newBuilding:\r\n\r\n>occupier\r\nAucun occupant x2\r\nMonstres mineurs\r\nMonstre majeur\r\nVermine\r\nPillards [:hostility:, :presence:]\r\n:1-2: marchand(s): :trading:\r\nErmite [:npcStatus:, :behaviour:, :presence:]\r\nPetite communauté [:npcStatus:, :behaviour:]\r\nRobot [:robotStatus:, :behaviour:, :presence:] x100\r\n\r\n>behaviour\r\nAmical\r\nAttitude neutre x4\r\nHostile (:hostility:) x2\r\n\r\n>hostility\r\nCannibale\r\nMéfiant\r\nTerritorial\r\nCache un secret\r\nPeur des PJs\r\n\r\n>npcStatus\r\n- x5\r\nAffamé\r\nAssoiffé\r\nMalade\r\nIrradié\r\nBlessé\r\nEstropié\r\nMourrant\r\nMort(s)\r\n\r\n>robotStatus\r\nUsé\r\nConception Artisanale\r\nEstropié\r\nEtrangement décoré\r\nFortement modifié\r\n\r\n>presence\r\nAbsent pour le moment\r\nPrésent x3\r\n\r\n>trading\r\nNourriture/Eau x2\r\nMunitions\r\nArmes\r\nArmures\r\nMods\r\n\r\n>loot\r\nBabiole\r\nObjet précieux\r\nNourriture\r\nEau\r\nArme\r\nArmure\r\nMod d'arme\r\nMod d'armure\r\nMunitions";
+	var raw = "#button Nouveau lieu | location\r\n#button Debug | location | 10\r\n#button Test | occupier | 5\r\n\r\n\r\n>location\r\n:ancientBuilding: :locationDetails:\r\n:outdoorLocation: :locationDetails:\r\n\r\n>locationDetails\r\n (:condition:)\\n  :locationFeature:\\n  :occupier:\\n  :loot:\r\n\r\n>ancientBuilding\r\nManoir x0.5\r\nBunker x0.3\r\nMaison\r\nImmeuble d'habitation\r\nCampement\r\nGymnase\r\nChâteau d'eau\r\nBureaux\r\nSupermarché x0.5\r\nRestaurant\r\nBar\r\nEcole\r\nCrèche\r\nEpicerie\r\nEntrepôt\r\nSalle de sport\r\nHôpital x0.5\r\nCabinet médical\r\nMagasin\r\nArmurier x0.3\r\nGare\r\nGarage\r\nStation service\r\nCabane\r\nMarché couvert\r\nPrison\r\nUsine\r\nLaboratoire\r\nLibrairie\r\nCommissariat\r\nChenil\r\nMusée\r\nBâtiment administratif\r\nBoîte de nuit\r\n\r\n>outdoorLocation\r\nTerrain de sport (:sport:)\r\nLac\r\nRoute\r\nAutoroute\r\nParc\r\nPlantation\r\nCimetière\r\nStation tramway\r\nAire de jeux\r\nChantier\r\nParking\r\nCratère\r\nCamion\r\nTrain\r\nMarécage\r\nForêt\r\nCarrière\r\nDéchetterie\r\nConvoi\r\nParc d'attraction\r\nEolienne\r\nPanneaux solaires\r\nStade\r\nSite d'un crash\r\nEpave d'un navire\r\n\r\n>sport\r\nGolf\r\nFootball\r\nBasketball\r\nTir x0.5\r\nNatation\r\nAthlétisme\r\nTennis\r\n\r\n>newBuilding\r\nPlace forte\r\nAvant-poste\r\nStockage\r\nHabitation\r\nAtelier\r\nAbri anti-atomique x0.5\r\n\r\n>condition\r\nStructure en bon état x0.2\r\nStructure ancienne x2\r\nStructure récemment rénovée x0.3\r\nStructure rasée x0.4\r\n\r\n>locationFeature\r\nRien de spécial x2\r\nIncendié x0.5\r\nBombardé\r\nIrradié x0.5\r\nPiégé\r\nDécoration étrange\r\nCamouflé\r\nAmbiance glauque\r\nBombe non-désarmée x0.1\r\nTransformé en :newBuilding:\r\n\r\n>occupier\r\nAucun occupant x2\r\nMonstres mineurs\r\nMonstre majeur\r\nVermine\r\nPillards [:hostility:, :presence:]\r\n:1-2: marchand(s): :trading:\r\nErmite [:npcStatus:, :behaviour:, :presence:]\r\nPetite communauté [:npcStatus:, :behaviour:]\r\nRobot [:robotStatus:, :behaviour:, :presence:] x100\r\n\r\n>behaviour\r\nAmical\r\nAttitude neutre x4\r\nHostile (:hostility:) x2\r\n\r\n>hostility\r\nCannibale\r\nMéfiant\r\nTerritorial\r\nCache un secret\r\nPeur des PJs\r\n\r\n>npcStatus\r\n- x5\r\nAffamé\r\nAssoiffé\r\nMalade\r\nIrradié\r\nBlessé\r\nEstropié\r\nMourrant\r\nMort(s)\r\n\r\n>robotStatus\r\nUsé\r\nConception artisanale\r\nEstropié\r\nEtrangement décoré\r\nFortement modifié\r\n\r\n>presence\r\nAbsent pour le moment\r\nPrésent x3\r\n\r\n>trading\r\nNourriture/Eau x2\r\nMunitions\r\nArmes\r\nArmures\r\nMods\r\n\r\n>loot\r\nBabiole\r\nObjet précieux\r\nNourriture\r\nEau\r\nArme\r\nArmure\r\nMod d'arme\r\nMod d'armure\r\nMunitions";
 	var rdata = RandomParser.run(raw);
 	var r = new Randomizer(rdata);
 	haxe_Log.trace(r.draw("test"),{ fileName : "src/App.hx", lineNumber : 20, className : "App", methodName : "new"});
@@ -2056,33 +2049,6 @@ dn_Tweenie.prototype = {
 		}
 	}
 	,__class__: dn_Tweenie
-};
-var haxe_ds_IntMap = function() {
-	this.h = { };
-};
-haxe_ds_IntMap.__name__ = "haxe.ds.IntMap";
-haxe_ds_IntMap.prototype = {
-	remove: function(key) {
-		if(!this.h.hasOwnProperty(key)) {
-			return false;
-		}
-		delete(this.h[key]);
-		return true;
-	}
-	,keys: function() {
-		var a = [];
-		for( var key in this.h ) if(this.h.hasOwnProperty(key)) a.push(+key);
-		return new haxe_iterators_ArrayIterator(a);
-	}
-	,iterator: function() {
-		return { ref : this.h, it : this.keys(), hasNext : function() {
-			return this.it.hasNext();
-		}, next : function() {
-			var i = this.it.next();
-			return this.ref[i];
-		}};
-	}
-	,__class__: haxe_ds_IntMap
 };
 var dn_struct_RandList = function(rndFunc,arr) {
 	if(rndFunc != null) {
@@ -19764,6 +19730,33 @@ haxe_ds_EnumValueMap.prototype = $extend(haxe_ds_BalancedTree.prototype,{
 	}
 	,__class__: haxe_ds_EnumValueMap
 });
+var haxe_ds_IntMap = function() {
+	this.h = { };
+};
+haxe_ds_IntMap.__name__ = "haxe.ds.IntMap";
+haxe_ds_IntMap.prototype = {
+	remove: function(key) {
+		if(!this.h.hasOwnProperty(key)) {
+			return false;
+		}
+		delete(this.h[key]);
+		return true;
+	}
+	,keys: function() {
+		var a = [];
+		for( var key in this.h ) if(this.h.hasOwnProperty(key)) a.push(+key);
+		return new haxe_iterators_ArrayIterator(a);
+	}
+	,iterator: function() {
+		return { ref : this.h, it : this.keys(), hasNext : function() {
+			return this.it.hasNext();
+		}, next : function() {
+			var i = this.it.next();
+			return this.ref[i];
+		}};
+	}
+	,__class__: haxe_ds_IntMap
+};
 var haxe_ds_List = function() {
 	this.length = 0;
 };
@@ -19850,6 +19843,13 @@ haxe_ds_ObjectMap.prototype = {
 		return new haxe_iterators_ArrayIterator(a);
 	}
 	,__class__: haxe_ds_ObjectMap
+};
+var haxe_ds_StringMap = function() {
+	this.h = Object.create(null);
+};
+haxe_ds_StringMap.__name__ = "haxe.ds.StringMap";
+haxe_ds_StringMap.prototype = {
+	__class__: haxe_ds_StringMap
 };
 var haxe_exceptions_PosException = function(message,previous,pos) {
 	haxe_Exception.call(this,message,previous);
