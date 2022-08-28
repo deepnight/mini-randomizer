@@ -1,10 +1,10 @@
-#button Nouveau lieu | location 
+#button Nouveau lieu | location
 #button Debug | location | 10
 #button Test | occupier | 5
 
 
 >location
-:ancientBuilding: :locationDetails: x3
+:ancientBuilding: :locationDetails:
 :outdoorLocation: :locationDetails:
 
 >locationDetails
@@ -113,11 +113,11 @@ Aucun occupant x2
 Monstres mineurs
 Monstre majeur
 Vermine
-Pillards [:presence:]
+Pillards [:hostility:, :presence:]
 :1-2: marchand(s): :trading:
-Ermite :npcStatus: [:behaviour:, :presence:]
-Petite communauté :npcStatus: [:behaviour:]
-Robot :npcStatus: [:behaviour:, :presence:]
+Ermite [:npcStatus:, :behaviour:, :presence:]
+Petite communauté [:npcStatus:, :behaviour:]
+Robot [:robotStatus:, :behaviour:, :presence:] x100
 
 >behaviour
 Amical
@@ -141,6 +141,13 @@ Blessé
 Estropié
 Mourrant
 Mort(s)
+
+>robotStatus
+Usé
+Conception artisanale
+Estropié
+Etrangement décoré
+Fortement modifié
 
 >presence
 Absent pour le moment
