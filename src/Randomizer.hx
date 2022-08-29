@@ -9,9 +9,11 @@ class Randomizer {
 			switch o.opt {
 				case "button":
 					var jBt = new J('<button>${o.args[0]}</button>');
-					jBt.click( _->{
+					jBt.click( (ev:js.jquery.Event)->{
 						app.clearOutput();
 						var count = o.args[2]==null ? 1 : Std.parseInt(o.args[2]);
+						if( ev.shiftKey )
+							count = 10;
 						for(i in 0...count)
 							app.output( draw(o.args[1]) );
 					});
@@ -41,7 +43,6 @@ class Randomizer {
 		var numberReg = ~/^([0-9]+)-([0-9]+)$/i;
 		while( refReg.match(out) ) {
 			var k = refReg.matched(1);
-			trace(k);
 			if( numberReg.match(k) ) {
 				// Random number
 				var min = Std.parseInt( numberReg.matched(1) );
