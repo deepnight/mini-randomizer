@@ -1,7 +1,7 @@
 import aceEditor.AceEditor;
 
 typedef Settings = {
-	var lastFile: String;
+	var curFile: String;
 }
 
 class App extends dn.Process {
@@ -13,7 +13,6 @@ class App extends dn.Process {
 	public var jOutput : J;
 	var storage : dn.data.LocalStorage;
 	var settings : Settings;
-	var curFile : Null<String>;
 	var curEditor : Null<AceEditor>;
 	var allFiles : Map<String,String>;
 
@@ -29,7 +28,7 @@ class App extends dn.Process {
 		// Init cookie
 		storage = dn.data.LocalStorage.createJsonStorage("settings");
 		settings = storage.readObject({
-			lastFile: null,
+			curFile: null,
 		});
 		saveSettings();
 
@@ -48,14 +47,14 @@ class App extends dn.Process {
 		});
 
 		// Reload last file
-		if( settings.lastFile!=null ) {
-			if( !allFiles.exists(settings.lastFile) ) {
-				settings.lastFile = curFile = null;
+		if( settings.curFile!=null ) {
+			if( !allFiles.exists(settings.curFile) ) {
+				settings.curFile = null;
 				saveSettings();
 			}
 			else {
-				jSelect.val(settings.lastFile);
-				useFile( settings.lastFile );
+				jSelect.val(settings.curFile);
+				useFile( settings.curFile );
 			}
 	}
 
@@ -70,19 +69,19 @@ class App extends dn.Process {
 
 		// Kill existing editor
 		if( curEditor!=null ) {
-			allFiles.set(curFile, curEditor.getValue());
+			allFiles.set(settings.curFile, curEditor.getValue());
 
 			jBody.removeClass("editing");
 			curEditor.destroy();
 			curEditor = null;
 			jEditor.empty();
 
-			useFile(curFile);
+			useFile(settings.curFile);
 		}
 
 		// Create editor
 		if( active ) {
-			jEditor.text(allFiles.get(curFile));
+			jEditor.text( allFiles.get(settings.curFile) );
 			jBody.addClass("editing");
 			curEditor = AceEditor.edit("editor");
 			curEditor.setTheme("ace/theme/monokai");
@@ -106,7 +105,7 @@ class App extends dn.Process {
 		var rdata = RandomParser.run(raw);
 		new Randomizer(rdata);
 
-		curFile = f;
+		settings.curFile = f;
 		saveSettings();
 	}
 
