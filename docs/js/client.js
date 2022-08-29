@@ -67,7 +67,10 @@ $hxClasses["haxe.ds.StringMap"] = haxe_ds_StringMap;
 haxe_ds_StringMap.__name__ = "haxe.ds.StringMap";
 haxe_ds_StringMap.__interfaces__ = [haxe_IMap];
 haxe_ds_StringMap.prototype = {
-	__class__: haxe_ds_StringMap
+	iterator: function() {
+		return new haxe_ds__$StringMap_StringMapValueIterator(this.h);
+	}
+	,__class__: haxe_ds_StringMap
 };
 var dn_Process = function(parent) {
 	this.tmpProfilerTimes = new haxe_ds_StringMap();
@@ -1060,7 +1063,7 @@ var App = function() {
 	this.settings = this.storage.readObject({ lastFile : null});
 	this.saveSettings();
 	var allFiles_h = Object.create(null);
-	allFiles_h["dataFiles/fallout.txt"] = "#button Nouveau lieu | location\r\n#button Debug | location | 10\r\n#button Test | occupier | 5\r\n\r\n\r\n>location\r\n:ancientBuilding: :locationDetails:\r\n:outdoorLocation: :locationDetails:\r\n\r\n>locationDetails\r\n (:condition:)\\n  :locationFeature:\\n  :occupier:\\n  :loot:\r\n\r\n>ancientBuilding\r\nManoir x0.5\r\nBunker x0.3\r\nMaison\r\nImmeuble d'habitation\r\nCampement\r\nGymnase\r\nChâteau d'eau\r\nBureaux\r\nSupermarché x0.5\r\nRestaurant\r\nBar\r\nEcole\r\nCrèche\r\nEpicerie\r\nEntrepôt\r\nSalle de sport\r\nHôpital x0.5\r\nCabinet médical\r\nMagasin\r\nArmurier x0.3\r\nGare\r\nGarage\r\nStation service\r\nCabane\r\nMarché couvert\r\nPrison\r\nUsine\r\nLaboratoire\r\nLibrairie\r\nCommissariat\r\nChenil\r\nMusée\r\nBâtiment administratif\r\nBoîte de nuit\r\n\r\n>outdoorLocation\r\nTerrain de sport (:sport:)\r\nLac\r\nRoute\r\nAutoroute\r\nParc\r\nPlantation\r\nCimetière\r\nStation tramway\r\nAire de jeux\r\nChantier\r\nParking\r\nCratère\r\nCamion\r\nTrain\r\nMarécage\r\nForêt\r\nCarrière\r\nDéchetterie\r\nConvoi\r\nParc d'attraction\r\nEolienne\r\nPanneaux solaires\r\nStade\r\nSite d'un crash\r\nEpave d'un navire\r\n\r\n>sport\r\nGolf\r\nFootball\r\nBasketball\r\nTir x0.5\r\nNatation\r\nAthlétisme\r\nTennis\r\n\r\n>newBuilding\r\nPlace forte\r\nAvant-poste\r\nStockage\r\nHabitation\r\nAtelier\r\nAbri anti-atomique x0.5\r\n\r\n>condition\r\nStructure en bon état x0.2\r\nStructure ancienne x2\r\nStructure récemment rénovée x0.3\r\nStructure rasée x0.4\r\n\r\n>locationFeature\r\nRien de spécial x2\r\nIncendié x0.5\r\nBombardé\r\nIrradié x0.5\r\nPiégé\r\nDécoration étrange\r\nCamouflé\r\nAmbiance glauque\r\nBombe non-désarmée x0.1\r\nTransformé en :newBuilding:\r\n\r\n>occupier\r\nAucun occupant x2\r\nMonstres mineurs\r\nMonstre majeur\r\nVermine\r\nPillards [:hostility:, :presence:]\r\n:1-2: marchand(s): :trading:\r\nErmite [:npcStatus:, :behaviour:, :presence:]\r\nPetite communauté [:npcStatus:, :behaviour:]\r\nRobot [:robotStatus:, :behaviour:, :presence:] x100\r\n\r\n>behaviour\r\nAmical\r\nAttitude neutre x4\r\nHostile (:hostility:) x2\r\n\r\n>hostility\r\nCannibale\r\nMéfiant\r\nTerritorial\r\nCache un secret\r\nPeur des PJs\r\n\r\n>npcStatus\r\n- x5\r\nAffamé\r\nAssoiffé\r\nMalade\r\nIrradié\r\nBlessé\r\nEstropié\r\nMourrant\r\nMort(s)\r\n\r\n>robotStatus\r\nUsé\r\nConception artisanale\r\nEstropié\r\nEtrangement décoré\r\nFortement modifié\r\n\r\n>presence\r\nAbsent pour le moment\r\nPrésent x3\r\n\r\n>trading\r\nNourriture/Eau x2\r\nMunitions\r\nArmes\r\nArmures\r\nMods\r\n\r\n>loot\r\nBabiole\r\nObjet précieux\r\nNourriture\r\nEau\r\nArme\r\nArmure\r\nMod d'arme\r\nMod d'armure\r\nMunitions";
+	allFiles_h["dataFiles/fallout.txt"] = "#button Lieu | location\r\n#button Campement | camp\r\n#button Rencontre | encounter\r\n#button Loot | loot\r\n#button Test | encounter | 10\r\n\r\n\r\n>location\r\n:ancientBuilding: :locationDetails:\r\n:outdoorLocation: :locationDetails:\r\n\r\n>locationDetails\r\n (:condition:)\\n  :locationFeature:\\n  :occupier:\\n  :loot:\r\n\r\n>ancientBuilding\r\nManoir x0.5\r\nBunker x0.3\r\nMaison\r\nImmeuble d'habitation\r\nCampement\r\nGymnase\r\nChâteau d'eau\r\nBureaux\r\nSupermarché x0.5\r\nRestaurant\r\nBar\r\nEcole\r\nCrèche\r\nEpicerie\r\nEntrepôt\r\nSalle de sport\r\nHôpital x0.5\r\nCabinet médical\r\nMagasin\r\nArmurier x0.3\r\nGare\r\nGarage\r\nStation service\r\nCabane\r\nMarché couvert\r\nPrison\r\nUsine\r\nLaboratoire\r\nLibrairie\r\nCommissariat\r\nChenil\r\nMusée\r\nBâtiment administratif\r\nBoîte de nuit\r\n\r\n>outdoorLocation\r\nTerrain de sport (:sport:)\r\nLac\r\nRoute\r\nAutoroute\r\nParc\r\nPlantation\r\nCimetière\r\nStation tramway\r\nAire de jeux\r\nChantier\r\nParking\r\nCratère\r\nCamion\r\nTrain\r\nMarécage\r\nForêt\r\nCarrière\r\nDéchetterie\r\nConvoi\r\nParc d'attraction\r\nEolienne\r\nPanneaux solaires\r\nStade\r\nSite d'un crash\r\nEpave d'un navire\r\n\r\n>sport\r\nGolf\r\nFootball\r\nBasketball\r\nTir x0.5\r\nNatation\r\nAthlétisme\r\nTennis\r\n\r\n>newBuilding\r\nPlace forte\r\nAvant-poste\r\nStockage\r\nHabitation\r\nAtelier\r\nAbri anti-atomique x0.5\r\n\r\n>condition\r\nStructure en bon état x0.2\r\nStructure ancienne x2\r\nStructure récemment rénovée x0.3\r\nStructure rasée x0.4\r\n\r\n>locationFeature\r\nRien de spécial x2\r\nIncendié x0.5\r\nBombardé\r\nIrradié x0.5\r\nPiégé\r\nDécoration étrange\r\nCamouflé\r\nAmbiance glauque\r\nBombe non-désarmée x0.1\r\nTransformé en :newBuilding:\r\n\r\n>occupier\r\nAucun occupant x10\r\n:encounter: [:presence:] x5\r\nPetite communauté [:npcStatus:, :behaviour:]\r\nDéfenses automatisées [:robotStatus:]\r\n\r\n>encounter\r\nMonstres mineurs\r\nMonstre majeur\r\nVermine\r\nPillards\r\nVoleur\r\n:1-2: marchand(s) avec escorte: :trading:\r\nErmite [:npcAspect:, :npcStatus:, :behaviour:]\r\nFou [:npcAspect:, :npcStatus:, :behaviour:]\r\nGroupe d'aventuriers [:npcAspect:, :npcStatus:, :behaviour:] x0.2\r\nRobot [:robotStatus:, :behaviour:]\r\nConfrérie de l'Acier [:npcStatus:, ::behaviour:] x0.2\r\n\r\n>npcAspect\r\nCostume et cravate\r\nTenue de sport\r\nTreillis militaire\r\nCostume excentrique\r\nVêtements trop petits\r\nArmure de fortune\r\nTenue militaire avancée x0.5\r\nNu x0.2\r\nCostume médiéval\r\nTenue d'habitant d'un abri (:10-40:)\r\nHaillons\r\nBleu de travail\r\nT-shirt geek\r\nManteau long\r\nTenue de cowboy\r\nCostume ancien\r\nCosplay furry x0.2\r\n\r\n\r\n>behaviour\r\nAmical x0.3\r\nAttitude neutre x4\r\nHostile (:hostility:) x2\r\nMort(s) x0.3\r\n\r\n>hostility\r\nCannibale\r\nMéfiant\r\nTerritorial\r\nCache un secret\r\nPeur des PJs\r\n\r\n>npcStatus\r\nBonne santé x5\r\nCaché\r\nAffamé\r\nAssoiffé\r\nFou\r\nMalade\r\nIrradié\r\nBlessé\r\nEstropié\r\n\r\n>robotStatus\r\nEn état de marche\r\nConception artisanale\r\nEstropié\r\nEtrangement décoré\r\nRôle modifié\r\nFortement customisé\r\n\r\n>presence\r\nAbsent pour le moment\r\nPrésent x10\r\n\r\n>trading\r\nNourriture/Eau x2\r\nMunitions\r\nArmes\r\nArmures\r\nMods\r\n\r\n>loot\r\nBabiole\r\nObjet précieux\r\nNourriture\r\nEau\r\nArme\r\nArmure\r\nMod d'arme\r\nMod d'armure\r\nMunitions\r\n\r\n\r\n>camp\r\n:weather:, :campEvent:\r\n\r\n>campEvent\r\nRien de spécial x10\r\n:encounter: x3\r\nMaraudeur non agressif\r\nObservateur étrange\r\nLumières au loin\r\nOmbres dans la nuit\r\nLumières dans le ciel\r\nAppareil volant x0.2\r\nIncendie au loin x0.2\r\nCoups de feu\r\nExplosion\r\nBruits de moteur\r\nCraquements\r\nGrognements\r\nMusique\r\n\r\n\r\n>weather\r\nTemps clair x8\r\nPluie légère x3\r\nPluie intense\r\nBrouillard x3\r\nBrouillard radioactif x0.3\r\nPluie radioactive x0.5\r\nOrage\r\nOrage magnétique x0.6\r\nGrand vent\r\n";
 	allFiles_h["dataFiles/demo.txt"] = "#button Pick random examples | demo\r\n\r\n\r\n>demo\r\na\r\nb\r\nc\r\n";
 	var jSelect = this.jBody.find("#files");
 	jSelect.append("<option value=\"\"/>");
@@ -1466,9 +1469,12 @@ var Randomizer = function(data) {
 		if(o[0].opt == "button") {
 			var jBt = $("<button>" + o[0].args[0] + "</button>");
 			jBt.click((function(o) {
-				return function(_) {
+				return function(ev) {
 					App.ME.clearOutput();
 					var count = o[0].args[2] == null ? 1 : Std.parseInt(o[0].args[2]);
+					if(ev.shiftKey) {
+						count = 10;
+					}
 					var _g = 0;
 					var _g1 = count;
 					while(_g < _g1) {
@@ -1486,7 +1492,7 @@ var Randomizer = function(data) {
 $hxClasses["Randomizer"] = Randomizer;
 Randomizer.__name__ = "Randomizer";
 Randomizer.error = function(msg) {
-	haxe_Log.trace("ERROR: " + msg,{ fileName : "c:\\projects\\mini-randomizer\\src\\Randomizer.hx", lineNumber : 25, className : "Randomizer", methodName : "error"});
+	haxe_Log.trace("ERROR: " + msg,{ fileName : "src/Randomizer.hx", lineNumber : 27, className : "Randomizer", methodName : "error"});
 };
 Randomizer.prototype = {
 	draw: function(key) {
@@ -1518,7 +1524,6 @@ Randomizer.prototype = {
 		var numberReg = new EReg("^([0-9]+)-([0-9]+)$","i");
 		while(refReg.match(out)) {
 			var k = refReg.matched(1);
-			haxe_Log.trace(k,{ fileName : "c:\\projects\\mini-randomizer\\src\\Randomizer.hx", lineNumber : 44, className : "Randomizer", methodName : "draw"});
 			if(numberReg.match(k)) {
 				var min = Std.parseInt(numberReg.matched(1));
 				var max = Std.parseInt(numberReg.matched(2));
@@ -22330,6 +22335,23 @@ haxe_ds_ObjectMap.prototype = {
 		return new haxe_iterators_ArrayIterator(a);
 	}
 	,__class__: haxe_ds_ObjectMap
+};
+var haxe_ds__$StringMap_StringMapValueIterator = function(h) {
+	this.h = h;
+	this.keys = Object.keys(h);
+	this.length = this.keys.length;
+	this.current = 0;
+};
+$hxClasses["haxe.ds._StringMap.StringMapValueIterator"] = haxe_ds__$StringMap_StringMapValueIterator;
+haxe_ds__$StringMap_StringMapValueIterator.__name__ = "haxe.ds._StringMap.StringMapValueIterator";
+haxe_ds__$StringMap_StringMapValueIterator.prototype = {
+	hasNext: function() {
+		return this.current < this.length;
+	}
+	,next: function() {
+		return this.h[this.keys[this.current++]];
+	}
+	,__class__: haxe_ds__$StringMap_StringMapValueIterator
 };
 var haxe_exceptions_PosException = function(message,previous,pos) {
 	haxe_Exception.call(this,message,previous);

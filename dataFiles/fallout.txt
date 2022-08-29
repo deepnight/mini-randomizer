@@ -1,6 +1,8 @@
-#button Nouveau lieu | location
-#button Debug | location | 10
-#button Test | occupier | 5
+#button Lieu | location
+#button Campement | camp
+#button Rencontre | encounter
+#button Loot | loot
+#button Test | encounter | 10
 
 
 >location
@@ -109,20 +111,49 @@ Bombe non-désarmée x0.1
 Transformé en :newBuilding:
 
 >occupier
-Aucun occupant x2
+Aucun occupant x10
+:encounter: [:presence:] x5
+Petite communauté [:npcStatus:, :behaviour:]
+Défenses automatisées [:robotStatus:]
+
+>encounter
 Monstres mineurs
 Monstre majeur
 Vermine
-Pillards [:hostility:, :presence:]
-:1-2: marchand(s): :trading:
-Ermite [:npcStatus:, :behaviour:, :presence:]
-Petite communauté [:npcStatus:, :behaviour:]
-Robot [:robotStatus:, :behaviour:, :presence:] x100
+Pillards
+Voleur
+:1-2: marchand(s) avec escorte: :trading:
+Ermite [:npcAspect:, :npcStatus:, :behaviour:]
+Fou [:npcAspect:, :npcStatus:, :behaviour:]
+Groupe d'aventuriers [:npcAspect:, :npcStatus:, :behaviour:] x0.2
+Robot [:robotStatus:, :behaviour:]
+Confrérie de l'Acier [:npcStatus:, ::behaviour:] x0.2
+
+>npcAspect
+Costume et cravate
+Tenue de sport
+Treillis militaire
+Costume excentrique
+Vêtements trop petits
+Armure de fortune
+Tenue militaire avancée x0.5
+Nu x0.2
+Costume médiéval
+Tenue d'habitant d'un abri (:10-40:)
+Haillons
+Bleu de travail
+T-shirt geek
+Manteau long
+Tenue de cowboy
+Costume ancien
+Cosplay furry x0.2
+
 
 >behaviour
-Amical
+Amical x0.3
 Attitude neutre x4
 Hostile (:hostility:) x2
+Mort(s) x0.3
 
 >hostility
 Cannibale
@@ -132,26 +163,27 @@ Cache un secret
 Peur des PJs
 
 >npcStatus
-- x5
+Bonne santé x5
+Caché
 Affamé
 Assoiffé
+Fou
 Malade
 Irradié
 Blessé
 Estropié
-Mourrant
-Mort(s)
 
 >robotStatus
-Usé
+En état de marche
 Conception artisanale
 Estropié
 Etrangement décoré
-Fortement modifié
+Rôle modifié
+Fortement customisé
 
 >presence
 Absent pour le moment
-Présent x3
+Présent x10
 
 >trading
 Nourriture/Eau x2
@@ -170,3 +202,36 @@ Armure
 Mod d'arme
 Mod d'armure
 Munitions
+
+
+>camp
+:weather:, :campEvent:
+
+>campEvent
+Rien de spécial x10
+:encounter: x3
+Maraudeur non agressif
+Observateur étrange
+Lumières au loin
+Ombres dans la nuit
+Lumières dans le ciel
+Appareil volant x0.2
+Incendie au loin x0.2
+Coups de feu
+Explosion
+Bruits de moteur
+Craquements
+Grognements
+Musique
+
+
+>weather
+Temps clair x8
+Pluie légère x3
+Pluie intense
+Brouillard x3
+Brouillard radioactif x0.3
+Pluie radioactive x0.5
+Orage
+Orage magnétique x0.6
+Grand vent
