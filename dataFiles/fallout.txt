@@ -15,6 +15,7 @@
 >ancientBuilding
 Manoir x0.5
 Bunker x0.3
+Petit abri anti-atomique
 Maison
 Immeuble d'habitation
 Campement
@@ -22,11 +23,11 @@ Gymnase
 Château d'eau
 Bureaux
 Supermarché x0.5
+Epicerie
 Restaurant
 Bar
 Ecole
 Crèche
-Epicerie
 Entrepôt
 Salle de sport
 Hôpital x0.5
@@ -111,7 +112,7 @@ Bombe non-désarmée x0.1
 Transformé en :newBuilding:
 
 >occupier
-Aucun occupant x10
+Aucun occupant x7
 :encounter: [:presence:] x5
 Petite communauté [:npcStatus:, :behaviour:]
 Défenses automatisées [:robotStatus:]
