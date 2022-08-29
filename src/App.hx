@@ -86,7 +86,7 @@ class App extends dn.Process {
 			ME = null;
 	}
 
-	function notify(str:String) {
+	public function notify(str:String) {
 		var jNotif = jBody.find("#notif");
 		jNotif.text(str);
 		jNotif.stop(true).hide().slideDown(200).delay(1400).fadeOut(200);
