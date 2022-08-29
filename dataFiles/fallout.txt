@@ -236,12 +236,17 @@ Animal non agressif
 Grosse créature non agressive x0.3
 Vermine
 Pillards
-Marchand (:trading:) avec escorte
-Ermite [:npcAspect:, :npcStatus:, :behaviour:]
-Fou [:npcAspect:, :npcStatus:, :behaviour:]
+:race: Marchand (:trading:) avec escorte
+:race: Ermite [:npcAspect:, :npcStatus:, :behaviour:]
+:race: Fou [:npcAspect:, :npcStatus:, :behaviour:]
 Groupe d'aventuriers [:npcAspect:, :npcStatus:, :behaviour:] x0.2
 Robot [:robotStatus:, :behaviour:]
 Confrérie de l'Acier [:npcStatus:, :behaviour:] x0.2
+
+>race
+Humain x5
+Mutant
+Super mutant x0.1
 
 >npcAspect
 Costume et cravate
@@ -266,15 +271,16 @@ Cosplay furry x0.2
 >behaviour
 Amical x0.3
 Attitude neutre x4
-Hostile (:hostilityReason:) x2
+Hostile x2
+Hostile (:specialBehaviour:)
 Mort(s) x0.3
 
->hostilityReason
-Cannibale
-Méfiant
-Territorial
-Cache un secret
+>specialBehaviour
+Méfiant x5
 Peur des PJs
+Protège une babiole x0.3
+Cache un secret x0.2
+Cannibale x0.3
 
 >npcStatus
 Bonne santé x5
