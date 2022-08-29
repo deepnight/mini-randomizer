@@ -55,10 +55,16 @@ h2 {
   }
 }
 
-#buttons {
+#controls select {
+  width: 100%;
+  padding: 1em 0;
+  margin-bottom: 2px;
+  cursor: pointer;
+}
+#controls #buttons {
   display: flex;
 }
-#buttons button {
+#controls #buttons button {
   flex: 1 0 auto;
   margin: 1px;
   padding: 1em;
@@ -69,7 +75,7 @@ h2 {
   border-bottom: 2px solid lightgray;
   cursor: pointer;
 }
-#buttons button:hover {
+#controls #buttons button:hover {
   color: white;
   background-color: gray;
   border-color: black;

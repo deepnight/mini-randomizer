@@ -1,23 +1,73 @@
+typedef Settings = {
+	var lastFile: String;
+}
+
 class App extends dn.Process {
 	public static var ME : App;
 
 	public var jBody : J;
 	public var jButtons : J;
 	public var jOutput : J;
+	var storage : dn.data.LocalStorage;
+	var settings : Settings;
 
 	public function new() {
 		super();
 
 		ME = this;
-
 		jBody = new J("body");
 		jButtons = jBody.find("#buttons");
 		jOutput = jBody.find("#output");
 
-		var raw = FileManager.read("res/fallout.txt");
+		// Init cookie
+		storage = dn.data.LocalStorage.createJsonStorage("settings");
+		settings = storage.readObject({
+			lastFile: null,
+		});
+		saveSettings();
+
+		// Load all files content
+		var allFiles = FileManager.getAllFiles();
+
+		// Init select
+		var jSelect = jBody.find("#files");
+		jSelect.append('<option value=""/>');
+		for(f in allFiles.keys())
+			jSelect.append('<option value="${f}">${dn.FilePath.extractFileName(f)}</option>');
+		jSelect.change( _->{
+			var f = jSelect.val();
+			useFile( f=="" ? null : f, allFiles.get(f) );
+		});
+
+		// Reload last file
+		if( settings.lastFile!=null ) {
+			if( !allFiles.exists(settings.lastFile) ) {
+				settings.lastFile = null;
+				saveSettings();
+			}
+			else {
+				jSelect.val(settings.lastFile);
+				useFile( settings.lastFile, allFiles.get(settings.lastFile) );
+			}
+		}
+	}
+
+	function saveSettings() {
+		storage.writeObject(settings);
+	}
+
+	function useFile(f:String, raw:String) {
+		clearOutput();
+		jButtons.empty();
+
+		settings.lastFile = f;
+		saveSettings();
+
+		if( raw==null )
+			return;
+
 		var rdata = RandomParser.run(raw);
-		var r = new Randomizer(rdata);
-		trace(r.draw("test"));
+		new Randomizer(rdata);
 	}
 
 	public function clearOutput() {

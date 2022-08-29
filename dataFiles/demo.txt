@@ -1,0 +1,7 @@
+#button Pick random examples | demo
+
+
+>demo
+a
+b
+c

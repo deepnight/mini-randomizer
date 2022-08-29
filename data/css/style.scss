@@ -57,27 +57,37 @@ h2 {
 	}
 }
 
-#buttons {
-	display: flex;
-
-	button {
-		flex: 1 0 auto;
-		margin: 1px;
-		padding: 1em;
-		color: gray;
-		text-transform: uppercase;
-		white-space: nowrap;
-		border: 1px solid lightgray;
-		border-bottom: 2px solid lightgray;
+#controls {
+	select {
+		width: 100%;
+		padding: 1em 0;
+		margin-bottom: 2px;
 		cursor: pointer;
+	}
 
-		&:hover {
-			color: white;
-			background-color: gray;
-			border-color: black;
+	#buttons {
+		display: flex;
+
+		button {
+			flex: 1 0 auto;
+			margin: 1px;
+			padding: 1em;
+			color: gray;
+			text-transform: uppercase;
+			white-space: nowrap;
+			border: 1px solid lightgray;
+			border-bottom: 2px solid lightgray;
+			cursor: pointer;
+
+			&:hover {
+				color: white;
+				background-color: gray;
+				border-color: black;
+			}
 		}
 	}
 }
+
 
 #output {
 	padding: 16px;
