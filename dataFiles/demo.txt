@@ -1,7 +1,7 @@
-#button Generate a random place (demo) | demo
+#button Generate a random place (demo) | demo | 5
 
 >demo
-:buildingType: (:physicalState:), :mood:
+:buildingType:\n :locationFeature:\n Inhabitant(s): :inhabitant:
 
 >buildingType
 Supermarket
@@ -14,24 +14,33 @@ Prison
 Museum
 Restaurant
 
->mood
-normal
-dark
-colorful wall painting
-messy
-blood splatters
-weird decoration
-weird smell
-radioactivity
-strange tags on walls
-flooded
-strange mist
-lots of insects
+>locationFeature
+Recently visited
+Dark place
+Walls are painted with bright colors
+Very messy
+Blood splatters
+Weird decoration
+Weird smell
+Weird noises inside
+Presence of radioactivity
+Strange tags on walls
+Flooded
+Strange mist
+Presence of lots of insects
+Abandoned recently
+Burned down
+Barricaded
+Recently bombed
+Repurposed into something else (:buildingType:)
 
-
->physicalState
-abandoned
-burned down
-barricaded
-recently bombed
-repurposed into something else
+>inhabitant
+Not occupied x5
+Bandits
+Merchant
+Ermit
+Crazy person
+Group of peaceful people
+Minor monsters
+One major monster
+Robot

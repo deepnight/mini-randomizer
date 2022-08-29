@@ -1061,11 +1061,11 @@ var App = function() {
 	this.jRandButtons = this.jBody.find("#randButtons");
 	this.jOutput = this.jBody.find("#output");
 	this.storage = dn_data_LocalStorage.createJsonStorage("settings");
-	this.settings = this.storage.readObject({ lastFile : null});
+	this.settings = this.storage.readObject({ curFile : null});
 	this.saveSettings();
 	var _g = new haxe_ds_StringMap();
 	_g.h["dataFiles/fallout.txt"] = "#button Lieu | location\r\n#button Campement | camp\r\n#button Rencontre | encounter\r\n#button Loot | loot\r\n#button Test | buildingLocation | 10\r\n\r\n\r\n>location\r\n:buildingLocation: :locationDetails:\r\n:outdoorLocation: :locationDetails:\r\n\r\n>locationDetails\r\n (:condition:)\\n  :locationFeature:\\n  :occupier:\\n  :loot:\r\n\r\n>buildingLocation\r\nManoir x0.5\r\nBunker x0.3\r\nPetit abri anti-atomique\r\nMaison\r\nImmeuble d'habitation\r\nPetite centrale électrique\r\nSite de traitement des eaux\r\nCampement\r\nGymnase\r\nChâteau d'eau\r\nBureaux\r\nSupermarché x0.5\r\nEpicerie\r\nRéparateur\r\nRestaurant :restaurantType:\r\nBar\r\nEcole\r\nCrèche\r\nEntrepôt :storageType:\r\nSalle de sport\r\nHôpital x0.5\r\nCabinet médical\r\nMagasin :shopType:\r\nBoucherie\r\nPoissonerie\r\nArmurier x0.3\r\nGare\r\nGarage :vehicleType:\r\nFourrière :vehicleType:\r\nStation service\r\nCabane\r\nMarché couvert\r\nPrison\r\nUsine\r\nLaboratoire\r\nCommissariat\r\nChenil\r\nMusée\r\nFête forraine\r\nBâtiment administratif\r\nBoîte de nuit\r\n\r\n\r\n>vehicleType\r\nvoiture\r\nmoto\r\ncamion\r\nvélo\r\nvoiture de sport x0.3\r\n\r\n>storageType\r\npièces mécaniques\r\ncomposants électronique\r\nnourriture\r\nvêtements\r\n\r\n>shopType\r\nsport\r\nvêtements\r\nbricolage\r\nlibrairie\r\ninformatique\r\n:vehicleType:\r\n\r\n>restaurantType\r\nfrançais\r\nasiatique\r\nburgers\r\nitalien\r\npizzeria\r\nmexicain\r\ngastronomique\r\nroutier\r\nsushi\r\n\r\n\r\n>outdoorLocation\r\nTerrain de sport (:sport:)\r\nLac\r\nRoute\r\nAutoroute\r\nParc\r\nPlantation\r\nCimetière\r\nEglise\r\nChapelle\r\nMonument\r\nStation tramway\r\nAire de jeux\r\nChantier\r\nParking payant\r\nParking de bus\r\nCratère\r\nCamion\r\nGrue de chargement\r\nTrain\r\nMarécage\r\nForêt\r\nCarrière\r\nDécharge\r\nConvoi\r\nParc d'attraction\r\nEolienne\r\nPanneaux solaires\r\nStade\r\nSite d'un crash (:flyingObject:)\r\nSite d'un atterissage en catastrophe (:flyingObject:)\r\nEpave d'un navire\r\nSite de tournage (:buildingLocation:)\r\nScène de concert\r\n\r\n>flyingObject\r\nAvion de ligne\r\nJet\r\nPetit avion\r\nAvion de chasse\r\nHélicoptère civil\r\nHélicoptère militaire\r\nHovercraft\r\nDeltaplane\r\nMontgolfière\r\nDirigeable\r\nDrone\r\nOVNI x0.1\r\n\r\n>sport\r\nGolf\r\nFootball\r\nBasketball\r\nTir x0.5\r\nNatation\r\nAthlétisme\r\nTennis\r\n\r\n>newBuilding\r\nPlace forte\r\nAvant-poste\r\nStockage\r\nHabitation\r\nAtelier\r\nAbri anti-atomique x0.5\r\n\r\n>condition\r\nStructure en bon état x0.2\r\nStructure ancienne x2\r\nStructure récemment rénovée x0.3\r\nStructure rasée x0.4\r\n\r\n>locationFeature\r\nRien de spécial\r\nIncendié x0.5\r\nBombardé\r\nInnondé\r\nIrradié x0.5\r\nPiégé\r\nDécoration étrange\r\nEnvahi par une végétation dense\r\nEnvahi par des champignons\r\nBeaucoup d'insectes\r\nBrume très localisée\r\nObjet notable incongru: :weirdObjectType: x0.7\r\nAmbiance sonore étrange\r\nOdeur anormale\r\nInscriptions sur les murs\r\nCamouflé\r\nAmbiance glauque\r\nBombe non-désarmée x0.1\r\nTransformé en :newBuilding:\r\n\r\n>weirdObjectType\r\nMannequins\r\nInstruments de musique\r\nCercueil\r\nMise en scène macabre: :encounter:\r\nAutel religieux\r\nDessins étranges\r\nPentagramme\r\nTable de JdR\r\n\r\n>occupier\r\nAucun occupant x7\r\n:encounter: [:presence:] x5\r\nPetite communauté [:npcStatus:, :behaviour:]\r\nDéfenses automatisées [:robotStatus:]\r\n\r\n>encounter\r\nMonstres mineurs\r\nMonstre majeur\r\nAnimal non agressif\r\nGrosse créature non agressive x0.3\r\nVermine\r\nPillards\r\nMarchand (:trading:) avec escorte\r\nErmite [:npcAspect:, :npcStatus:, :behaviour:]\r\nFou [:npcAspect:, :npcStatus:, :behaviour:]\r\nGroupe d'aventuriers [:npcAspect:, :npcStatus:, :behaviour:] x0.2\r\nRobot [:robotStatus:, :behaviour:]\r\nConfrérie de l'Acier [:npcStatus:, :behaviour:] x0.2\r\n\r\n>npcAspect\r\nCostume et cravate\r\nTenue de sport\r\nTreillis militaire\r\nCostume excentrique\r\nVêtements trop petits\r\nArmure de fortune\r\nTenue militaire avancée x0.5\r\nNu x0.2\r\nCostume médiéval\r\nTenue d'habitant d'un abri (:10-40:)\r\nHaillons\r\nBleu de travail\r\nT-shirt geek\r\nManteau long\r\nTenue de cowboy\r\nCostume ancien\r\nCosplay furry x0.2\r\n\r\n\r\n>behaviour\r\nAmical x0.3\r\nAttitude neutre x4\r\nHostile (:hostility:) x2\r\nMort(s) x0.3\r\n\r\n>hostility\r\nCannibale\r\nMéfiant\r\nTerritorial\r\nCache un secret\r\nPeur des PJs\r\n\r\n>npcStatus\r\nBonne santé x5\r\nCaché\r\nAffamé\r\nAssoiffé\r\nFou\r\nMalade\r\nIrradié\r\nBlessé\r\nEstropié\r\n\r\n>robotStatus\r\nEn état de marche\r\nConception artisanale\r\nEstropié\r\nEtrangement décoré\r\nRecouvert de végétation x0.6\r\nRôle modifié\r\nFortement customisé\r\n\r\n>presence\r\nAbsent pour le moment\r\nPrésent x10\r\n\r\n>trading\r\nNourriture/Eau x2\r\nMunitions\r\nArmes\r\nArmures\r\nMods\r\n\r\n>loot\r\nBabiole\r\nObjet précieux\r\nNourriture\r\nEau\r\nArme\r\nArmure\r\nMod d'arme\r\nMod d'armure\r\nMunitions\r\n\r\n\r\n>camp\r\n:campEvent:\\n  :weather:\r\n\r\n>campEvent\r\nRien de spécial x5\r\nRencontre : :encounter: x3\r\n:1-2: voleur(s)\r\nMaraudeur non agressif\r\nPassage d'un robot/drone\r\nPassage : :flyingObject:\r\nPassage : :vehicleType:\r\nQuelque chose tombant du ciel: :skyFall: x0.2\r\nObservateur étrange\r\nLumières au loin\r\nBruit non identifié\r\nOmbres dans la nuit\r\nLumières dans le ciel\r\nAppareil volant x0.2\r\nIncendie au loin x0.2\r\nCoups de feu\r\nExplosion\r\nBruits lointains de moteur\r\nCraquements\r\nGrognements\r\nMusique\r\n\r\n>skyFall\r\n:flyingObject:\r\ncaisse (:loot:)\r\n\r\n\r\n>weather\r\nTemps clair x8\r\nPluie légère x3\r\nPluie intense\r\nBrouillard x3\r\nBrouillard radioactif x0.3\r\nPluie radioactive x0.5\r\nOrage\r\nOrage magnétique x0.6\r\nGrand vent\r\n";
-	_g.h["dataFiles/demo.txt"] = "#button Generate a random place (demo) | demo\r\n\r\n>demo\r\n:buildingType: (:physicalState:), :mood:\r\n\r\n>buildingType\r\nSupermarket\r\nMansion\r\nSchool\r\nHospital\r\nTrain station\r\nBunker\r\nPrison\r\nMuseum\r\nRestaurant\r\n\r\n>mood\r\nnormal\r\ndark\r\ncolorful wall painting\r\nmessy\r\nblood splatters\r\nweird decoration\r\nweird smell\r\nradioactivity\r\nstrange tags on walls\r\nflooded\r\nstrange mist\r\nlots of insects\r\n\r\n\r\n>physicalState\r\nabandoned\r\nburned down\r\nbarricaded\r\nrecently bombed\r\nrepurposed into something else";
+	_g.h["dataFiles/demo.txt"] = "#button Generate a random place (demo) | demo | 5\r\n\r\n>demo\r\n:buildingType:\\n :locationFeature:\\n Inhabitant(s): :inhabitant:\r\n\r\n>buildingType\r\nSupermarket\r\nMansion\r\nSchool\r\nHospital\r\nTrain station\r\nBunker\r\nPrison\r\nMuseum\r\nRestaurant\r\n\r\n>locationFeature\r\nRecently visited\r\nDark place\r\nWalls are painted with bright colors\r\nVery messy\r\nBlood splatters\r\nWeird decoration\r\nWeird smell\r\nWeird noises inside\r\nPresence of radioactivity\r\nStrange tags on walls\r\nFlooded\r\nStrange mist\r\nPresence of lots of insects\r\nAbandoned recently\r\nBurned down\r\nBarricaded\r\nRecently bombed\r\nRepurposed into something else (:buildingType:)\r\n\r\n>inhabitant\r\nNot occupied x5\r\nBandits\r\nMerchant\r\nErmit\r\nCrazy person\r\nGroup of peaceful people\r\nMinor monsters\r\nOne major monster\r\nRobot";
 	this.allFiles = _g;
 	var jSelect = this.jBody.find("#files");
 	jSelect.append("<option value=\"\"/>");
@@ -1086,13 +1086,13 @@ var App = function() {
 		_gthis.setEditor(false);
 		_gthis.useFile(f == "" ? null : f);
 	});
-	if(this.settings.lastFile != null) {
-		if(!Object.prototype.hasOwnProperty.call(this.allFiles.h,this.settings.lastFile)) {
-			this.settings.lastFile = this.curFile = null;
+	if(this.settings.curFile != null) {
+		if(!Object.prototype.hasOwnProperty.call(this.allFiles.h,this.settings.curFile)) {
+			this.settings.curFile = null;
 			this.saveSettings();
 		} else {
-			jSelect.val(this.settings.lastFile);
-			this.useFile(this.settings.lastFile);
+			jSelect.val(this.settings.curFile);
+			this.useFile(this.settings.curFile);
 		}
 	}
 	this.jToolbar.find("#edit").click(function(_) {
@@ -1107,17 +1107,17 @@ App.prototype = $extend(dn_Process.prototype,{
 		var jEditor = this.jBody.find("#editor");
 		if(this.curEditor != null) {
 			var this1 = this.allFiles;
-			var key = this.curFile;
+			var key = this.settings.curFile;
 			var value = this.curEditor.getValue();
 			this1.h[key] = value;
 			this.jBody.removeClass("editing");
 			this.curEditor.destroy();
 			this.curEditor = null;
 			jEditor.empty();
-			this.useFile(this.curFile);
+			this.useFile(this.settings.curFile);
 		}
 		if(active) {
-			jEditor.text(this.allFiles.h[this.curFile]);
+			jEditor.text(this.allFiles.h[this.settings.curFile]);
 			this.jBody.addClass("editing");
 			this.curEditor = ace.edit("editor");
 			this.curEditor.setTheme("ace/theme/monokai");
@@ -1136,7 +1136,7 @@ App.prototype = $extend(dn_Process.prototype,{
 		}
 		var rdata = RandomParser.run(raw);
 		new Randomizer(rdata);
-		this.curFile = f;
+		this.settings.curFile = f;
 		this.saveSettings();
 	}
 	,clearOutput: function() {
