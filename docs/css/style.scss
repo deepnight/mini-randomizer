@@ -6,8 +6,11 @@ body {
 }
 
 canvas {
+	top: 0;
+	left: 0;
 	width: 1px !important;
 	height: 1px !important;
+	position: absolute;
 }
 
 h2 {
@@ -30,13 +33,21 @@ h2 {
 	}
 }
 
+
+
 #site {
+	display: grid;
+	gap: 8px;
+	grid-template-rows: auto min-content;
+	overflow: hidden;
+
+	height: 100vh;
 	max-width: 500px;
 	padding: 4px;
 	margin: auto;
-	margin-top: 16px;
 	border-radius: 3px;
 	border: 1px solid lightgray;
+	box-sizing: border-box;
 
 	@media (max-width:500px) {
 		margin: 0;
@@ -45,19 +56,12 @@ h2 {
 		#output {
 			font-size: 13pt;
 		}
-
-		#buttons {
-			bottom: 4px;
-			width: calc( 100% - 8px );
-			position: fixed;
-			button {
-				min-height: 4em;
-			}
-		}
 	}
 }
 
 #controls {
+	grid-row: 2/3;
+
 	select {
 		width: 100%;
 		padding: 1em 0;
@@ -90,6 +94,9 @@ h2 {
 
 
 #output {
+	grid-row: 1/2;
+
+	overflow: auto;
 	padding: 16px;
 	padding-bottom: 4em;
 	font-size: 12pt;
@@ -109,6 +116,5 @@ h2 {
 		padding-top: 10px;
 		margin-top: 10px;
 		border-top: 1px dashed gray;
-
 	}
 }
