@@ -43,6 +43,7 @@ class App extends dn.Process {
 			jSelect.append('<option value="${f}">${dn.FilePath.extractFileName(f)}</option>');
 		jSelect.change( _->{
 			var f = jSelect.val();
+			setEditor(false);
 			useFile( f=="" ? null : f );
 		});
 
@@ -66,7 +67,6 @@ class App extends dn.Process {
 
 	function setEditor(active:Bool) {
 		var jEditor = jBody.find("#editor");
-		notify("Editor: "+active);
 
 		// Kill existing editor
 		if( curEditor!=null ) {

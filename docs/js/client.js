@@ -1083,6 +1083,7 @@ var App = function() {
 	}
 	jSelect.change(function(_) {
 		var f = jSelect.val();
+		_gthis.setEditor(false);
 		_gthis.useFile(f == "" ? null : f);
 	});
 	if(this.settings.lastFile != null) {
@@ -1104,7 +1105,6 @@ App.__super__ = dn_Process;
 App.prototype = $extend(dn_Process.prototype,{
 	setEditor: function(active) {
 		var jEditor = this.jBody.find("#editor");
-		this.notify("Editor: " + (active == null ? "null" : "" + active));
 		if(this.curEditor != null) {
 			var this1 = this.allFiles;
 			var key = this.curFile;
@@ -1152,11 +1152,6 @@ App.prototype = $extend(dn_Process.prototype,{
 		if(App.ME == this) {
 			App.ME = null;
 		}
-	}
-	,notify: function(str) {
-		var jNotif = this.jBody.find("#notif");
-		jNotif.text(str);
-		jNotif.stop(true).hide().slideDown(200).delay(1400).fadeOut(200);
 	}
 	,update: function() {
 		dn_Process.prototype.update.call(this);
