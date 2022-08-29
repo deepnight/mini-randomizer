@@ -2,52 +2,91 @@
 #button Campement | camp
 #button Rencontre | encounter
 #button Loot | loot
-#button Test | encounter | 10
+#button Test | buildingLocation | 10
 
 
 >location
-:ancientBuilding: :locationDetails:
+:buildingLocation: :locationDetails:
 :outdoorLocation: :locationDetails:
 
 >locationDetails
  (:condition:)\n  :locationFeature:\n  :occupier:\n  :loot:
 
->ancientBuilding
+>buildingLocation
 Manoir x0.5
 Bunker x0.3
 Petit abri anti-atomique
 Maison
 Immeuble d'habitation
+Petite centrale électrique
+Site de traitement des eaux
 Campement
 Gymnase
 Château d'eau
 Bureaux
 Supermarché x0.5
 Epicerie
-Restaurant
+Réparateur
+Restaurant :restaurantType:
 Bar
 Ecole
 Crèche
-Entrepôt
+Entrepôt :storageType:
 Salle de sport
 Hôpital x0.5
 Cabinet médical
-Magasin
+Magasin :shopType:
+Boucherie
+Poissonerie
 Armurier x0.3
 Gare
-Garage
+Garage :vehicleType:
+Fourrière :vehicleType:
 Station service
 Cabane
 Marché couvert
 Prison
 Usine
 Laboratoire
-Librairie
 Commissariat
 Chenil
 Musée
+Fête forraine
 Bâtiment administratif
 Boîte de nuit
+
+>vehicleType
+voiture
+moto
+camion
+vélo
+voiture de sport x0.3
+
+>storageType
+pièces mécaniques
+composants électronique
+nourriture
+vêtements
+
+>shopType
+sport
+vêtements
+bricolage
+librairie
+informatique
+:vehicleType:
+
+>restaurantType
+français
+asiatique
+burgers
+italien
+pizzeria
+mexicain
+gastronomique
+routier
+sushi
+
 
 >outdoorLocation
 Terrain de sport (:sport:)
@@ -60,21 +99,39 @@ Cimetière
 Station tramway
 Aire de jeux
 Chantier
-Parking
+Parking payant
+Parking de bus
 Cratère
 Camion
+Grue de chargement
 Train
 Marécage
 Forêt
 Carrière
-Déchetterie
+Décharge
 Convoi
 Parc d'attraction
 Eolienne
 Panneaux solaires
 Stade
-Site d'un crash
+Site d'un crash (:flyingObject:)
+Site d'un atterissage en catastrophe (:flyingObject:)
 Epave d'un navire
+Site de tournage (:buildingLocation:)
+
+>flyingObject
+Avion de ligne
+Jet
+Petit avion
+Avion de chasse
+Hélicoptère civil
+Hélicoptère militaire
+Hovercraft
+Deltaplane
+Montgolfière
+Dirigeable
+Drone
+OVNI x0.1
 
 >sport
 Golf
@@ -100,12 +157,16 @@ Structure récemment rénovée x0.3
 Structure rasée x0.4
 
 >locationFeature
-Rien de spécial x2
+Rien de spécial
 Incendié x0.5
 Bombardé
+Innondé
 Irradié x0.5
 Piégé
 Décoration étrange
+Ambiance sonore étrange
+Odeur anormale
+Inscriptions sur les murs
 Camouflé
 Ambiance glauque
 Bombe non-désarmée x0.1
@@ -122,8 +183,7 @@ Monstres mineurs
 Monstre majeur
 Vermine
 Pillards
-Voleur
-:1-2: marchand(s) avec escorte: :trading:
+Marchand (:trading:) avec escorte
 Ermite [:npcAspect:, :npcStatus:, :behaviour:]
 Fou [:npcAspect:, :npcStatus:, :behaviour:]
 Groupe d'aventuriers [:npcAspect:, :npcStatus:, :behaviour:] x0.2
@@ -206,24 +266,34 @@ Munitions
 
 
 >camp
-:weather:, :campEvent:
+:campEvent:\n  :weather:
 
 >campEvent
-Rien de spécial x10
-:encounter: x3
+Rien de spécial x5
+Rencontre : :encounter: x3
+:1-2: voleur(s)
 Maraudeur non agressif
+Passage d'un robot/drone
+Passage : :flyingObject:
+Passage : :vehicleType:
+Quelque chose tombant du ciel: :skyFall: x0.2
 Observateur étrange
 Lumières au loin
+Bruit non identifié
 Ombres dans la nuit
 Lumières dans le ciel
 Appareil volant x0.2
 Incendie au loin x0.2
 Coups de feu
 Explosion
-Bruits de moteur
+Bruits lointains de moteur
 Craquements
 Grognements
 Musique
+
+>skyFall
+:flyingObject:
+caisse (:loot:)
 
 
 >weather
