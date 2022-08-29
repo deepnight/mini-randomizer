@@ -6,7 +6,7 @@ A simple tool to generate things for tabletop RPGs. For example, it can be used 
 
 This tool was inspired by *RandomGen* from Orteil (https://orteil.dashnet.org/randomgen/). Fun fact: I developed a very similar tech years ago, for the hacking game "Intrusion" (https://deepnight.net/games/motion-twin/intrusion/), to generate file contents in hacked computers.
 
-[Online demo](https://deepnight.github.io/mini-randomizer/) |
+[Online demo](https://deepnight.github.io/mini-randomizer/) 
 
 ## File format
 
