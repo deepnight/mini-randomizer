@@ -56,19 +56,6 @@ dn_struct_FixedArray.prototype = {
 	}
 	,__class__: dn_struct_FixedArray
 };
-var haxe_IMap = function() { };
-$hxClasses["haxe.IMap"] = haxe_IMap;
-haxe_IMap.__name__ = "haxe.IMap";
-haxe_IMap.__isInterface__ = true;
-var haxe_ds_StringMap = function() {
-	this.h = Object.create(null);
-};
-$hxClasses["haxe.ds.StringMap"] = haxe_ds_StringMap;
-haxe_ds_StringMap.__name__ = "haxe.ds.StringMap";
-haxe_ds_StringMap.__interfaces__ = [haxe_IMap];
-haxe_ds_StringMap.prototype = {
-	__class__: haxe_ds_StringMap
-};
 var dn_Process = function(parent) {
 	this.tmpProfilerTimes = new haxe_ds_StringMap();
 	this._initOnceDone = false;
@@ -1486,7 +1473,7 @@ var Randomizer = function(data) {
 $hxClasses["Randomizer"] = Randomizer;
 Randomizer.__name__ = "Randomizer";
 Randomizer.error = function(msg) {
-	haxe_Log.trace("ERROR: " + msg,{ fileName : "c:\\projects\\mini-randomizer\\src\\Randomizer.hx", lineNumber : 25, className : "Randomizer", methodName : "error"});
+	haxe_Log.trace("ERROR: " + msg,{ fileName : "src/Randomizer.hx", lineNumber : 25, className : "Randomizer", methodName : "error"});
 };
 Randomizer.prototype = {
 	draw: function(key) {
@@ -1518,7 +1505,7 @@ Randomizer.prototype = {
 		var numberReg = new EReg("^([0-9]+)-([0-9]+)$","i");
 		while(refReg.match(out)) {
 			var k = refReg.matched(1);
-			haxe_Log.trace(k,{ fileName : "c:\\projects\\mini-randomizer\\src\\Randomizer.hx", lineNumber : 44, className : "Randomizer", methodName : "draw"});
+			haxe_Log.trace(k,{ fileName : "src/Randomizer.hx", lineNumber : 44, className : "Randomizer", methodName : "draw"});
 			if(numberReg.match(k)) {
 				var min = Std.parseInt(numberReg.matched(1));
 				var max = Std.parseInt(numberReg.matched(2));
@@ -3594,35 +3581,6 @@ dn_data_LocalStorage.prototype = {
 		this.toStorage(str);
 	}
 	,__class__: dn_data_LocalStorage
-};
-var haxe_ds_IntMap = function() {
-	this.h = { };
-};
-$hxClasses["haxe.ds.IntMap"] = haxe_ds_IntMap;
-haxe_ds_IntMap.__name__ = "haxe.ds.IntMap";
-haxe_ds_IntMap.__interfaces__ = [haxe_IMap];
-haxe_ds_IntMap.prototype = {
-	remove: function(key) {
-		if(!this.h.hasOwnProperty(key)) {
-			return false;
-		}
-		delete(this.h[key]);
-		return true;
-	}
-	,keys: function() {
-		var a = [];
-		for( var key in this.h ) if(this.h.hasOwnProperty(key)) a.push(+key);
-		return new haxe_iterators_ArrayIterator(a);
-	}
-	,iterator: function() {
-		return { ref : this.h, it : this.keys(), hasNext : function() {
-			return this.it.hasNext();
-		}, next : function() {
-			var i = this.it.next();
-			return this.ref[i];
-		}};
-	}
-	,__class__: haxe_ds_IntMap
 };
 var dn_struct_RandList = function(rndFunc,arr) {
 	if(rndFunc != null) {
@@ -20549,6 +20507,10 @@ h3d_shader_VolumeDecal.prototype = $extend(hxsl_Shader.prototype,{
 	}
 	,__class__: h3d_shader_VolumeDecal
 });
+var haxe_IMap = function() { };
+$hxClasses["haxe.IMap"] = haxe_IMap;
+haxe_IMap.__name__ = "haxe.IMap";
+haxe_IMap.__isInterface__ = true;
 var haxe_EntryPoint = function() { };
 $hxClasses["haxe.EntryPoint"] = haxe_EntryPoint;
 haxe_EntryPoint.__name__ = "haxe.EntryPoint";
@@ -22240,6 +22202,35 @@ haxe_ds_EnumValueMap.prototype = $extend(haxe_ds_BalancedTree.prototype,{
 	}
 	,__class__: haxe_ds_EnumValueMap
 });
+var haxe_ds_IntMap = function() {
+	this.h = { };
+};
+$hxClasses["haxe.ds.IntMap"] = haxe_ds_IntMap;
+haxe_ds_IntMap.__name__ = "haxe.ds.IntMap";
+haxe_ds_IntMap.__interfaces__ = [haxe_IMap];
+haxe_ds_IntMap.prototype = {
+	remove: function(key) {
+		if(!this.h.hasOwnProperty(key)) {
+			return false;
+		}
+		delete(this.h[key]);
+		return true;
+	}
+	,keys: function() {
+		var a = [];
+		for( var key in this.h ) if(this.h.hasOwnProperty(key)) a.push(+key);
+		return new haxe_iterators_ArrayIterator(a);
+	}
+	,iterator: function() {
+		return { ref : this.h, it : this.keys(), hasNext : function() {
+			return this.it.hasNext();
+		}, next : function() {
+			var i = this.it.next();
+			return this.ref[i];
+		}};
+	}
+	,__class__: haxe_ds_IntMap
+};
 var haxe_ds_List = function() {
 	this.length = 0;
 };
@@ -22330,6 +22321,35 @@ haxe_ds_ObjectMap.prototype = {
 		return new haxe_iterators_ArrayIterator(a);
 	}
 	,__class__: haxe_ds_ObjectMap
+};
+var haxe_ds_StringMap = function() {
+	this.h = Object.create(null);
+};
+$hxClasses["haxe.ds.StringMap"] = haxe_ds_StringMap;
+haxe_ds_StringMap.__name__ = "haxe.ds.StringMap";
+haxe_ds_StringMap.__interfaces__ = [haxe_IMap];
+haxe_ds_StringMap.prototype = {
+	iterator: function() {
+		return new haxe_ds__$StringMap_StringMapValueIterator(this.h);
+	}
+	,__class__: haxe_ds_StringMap
+};
+var haxe_ds__$StringMap_StringMapValueIterator = function(h) {
+	this.h = h;
+	this.keys = Object.keys(h);
+	this.length = this.keys.length;
+	this.current = 0;
+};
+$hxClasses["haxe.ds._StringMap.StringMapValueIterator"] = haxe_ds__$StringMap_StringMapValueIterator;
+haxe_ds__$StringMap_StringMapValueIterator.__name__ = "haxe.ds._StringMap.StringMapValueIterator";
+haxe_ds__$StringMap_StringMapValueIterator.prototype = {
+	hasNext: function() {
+		return this.current < this.length;
+	}
+	,next: function() {
+		return this.h[this.keys[this.current++]];
+	}
+	,__class__: haxe_ds__$StringMap_StringMapValueIterator
 };
 var haxe_exceptions_PosException = function(message,previous,pos) {
 	haxe_Exception.call(this,message,previous);

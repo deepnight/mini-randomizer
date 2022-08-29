@@ -3,8 +3,8 @@
 	<head>
 		<meta charset="utf-8"/>
 		<title>Randomizer</title>
-		<link rel="stylesheet" href="data/css/style.min.css?v=4"/>
-		<script type="text/javascript" src="data/js/jquery.min.js"></script>
+		<link rel="stylesheet" href="css/style.min.css?v=4"/>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
 	</head>
 
@@ -12,12 +12,15 @@
 		<div id="notif"></div>
 
 		<div id="site">
-			<div id="buttons"></div>
+			<div id="controls">
+				<select id="files"></select>
+				<div id="buttons"></div>
+			</div>
 			<div id="output"></div>
 		</div>
 
 		<!-- Init JS -->
 		<canvas id="webgl" globalevents="0"></canvas>
-		<script type="text/javascript" src="client.js?v=3"></script>
+		<script type="text/javascript" src="js/client.js?v=3"></script>
 	</body>
 </html>

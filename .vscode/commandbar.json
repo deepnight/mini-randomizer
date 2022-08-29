@@ -7,14 +7,14 @@
 			"text": "👁 Run HTML",
 			"color": "yellow",
 			"alignment": "right",
-			"command": "start index.html",
+			"command": "start docs/index.html",
 			"skipTerminateQuickPick": false,
 			"priority": 1
 		},
 		{
 			"text": "📦 Redist",
 			"alignment": "right",
-			"command": "redist.cmd",
+			"command": "haxelib run redistHelper js.hxml -o redist docs/js docs/css docs/index.html -ignore style.css,*.scss,*.map",
 			"skipTerminateQuickPick": false,
 			"priority": 0
 		}
