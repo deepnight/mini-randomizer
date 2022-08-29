@@ -53,16 +53,6 @@ h2 {
 		display: none;
 	}
 
-	&.editing {
-		#editor {
-			display: block;
-		}
-
-		#output {
-			display: none;
-		}
-	}
-
 	@media (max-width:500px) {
 		margin: 0;
 		border: none;
@@ -70,6 +60,20 @@ h2 {
 		#output {
 			font-size: 13pt;
 		}
+	}
+}
+
+body.editing #site {
+	#editor {
+		display: block;
+	}
+
+	#randButtons {
+		display: none;
+	}
+
+	#output {
+		display: none;
 	}
 }
 

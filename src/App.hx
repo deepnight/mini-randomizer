@@ -15,6 +15,7 @@ class App extends dn.Process {
 	var settings : Settings;
 	var curFile : Null<String>;
 	var curEditor : Null<AceEditor>;
+	var allFiles : Map<String,String>;
 
 	public function new() {
 		super();
@@ -33,7 +34,7 @@ class App extends dn.Process {
 		saveSettings();
 
 		// Load all files content
-		var allFiles = FileManager.getAllFiles();
+		allFiles = FileManager.getAllFiles();
 
 		// Init select
 		var jSelect = jBody.find("#files");
@@ -42,7 +43,7 @@ class App extends dn.Process {
 			jSelect.append('<option value="${f}">${dn.FilePath.extractFileName(f)}</option>');
 		jSelect.change( _->{
 			var f = jSelect.val();
-			useFile( f=="" ? null : f, allFiles.get(f) );
+			useFile( f=="" ? null : f );
 		});
 
 		// Reload last file
@@ -53,27 +54,40 @@ class App extends dn.Process {
 			}
 			else {
 				jSelect.val(settings.lastFile);
-				useFile( settings.lastFile, allFiles.get(settings.lastFile) );
+				useFile( settings.lastFile );
 			}
 	}
 
 		// Edit button
 		jToolbar.find("#edit").click(_->{
-			var jEditor = jBody.find("#editor");
-			if( curEditor==null ) {
-				jEditor.text(allFiles.get(curFile));
-				jBody.find("#site").addClass("editing");
-				curEditor = AceEditor.edit("editor");
-				curEditor.setTheme("ace/theme/solarized-light");
-				curEditor.session.setMode("ace/mode/randomizer");
-			}
-			else {
-				jBody.find("#site").removeClass("editing");
-				curEditor.destroy();
-				curEditor = null;
-				jEditor.empty();
-			}
+			setEditor( !jBody.hasClass("editing") );
 		});
+	}
+
+	function setEditor(active:Bool) {
+		var jEditor = jBody.find("#editor");
+		notify("Editor: "+active);
+
+		// Kill existing editor
+		if( curEditor!=null ) {
+			allFiles.set(curFile, curEditor.getValue());
+
+			jBody.removeClass("editing");
+			curEditor.destroy();
+			curEditor = null;
+			jEditor.empty();
+
+			useFile(curFile);
+		}
+
+		// Create editor
+		if( active ) {
+			jEditor.text(allFiles.get(curFile));
+			jBody.addClass("editing");
+			curEditor = AceEditor.edit("editor");
+			curEditor.setTheme("ace/theme/monokai");
+			curEditor.session.setMode("ace/mode/randomizer");
+		}
 
 	}
 
@@ -81,7 +95,8 @@ class App extends dn.Process {
 		storage.writeObject(settings);
 	}
 
-	function useFile(f:String, raw:String) {
+	function useFile(f:String) {
+		var raw = allFiles.get(f);
 		clearOutput();
 		jRandButtons.empty();
 

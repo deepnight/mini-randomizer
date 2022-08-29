@@ -6,6 +6,7 @@ package aceEditor;
 	public var session : AceEditorSession;
 	public function setTheme(id:String) : Void;
 	public function destroy() : Void;
+	public function getValue() : String;
 }
 
 extern class AceEditorSession {
