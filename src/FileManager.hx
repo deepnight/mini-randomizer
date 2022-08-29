@@ -16,9 +16,13 @@ class FileManager {
 	#end
 
 	public static macro function getAllFiles() {
+		Context.registerModuleDependency( Context.getLocalModule(), DATA_FILES_DIR );
+
 		var out = new Map();
-		for( f in listAllFilesStr() )
+		for( f in listAllFilesStr() ) {
+			Context.registerModuleDependency( Context.getLocalModule(), f );
 			out.set(f, sys.io.File.getContent(f));
+		}
 
 		return macro $v{out};
 	}
