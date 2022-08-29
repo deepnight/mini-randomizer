@@ -1,7 +1,37 @@
-#button Pick random examples | demo
-
+#button Generate a random place (demo) | demo
 
 >demo
-a
-b
-c
+:buildingType: (:physicalState:), :mood:
+
+>buildingType
+Supermarket
+Mansion
+School
+Hospital
+Train station
+Bunker
+Prison
+Museum
+Restaurant
+
+>mood
+normal
+dark
+colorful wall painting
+messy
+blood splatters
+weird decoration
+weird smell
+radioactivity
+strange tags on walls
+flooded
+strange mist
+lots of insects
+
+
+>physicalState
+abandoned
+burned down
+barricaded
+recently bombed
+repurposed into something else
