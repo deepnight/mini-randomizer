@@ -173,29 +173,60 @@ Envahi par une végétation dense
 Envahi par des champignons
 Beaucoup d'insectes
 Brume très localisée
-Objet notable incongru: :weirdObjectType: x0.7
+Objet notable incongru: :weirdLargeProp: x0.7
+Présence de nombreux [:weirdItem:] sur le lieu x0.6
 Ambiance sonore étrange
 Odeur anormale
 Inscriptions sur les murs
+Très encombré
 Camouflé
 Ambiance glauque
 Bombe non-désarmée x0.1
 Transformé en :newBuilding:
+Présence de :newTool:
 
->weirdObjectType
+>newTool
+Puits
+Atelier
+Emetteur radio
+Equipements informatiques
+
+>weirdLargeProp
 Mannequins
 Instruments de musique
 Cercueil
 Mise en scène macabre: :encounter:
 Autel religieux
+Autel comportant de nombreux [:weirdItem:]
 Dessins étranges
 Pentagramme
+Refrigérateur au contenu bizarre
 Table de JdR
+Piscine
+
+>weirdItem
+Carte à jouer
+Origami
+Figurine jouet
+Poupée
+Tasse colorée
+Valise
+Symbole religieux
+Ossement humain
+Bouteille vide
+Petit fanion
+Sculpture en bois
+Casque
+Chapeau
+Vieux téléviseur cathodique
+Poisson mort
+Mines anti-personnelles factices
+Pages d'un magazine à reconstituer
 
 >occupier
 Aucun occupant x7
 :encounter: [:presence:] x5
-Petite communauté [:npcStatus:, :behaviour:]
+Petite communauté [:npcStatus:, :behaviour:] x0.2
 Défenses automatisées [:robotStatus:]
 
 >encounter
@@ -235,10 +266,10 @@ Cosplay furry x0.2
 >behaviour
 Amical x0.3
 Attitude neutre x4
-Hostile (:hostility:) x2
+Hostile (:hostilityReason:) x2
 Mort(s) x0.3
 
->hostility
+>hostilityReason
 Cannibale
 Méfiant
 Territorial
@@ -247,7 +278,7 @@ Peur des PJs
 
 >npcStatus
 Bonne santé x5
-Caché
+Endormi x0.7
 Affamé
 Assoiffé
 Fou
@@ -267,6 +298,7 @@ Fortement customisé
 
 >presence
 Absent pour le moment
+Caché x0.3
 Présent x10
 
 >trading
