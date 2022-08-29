@@ -1,3 +1,5 @@
+import aceEditor.AceEditor;
+
 typedef Settings = {
 	var lastFile: String;
 }
@@ -6,17 +8,21 @@ class App extends dn.Process {
 	public static var ME : App;
 
 	public var jBody : J;
-	public var jButtons : J;
+	public var jToolbar : J;
+	public var jRandButtons : J;
 	public var jOutput : J;
 	var storage : dn.data.LocalStorage;
 	var settings : Settings;
+	var curFile : Null<String>;
+	var curEditor : Null<AceEditor>;
 
 	public function new() {
 		super();
 
 		ME = this;
 		jBody = new J("body");
-		jButtons = jBody.find("#buttons");
+		jToolbar = jBody.find("#toolbar");
+		jRandButtons = jBody.find("#randButtons");
 		jOutput = jBody.find("#output");
 
 		// Init cookie
@@ -42,14 +48,33 @@ class App extends dn.Process {
 		// Reload last file
 		if( settings.lastFile!=null ) {
 			if( !allFiles.exists(settings.lastFile) ) {
-				settings.lastFile = null;
+				settings.lastFile = curFile = null;
 				saveSettings();
 			}
 			else {
 				jSelect.val(settings.lastFile);
 				useFile( settings.lastFile, allFiles.get(settings.lastFile) );
 			}
-		}
+	}
+
+		// Edit button
+		jToolbar.find("#edit").click(_->{
+			var jEditor = jBody.find("#editor");
+			if( curEditor==null ) {
+				jEditor.text(allFiles.get(curFile));
+				jBody.find("#site").addClass("editing");
+				curEditor = AceEditor.edit("editor");
+				curEditor.setTheme("ace/theme/solarized-light");
+				curEditor.session.setMode("ace/mode/randomizer");
+			}
+			else {
+				jBody.find("#site").removeClass("editing");
+				curEditor.destroy();
+				curEditor = null;
+				jEditor.empty();
+			}
+		});
+
 	}
 
 	function saveSettings() {
@@ -58,16 +83,16 @@ class App extends dn.Process {
 
 	function useFile(f:String, raw:String) {
 		clearOutput();
-		jButtons.empty();
-
-		settings.lastFile = f;
-		saveSettings();
+		jRandButtons.empty();
 
 		if( raw==null )
 			return;
 
 		var rdata = RandomParser.run(raw);
 		new Randomizer(rdata);
+
+		curFile = f;
+		saveSettings();
 	}
 
 	public function clearOutput() {

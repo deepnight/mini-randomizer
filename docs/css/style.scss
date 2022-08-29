@@ -49,6 +49,20 @@ h2 {
 	border: 1px solid lightgray;
 	box-sizing: border-box;
 
+	#editor {
+		display: none;
+	}
+
+	&.editing {
+		#editor {
+			display: block;
+		}
+
+		#output {
+			display: none;
+		}
+	}
+
 	@media (max-width:500px) {
 		margin: 0;
 		border: none;
@@ -59,36 +73,41 @@ h2 {
 	}
 }
 
-#controls {
+#toolbar {
 	grid-row: 2/3;
 
-	select {
-		width: 100%;
-		padding: 1em 0;
-		margin-bottom: 2px;
+	button {
+		flex: 1 0 auto;
+		margin: 1px;
+		padding: 1em;
+		color: gray;
+		text-transform: uppercase;
+		white-space: nowrap;
+		border: 1px solid lightgray;
+		border-bottom: 2px solid lightgray;
 		cursor: pointer;
+
+		&:hover {
+			color: white;
+			background-color: gray;
+			border-color: black;
+		}
 	}
 
-	#buttons {
+	#generalBar {
 		display: flex;
+		flex-wrap: nowrap;
 
-		button {
-			flex: 1 0 auto;
-			margin: 1px;
-			padding: 1em;
-			color: gray;
-			text-transform: uppercase;
-			white-space: nowrap;
-			border: 1px solid lightgray;
-			border-bottom: 2px solid lightgray;
+		select {
+			width: 100%;
+			padding: 1em 0;
+			margin-bottom: 2px;
 			cursor: pointer;
-
-			&:hover {
-				color: white;
-				background-color: gray;
-				border-color: black;
-			}
 		}
+	}
+
+	#randButtons {
+		display: flex;
 	}
 }
 

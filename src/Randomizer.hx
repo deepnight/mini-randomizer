@@ -17,7 +17,7 @@ class Randomizer {
 						for(i in 0...count)
 							app.output( draw(o.args[1]) );
 					});
-					app.jButtons.append(jBt);
+					app.jRandButtons.append(jBt);
 
 				case _: error('Unknown option: ${o.opt}');
 			}

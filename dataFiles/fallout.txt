@@ -55,6 +55,7 @@ Fête forraine
 Bâtiment administratif
 Boîte de nuit
 
+
 >vehicleType
 voiture
 moto
@@ -96,6 +97,9 @@ Autoroute
 Parc
 Plantation
 Cimetière
+Eglise
+Chapelle
+Monument
 Station tramway
 Aire de jeux
 Chantier
@@ -118,6 +122,7 @@ Site d'un crash (:flyingObject:)
 Site d'un atterissage en catastrophe (:flyingObject:)
 Epave d'un navire
 Site de tournage (:buildingLocation:)
+Scène de concert
 
 >flyingObject
 Avion de ligne
@@ -164,6 +169,11 @@ Innondé
 Irradié x0.5
 Piégé
 Décoration étrange
+Envahi par une végétation dense
+Envahi par des champignons
+Beaucoup d'insectes
+Brume très localisée
+Objet notable incongru: :weirdObjectType: x0.7
 Ambiance sonore étrange
 Odeur anormale
 Inscriptions sur les murs
@@ -171,6 +181,16 @@ Camouflé
 Ambiance glauque
 Bombe non-désarmée x0.1
 Transformé en :newBuilding:
+
+>weirdObjectType
+Mannequins
+Instruments de musique
+Cercueil
+Mise en scène macabre: :encounter:
+Autel religieux
+Dessins étranges
+Pentagramme
+Table de JdR
 
 >occupier
 Aucun occupant x7
@@ -181,6 +201,8 @@ Défenses automatisées [:robotStatus:]
 >encounter
 Monstres mineurs
 Monstre majeur
+Animal non agressif
+Grosse créature non agressive x0.3
 Vermine
 Pillards
 Marchand (:trading:) avec escorte
@@ -188,7 +210,7 @@ Ermite [:npcAspect:, :npcStatus:, :behaviour:]
 Fou [:npcAspect:, :npcStatus:, :behaviour:]
 Groupe d'aventuriers [:npcAspect:, :npcStatus:, :behaviour:] x0.2
 Robot [:robotStatus:, :behaviour:]
-Confrérie de l'Acier [:npcStatus:, ::behaviour:] x0.2
+Confrérie de l'Acier [:npcStatus:, :behaviour:] x0.2
 
 >npcAspect
 Costume et cravate
@@ -239,6 +261,7 @@ En état de marche
 Conception artisanale
 Estropié
 Etrangement décoré
+Recouvert de végétation x0.6
 Rôle modifié
 Fortement customisé
 
