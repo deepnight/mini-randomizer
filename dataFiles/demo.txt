@@ -1,4 +1,4 @@
-#button Generate a random place (demo) | demo | 5
+#button Generate random locations (demo) | demo | 6
 
 >demo
 :buildingType:\n :locationFeature:\n Inhabitant(s): :inhabitant:
