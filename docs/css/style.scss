@@ -38,18 +38,18 @@ h2 {
 #site {
 	display: grid;
 	gap: 8px;
-	grid-template-rows: auto min-content;
+	grid-template-rows: 1fr min-content;
 	overflow: hidden;
 
 	height: 100vh;
-	max-width: 600px;
+	max-width: 500px;
 	padding: 4px;
 	margin: auto;
 	border-radius: 3px;
 	border: 1px solid lightgray;
 	box-sizing: border-box;
 
-	#editor {
+	#editorWrapper {
 		display: none;
 	}
 
@@ -63,17 +63,19 @@ h2 {
 	}
 }
 
+
 body.editing #site {
-	#editor {
+	max-width: fit-content;
+	grid-template-columns: 500px 500px;
+
+	#editorWrapper {
 		display: block;
-	}
+		grid-column: 2/3;
+		grid-row: 1/3;
 
-	#randButtons {
-		display: none;
-	}
-
-	#output {
-		display: none;
+		#editor {
+			height: 100vh;
+		}
 	}
 }
 
@@ -121,7 +123,6 @@ body.editing #site {
 
 	overflow: auto;
 	padding: 16px;
-	padding-bottom: 4em;
 	font-size: 12pt;
 
 	.entry {

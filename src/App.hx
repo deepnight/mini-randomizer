@@ -64,30 +64,39 @@ class App extends dn.Process {
 		});
 	}
 
-	function setEditor(active:Bool) {
-		var jEditor = jBody.find("#editor");
 
+	function setEditor(active:Bool) {
 		// Kill existing editor
 		if( curEditor!=null ) {
-			allFiles.set(settings.curFile, curEditor.getValue());
+			saveEditor();
 
 			jBody.removeClass("editing");
 			curEditor.destroy();
 			curEditor = null;
-			jEditor.empty();
-
-			useFile(settings.curFile);
+			jBody.find("#editor").empty();
 		}
 
 		// Create editor
 		if( active ) {
-			jEditor.text( allFiles.get(settings.curFile) );
+			jBody.find("#editor").text( allFiles.get(settings.curFile) );
 			jBody.addClass("editing");
 			curEditor = AceEditor.edit("editor");
 			curEditor.setTheme("ace/theme/monokai");
 			curEditor.session.setMode("ace/mode/randomizer");
+			curEditor.commands.addCommand({
+				name: "Save",
+				bindKey: { win:"Ctrl-s", mac:"Command-s" },
+				exec: (e)->saveEditor(),
+			});
 		}
+	}
 
+	function saveEditor() {
+		if( curEditor!=null ) {
+			allFiles.set(settings.curFile, curEditor.getValue());
+			useFile(settings.curFile);
+			notify("Saved.");
+		}
 	}
 
 	function saveSettings() {
