@@ -286,7 +286,7 @@ Hostile (:specialBehaviour:)
 Mort(s) x0.3
 
 >natureBehaviour
-Neutre x2
+Attitude neutre x2
 Hostile
 
 >specialBehaviour
