@@ -10,7 +10,7 @@ class Randomizer {
 				case "button":
 					var jBt = new J('<button>${o.args[0]}</button>');
 					jBt.click( (ev:js.jquery.Event)->{
-						app.clearOutput();
+						// app.clearOutput();
 						var count = o.args[2]==null ? 1 : Std.parseInt(o.args[2]);
 						if( ev.shiftKey )
 							count = 10;

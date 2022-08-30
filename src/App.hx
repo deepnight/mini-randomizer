@@ -56,12 +56,13 @@ class App extends dn.Process {
 				jSelect.val(settings.curFile);
 				useFile( settings.curFile );
 			}
-	}
+		}
 
 		// Edit button
-		jToolbar.find("#edit").click(_->{
-			setEditor( !jBody.hasClass("editing") );
-		});
+		jToolbar.find("#edit").click( _->setEditor( !jBody.hasClass("editing") ) );
+		
+		// Clear button
+		jToolbar.find("#clear").click( _->clearOutput() );
 	}
 
 
@@ -125,7 +126,7 @@ class App extends dn.Process {
 	public function output(str:String) {
 		str = StringTools.htmlEscape(str);
 		str = "<pre>" + str.split("\\n").join("</pre><pre>") + "</pre>";
-		jOutput.append('<div class="entry">$str</div>');
+		jOutput.prepend('<div class="entry">$str</div>');
 	}
 
 	override function onDispose() {
