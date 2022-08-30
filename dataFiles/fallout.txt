@@ -162,16 +162,16 @@ Structure récemment rénovée x0.3
 Structure rasée x0.4
 
 >locationFeature
-Rien de spécial
+Rien de spécial x0.5
 Incendié x0.5
 Bombardé
 Innondé
 Irradié x0.5
-Piégé
+Piégé (:trap:)
 Décoration étrange
-Envahi par une végétation dense
-Envahi par des champignons
-Beaucoup d'insectes
+Envahi par une végétation dense (:natureBehaviour:)
+Envahi par des champignons (:natureBehaviour:)
+Beaucoup d'insectes (:natureBehaviour:)
 Brume très localisée
 Objet notable incongru: :weirdLargeProp: x0.7
 Présence de nombreux [:weirdItem:] sur le lieu x0.6
@@ -181,9 +181,19 @@ Inscriptions sur les murs
 Très encombré
 Camouflé
 Ambiance glauque
-Bombe non-désarmée x0.1
+Ogive nucléaire non-activée x0.1
 Transformé en :newBuilding:
 Présence de :newTool:
+
+>trap
+Conserves d'alarme
+Alarme puissante
+Mines anti-personnelles
+Explosif artisanal puissant
+Véhicule piégé (:vehicleType:)
+Obus non-explosés
+Chausses-trappes
+Arbalètes
 
 >newTool
 Puits
@@ -274,6 +284,10 @@ Attitude neutre x4
 Hostile x2
 Hostile (:specialBehaviour:)
 Mort(s) x0.3
+
+>natureBehaviour
+Neutre x2
+Hostile
 
 >specialBehaviour
 Méfiant x5
