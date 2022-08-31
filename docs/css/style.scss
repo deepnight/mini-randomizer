@@ -38,20 +38,29 @@ h2 {
 #site {
 	display: grid;
 	gap: 8px;
-	grid-template-rows: 1fr min-content;
 	overflow: hidden;
+	width: fit-content;
 
 	height: 100vh;
-	max-width: 500px;
 	padding: 4px;
-	margin: auto;
 	border-radius: 3px;
 	border: 1px solid lightgray;
 	box-sizing: border-box;
 
-	#editorWrapper {
-		display: none;
+	.column {
+		display: grid;
+		gap: 8px;
+		width: 500px;
+
+		&.random {
+			grid-template-rows: 1fr min-content;
+		}
+
+		&.editor {
+			display: none;
+		}
 	}
+
 
 	@media (max-width:500px) {
 		margin: 0;
@@ -65,27 +74,46 @@ h2 {
 
 
 body.editing #site {
-	max-width: fit-content;
-	grid-template-columns: 500px 500px;
+	// max-width: fit-content;
+	grid-template-columns: fit-content fit-content;
 
-	#editorWrapper {
-		display: block;
+	.column.editor {
+		display: grid;
+		grid-template-rows: auto min-content;
 		grid-column: 2/3;
-		grid-row: 1/3;
 
 		#editor {
-			height: 100vh;
+			height: 100%;
 		}
 	}
 }
 
-#toolbar {
-	grid-row: 2/3;
+.toolbar {
+	display: flex;
+	flex-wrap: wrap;
+
+	.row {
+		display: flex;
+		flex-wrap: nowrap;
+		flex: 1 0 100%;
+
+		&>* {
+			padding: 1em 0.5em;
+		}
+		&.small>* {
+			padding: 4px 0.5em;
+		}
+	}
+	.row+.row {
+		margin-top: 4px;
+		padding-top: 4px;
+		border-top: 1px dotted gray;
+	}
 
 	button {
-		flex: 1 0 auto;
+		flex: 1 0 0px;
 		margin: 1px;
-		padding: 1em;
+		padding: 1em 0.5em;
 		color: gray;
 		text-transform: uppercase;
 		white-space: nowrap;
@@ -100,23 +128,16 @@ body.editing #site {
 		}
 	}
 
-	#generalBar {
-		display: flex;
-		flex-wrap: nowrap;
-
-		select {
-			width: 100%;
-			padding: 1em 0;
-			margin-bottom: 2px;
-			cursor: pointer;
-		}
-	}
-
-	#randButtons {
-		display: flex;
+	select {
+		flex: 1 0 auto;
+		margin-bottom: 2px;
+		cursor: pointer;
 	}
 }
 
+.buttons {
+	display: flex;
+}
 
 #output {
 	grid-row: 1/2;

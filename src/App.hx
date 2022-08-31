@@ -8,7 +8,7 @@ class App extends dn.Process {
 	public static var ME : App;
 
 	public var jBody : J;
-	public var jToolbar : J;
+	public var jMainToolbar : J;
 	public var jRandButtons : J;
 	public var jOutput : J;
 	var storage : dn.data.LocalStorage;
@@ -21,7 +21,7 @@ class App extends dn.Process {
 
 		ME = this;
 		jBody = new J("body");
-		jToolbar = jBody.find("#toolbar");
+		jMainToolbar = jBody.find("#mainToolbar");
 		jRandButtons = jBody.find("#randButtons");
 		jOutput = jBody.find("#output");
 
@@ -59,10 +59,10 @@ class App extends dn.Process {
 		}
 
 		// Edit button
-		jToolbar.find("#edit").click( _->setEditor( !jBody.hasClass("editing") ) );
-		
+		jMainToolbar.find(".edit").click( _->setEditor( !jBody.hasClass("editing") ) );
+
 		// Clear button
-		jToolbar.find("#clear").click( _->clearOutput() );
+		jMainToolbar.find(".clear").click( _->clearOutput() );
 	}
 
 
@@ -84,10 +84,19 @@ class App extends dn.Process {
 			curEditor = AceEditor.edit("editor");
 			curEditor.setTheme("ace/theme/monokai");
 			curEditor.session.setMode("ace/mode/randomizer");
+			curEditor.on("change", ()->saveEditor());
 			curEditor.commands.addCommand({
 				name: "Save",
 				bindKey: { win:"Ctrl-s", mac:"Command-s" },
 				exec: (e)->saveEditor(),
+			});
+
+			var jBar = jBody.find(".column.editor .toolbar");
+			jBar.find(".close").click(_->setEditor(false));
+			jBar.find(".reload").click(_->{
+				setEditor(false);
+				allFiles = FileManager.getAllFiles();
+				useFile(settings.curFile);
 			});
 		}
 	}

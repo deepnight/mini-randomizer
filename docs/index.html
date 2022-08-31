@@ -14,20 +14,28 @@
 
 
 		<div id="site">
-			<div id="editorWrapper">
-				<div id="editor"></div>
+
+			<div class="column random">
+				<div class="toolbar" id="mainToolbar">
+					<div class="row buttons" id="randButtons"></div>
+					<div class="row small">
+						<button class="clear">Clear</button>
+						<select id="files"></select>
+						<button class="edit">Edit</button>
+					</div>
+				</div>
+
+				<div id="output"></div>
 			</div>
 
-			<div id="toolbar">
-				<div id="randButtons"></div>
-				<div id="generalBar">
-					<button id="clear">Clear</button>
-					<select id="files"></select>
-					<button id="edit">Edit</button>
+			<div class="column editor">
+				<div id="editor"></div>
+				<div class="toolbar">
+					<button class="close">Close</button>
+					<button class="reload">Reload from source</button>
 				</div>
 			</div>
 
-			<div id="output"></div>
 		</div>
 
 		<!-- Init JS -->
