@@ -23,6 +23,8 @@ h2 {
 	min-height: 1em;
 	position: absolute;
 	top: 8px;
+	right: 0px;
+	pointer-events: none;
 	padding: 8px;
 	padding-right: 32px;
 	border-top-right-radius: 3px;
@@ -35,22 +37,51 @@ h2 {
 
 
 
+
+#menu {
+	display: flex;
+	gap: 4px;
+	margin-bottom: 4px;
+	padding-bottom: 4px;
+	border-bottom: 1px dashed gray;
+
+	select {
+		flex: 1 0 auto;
+		padding: 0.3em;
+		cursor: pointer;
+	}
+}
+
 #site {
 	display: grid;
-	gap: 8px;
+	grid-template-rows: min-content auto;
 	overflow: hidden;
 	width: fit-content;
 
 	height: 100vh;
 	padding: 4px;
-	border-radius: 3px;
-	border: 1px solid lightgray;
+	// border: 1px solid lightgray;
 	box-sizing: border-box;
+
+	.columns {
+		display: grid;
+		grid-auto-flow: column;
+		grid-auto-columns: 500px;
+
+		gap: 8px;
+		overflow: hidden;
+	}
 
 	.column {
 		display: grid;
+		grid-template-rows: auto min-content;
 		gap: 8px;
 		width: 500px;
+		overflow-y: auto;
+
+		&:not(.active) {
+			display: none;
+		}
 
 		&.random {
 			grid-template-rows: 1fr min-content;
@@ -66,7 +97,7 @@ h2 {
 		margin: 0;
 		border: none;
 
-		#output {
+		.output {
 			font-size: 13pt;
 		}
 	}
@@ -127,21 +158,13 @@ body.editing #site {
 			border-color: black;
 		}
 	}
-
-	select {
-		flex: 1 0 auto;
-		margin-bottom: 2px;
-		cursor: pointer;
-	}
 }
 
 .buttons {
 	display: flex;
 }
 
-#output {
-	grid-row: 1/2;
-
+.output {
 	overflow: auto;
 	padding: 16px;
 	font-size: 12pt;

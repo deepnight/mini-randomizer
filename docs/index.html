@@ -10,33 +10,42 @@
 	</head>
 
 	<body>
-		<div id="notif"></div>
-
-
 		<div id="site">
 
-			<div class="column random">
-				<div class="toolbar" id="mainToolbar">
-					<div class="row buttons" id="randButtons"></div>
-					<div class="row small">
-						<button class="clear">Clear</button>
-						<select id="files"></select>
-						<button class="edit">Edit</button>
-					</div>
-				</div>
-
-				<div id="output"></div>
+			<!-- Main menu -->
+			<div id="menu">
+				<select id="files"></select>
+				<button class="edit">Edit</button>
 			</div>
 
-			<div class="column editor">
-				<div id="editor"></div>
-				<div class="toolbar">
-					<button class="close">Close</button>
-					<button class="reload">Reload from source</button>
+			<div class="columns">
+				<!-- Randomizer column -->
+				<div class="column" id="random">
+					<div class="output"></div>
+
+					<div class="toolbar">
+						<div class="row buttons randButtons"></div>
+						<div class="row small">
+							<button class="clear">Clear</button>
+						</div>
+					</div>
+
+				</div>
+
+				<!-- Editor column -->
+				<div class="column editor">
+					<div id="editor"></div>
+					<div class="toolbar">
+						<button class="close">Close</button>
+						<button class="reload">Reload from source</button>
+					</div>
 				</div>
 			</div>
 
 		</div>
+
+		<!-- UI components -->
+		<div id="notif"></div>
 
 		<!-- Init JS -->
 		<canvas id="webgl" globalevents="0"></canvas>

@@ -5,22 +5,21 @@ class Randomizer {
 
 	public function new(data:RandomParser.RandData) {
 		this.data = data;
-		for(o in data.options)
-			switch o.opt {
-				case "button":
-					var jBt = new J('<button>${o.args[0]}</button>');
-					jBt.click( (ev:js.jquery.Event)->{
-						// app.clearOutput();
-						var count = o.args[2]==null ? 1 : Std.parseInt(o.args[2]);
-						if( ev.shiftKey )
-							count = 10;
-						for(i in 0...count)
-							app.output( draw(o.args[1]) );
-					});
-					app.jRandButtons.append(jBt);
+		// for(o in data.options)
+		// 	switch o.opt {
+		// 		case "button":
+		// 			var jBt = new J('<button>${o.args[0]}</button>');
+		// 			jBt.click( (ev:js.jquery.Event)->{
+		// 				var count = o.args[2]==null ? 1 : Std.parseInt(o.args[2]);
+		// 				if( ev.shiftKey )
+		// 					count = 10;
+		// 				// for(i in 0...count)
+		// 				// 	app.output( draw(o.args[1]) );
+		// 			});
+		// 			// app.jRandButtons.append(jBt);
 
-				case _: error('Unknown option: ${o.opt}');
-			}
+		// 		case _: error('Unknown option: ${o.opt}');
+		// 	}
 	}
 
 	static function error(msg:String) {

@@ -1,71 +1,122 @@
 import aceEditor.AceEditor;
 
 typedef Settings = {
-	var curFile: String;
+	var curFileId: String;
+	var savedFiles: Array<{id:String, raw:String}>;
 }
 
 class App extends dn.Process {
 	public static var ME : App;
 
+	public var jDoc : J;
+	public var jSite : J;
 	public var jBody : J;
-	public var jMainToolbar : J;
-	public var jRandButtons : J;
-	public var jOutput : J;
+	public var jSelect : J;
+	// public var jMainToolbar : J;
+	// public var jRandButtons : J;
+	// public var jOutput : J;
 	var storage : dn.data.LocalStorage;
-	var settings : Settings;
-	var curEditor : Null<AceEditor>;
-	var allFiles : Map<String,String>;
+	public var settings : Settings;
+	// var curEditor : Null<AceEditor>;
+	var internalFiles : Map<String,String>;
 
 	public function new() {
 		super();
 
 		ME = this;
+		jDoc = new J( js.Browser.document );
 		jBody = new J("body");
-		jMainToolbar = jBody.find("#mainToolbar");
-		jRandButtons = jBody.find("#randButtons");
-		jOutput = jBody.find("#output");
+		jSite = jBody.find("#site");
+
+		// jMainToolbar = jBody.find("#mainToolbar");
+		// jRandButtons = jBody.find("#randButtons");
+		// jOutput = jBody.find("#output");
+
+		// Load all files content from last compilation
+		internalFiles = FileManager.getAllFiles();
 
 		// Init cookie
 		storage = dn.data.LocalStorage.createJsonStorage("settings");
 		settings = storage.readObject({
-			curFile: null,
+			curFileId: null,
+			savedFiles: [],
 		});
 		saveSettings();
 
-		// Load all files content
-		allFiles = FileManager.getAllFiles();
-
 		// Init select
-		var jSelect = jBody.find("#files");
+		jSelect = jBody.find("#files");
 		jSelect.append('<option value=""/>');
-		for(f in allFiles.keys())
-			jSelect.append('<option value="${f}">${dn.FilePath.extractFileName(f)}</option>');
+		for(fid in getAllFileIds())
+			jSelect.append('<option value="${fid}">${dn.FilePath.extractFileName(fid)} ${isSavedLocally(fid)?"*":""}</option>');
 		jSelect.change( _->{
-			var f = jSelect.val();
-			setEditor(false);
-			useFile( f=="" ? null : f );
+			var fid = jSelect.val();
+			useFile( fid=="" ? null : fid );
 		});
+		
+		new RandomUI();
 
 		// Reload last file
-		if( settings.curFile!=null ) {
-			if( !allFiles.exists(settings.curFile) ) {
-				settings.curFile = null;
+		if( settings.curFileId!=null ) {
+			if( getFile(settings.curFileId)==null ) {
+				settings.curFileId = null;
 				saveSettings();
 			}
-			else {
-				jSelect.val(settings.curFile);
-				useFile( settings.curFile );
-			}
+			else
+				useFile( settings.curFileId );
 		}
 
+
 		// Edit button
-		jMainToolbar.find(".edit").click( _->setEditor( !jBody.hasClass("editing") ) );
+		// jMainToolbar.find(".edit").click( _->setEditor( !jBody.hasClass("editing") ) );
 
 		// Clear button
-		jMainToolbar.find(".clear").click( _->clearOutput() );
+		// jMainToolbar.find(".clear").click( _->clearOutput() );
 	}
 
+	public function saveFile(fileId:String, raw:String) {
+		for(f in settings.savedFiles)
+			if( f.id==fileId ) {
+				f.raw = raw;
+				saveSettings();
+				break;
+			}
 
+		settings.savedFiles.push({ id:fileId, raw:raw });
+		saveSettings();
+	}
+
+	public function getAllFileIds() {
+		var dones = new Map();
+		var all = [];
+		for(f in settings.savedFiles) {
+			dones.set(f.id,true);
+			all.push(f.id);
+		}
+
+		for(fid in internalFiles.keys())
+			if( !dones.exists(fid) )
+				all.push(fid);
+
+		return all;
+	}
+
+	public function isSavedLocally(fileId:String) {
+		for(f in settings.savedFiles)
+			if( f.id==fileId )
+				return true;
+		return false;
+	}
+
+	function getFile(fileId:String) : Null<String> {
+		var raw : String = null;
+		for(f in settings.savedFiles)
+			if( f.id==fileId )
+				return f.raw;
+
+		return internalFiles.get(fileId);
+	}
+
+	/*
 	function setEditor(active:Bool) {
 		// Kill existing editor
 		if( curEditor!=null ) {
@@ -108,26 +159,37 @@ class App extends dn.Process {
 			notify("Saved.");
 		}
 	}
+	*/
 
-	function saveSettings() {
+	public function saveSettings() {
 		storage.writeObject(settings);
 	}
 
-	function useFile(f:String) {
-		var raw = allFiles.get(f);
-		clearOutput();
-		jRandButtons.empty();
-
-		if( raw==null )
+	function useFile(fileId:String) {
+		var raw = getFile(fileId);
+		if( raw==null ) {
+			notify("Failed to load "+fileId);
 			return;
+		}
 
-		var rdata = RandomParser.run(raw);
-		new Randomizer(rdata);
-
-		settings.curFile = f;
+		settings.curFileId = fileId;
 		saveSettings();
+		jSelect.val(settings.curFileId);
+
+		for(p in SiteProcess.ALL)
+			p.onFileChanged(raw);
+		// clearOutput();
+		// jRandButtons.empty();
+
+		// if( raw==null )
+		// 	return;
+
+		// var rdata = RandomParser.run(raw);
+		// new Randomizer(rdata);
+
 	}
 
+	/*
 	public function clearOutput() {
 		jOutput.empty();
 	}
@@ -137,6 +199,7 @@ class App extends dn.Process {
 		str = "<pre>" + str.split("\\n").join("</pre><pre>") + "</pre>";
 		jOutput.prepend('<div class="entry">$str</div>');
 	}
+	*/
 
 	override function onDispose() {
 		super.onDispose();
@@ -144,13 +207,10 @@ class App extends dn.Process {
 			ME = null;
 	}
 
+
 	public function notify(str:String) {
 		var jNotif = jBody.find("#notif");
 		jNotif.text(str);
 		jNotif.stop(true).hide().slideDown(200).delay(1400).fadeOut(200);
-	}
-
-	override function update() {
-		super.update();
 	}
 }
