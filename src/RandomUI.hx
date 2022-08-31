@@ -4,6 +4,7 @@ class RandomUI extends SiteProcess {
 	public var jToolbar : J;
 	public var jRandButtons : J;
 	public var jOutput : J;
+	var randomizer : Null<Randomizer>;
 
 	public function new() {
 		super("random");
@@ -22,7 +23,7 @@ class RandomUI extends SiteProcess {
 		jRandButtons.empty();
 
 		var data = RandomParser.run(raw);
-		var r = new Randomizer(data);
+		randomizer = new Randomizer(data);
 
 		// Add buttons
 		for(o in data.options)
@@ -30,16 +31,21 @@ class RandomUI extends SiteProcess {
 				case "button":
 					var jBt = new J('<button>${o.args[0]}</button>');
 					jBt.click( (ev:js.jquery.Event)->{
+						if( app.editor!=null && app.editor.checkAutoSave() )
+							return;
+
 						var count = o.args[2]==null ? 1 : Std.parseInt(o.args[2]);
 						if( ev.shiftKey )
 							count = 10;
 						for(i in 0...count)
-							output( r.draw(o.args[1]) );
+							output( randomizer.draw(o.args[1]) );
 					});
 					jRandButtons.append(jBt);
 
 				case _: notify('Unknown option: ${o.opt}');
 			}
+
+		clearOutput();
 	}
 
 	public function clearOutput() {

@@ -14,8 +14,10 @@
 
 			<!-- Main menu -->
 			<div id="menu">
+				<div class="start"></div>
 				<select id="files"></select>
-				<button class="edit">Edit</button>
+				<button class="edit">Show/hide editor</button>
+				<div class="filler"></div>
 			</div>
 
 			<div class="columns">
@@ -33,8 +35,8 @@
 				</div>
 
 				<!-- Editor column -->
-				<div class="column editor">
-					<div id="editor"></div>
+				<div class="column" id="editor">
+					<div id="ace"></div>
 					<div class="toolbar">
 						<button class="close">Close</button>
 						<button class="reload">Reload from source</button>

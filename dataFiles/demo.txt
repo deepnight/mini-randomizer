@@ -1,4 +1,4 @@
-#button Generate random locations (demo) | demo | 6
+#button Generate random locations (demo) | demo
 
 >demo
 :buildingType:\n :locationFeature:\n Inhabitant(s): :inhabitant:
@@ -13,6 +13,8 @@ Bunker
 Prison
 Museum
 Restaurant
+Parking lot
+Bridge
 
 >locationFeature
 Recently visited
@@ -35,12 +37,12 @@ Recently bombed
 Repurposed into something else (:buildingType:)
 
 >inhabitant
-Not occupied x5
+Not occupied x2
 Bandits
 Merchant
 Ermit
 Crazy person
-Group of peaceful people
+Group of peaceful people x0.5
 Minor monsters
 One major monster
 Robot

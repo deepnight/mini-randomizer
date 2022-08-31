@@ -37,38 +37,43 @@ h2 {
 
 
 
-
-#menu {
-	display: flex;
-	gap: 4px;
-	margin-bottom: 4px;
-	padding-bottom: 4px;
-	border-bottom: 1px dashed gray;
-
-	select {
-		flex: 1 0 auto;
-		padding: 0.3em;
-		cursor: pointer;
-	}
-}
-
 #site {
 	display: grid;
 	grid-template-rows: min-content auto;
+	gap: 8px;
 	overflow: hidden;
 	width: fit-content;
 
 	height: 100vh;
 	padding: 4px;
-	// border: 1px solid lightgray;
 	box-sizing: border-box;
+
+	#menu {
+		display: flex;
+		gap: 4px;
+
+		select {
+			border: 1px solid black;
+			padding: 0.3em;
+			min-width: 200px;
+			cursor: pointer;
+		}
+
+		.start {
+			width: 10px;
+			background-color: lightgray;
+		}
+		.filler {
+			flex: 1 0 auto;
+			background-color: lightgray;
+		}
+	}
 
 	.columns {
 		display: grid;
 		grid-auto-flow: column;
 		grid-auto-columns: 500px;
 
-		gap: 8px;
 		overflow: hidden;
 	}
 
@@ -90,6 +95,12 @@ h2 {
 		&.editor {
 			display: none;
 		}
+	}
+
+	.column+.column {
+		margin-left: 4px;
+		padding-left: 4px;
+		border-left: 1px dashed gray;
 	}
 
 

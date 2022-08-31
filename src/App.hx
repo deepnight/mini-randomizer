@@ -11,14 +11,15 @@ class App extends dn.Process {
 	public var jDoc : J;
 	public var jSite : J;
 	public var jBody : J;
+	public var jMenu : J;
 	public var jSelect : J;
-	// public var jMainToolbar : J;
-	// public var jRandButtons : J;
-	// public var jOutput : J;
+
+	public var internalFiles : Map<String,String>;
 	var storage : dn.data.LocalStorage;
 	public var settings : Settings;
-	// var curEditor : Null<AceEditor>;
-	var internalFiles : Map<String,String>;
+
+	public var editor : Null<EditorUI>;
+
 
 	public function new() {
 		super();
@@ -27,10 +28,7 @@ class App extends dn.Process {
 		jDoc = new J( js.Browser.document );
 		jBody = new J("body");
 		jSite = jBody.find("#site");
-
-		// jMainToolbar = jBody.find("#mainToolbar");
-		// jRandButtons = jBody.find("#randButtons");
-		// jOutput = jBody.find("#output");
+		jMenu = jBody.find("#menu");
 
 		// Load all files content from last compilation
 		internalFiles = FileManager.getAllFiles();
@@ -45,14 +43,11 @@ class App extends dn.Process {
 
 		// Init select
 		jSelect = jBody.find("#files");
-		jSelect.append('<option value=""/>');
-		for(fid in getAllFileIds())
-			jSelect.append('<option value="${fid}">${dn.FilePath.extractFileName(fid)} ${isSavedLocally(fid)?"*":""}</option>');
-		jSelect.change( _->{
-			var fid = jSelect.val();
-			useFile( fid=="" ? null : fid );
-		});
-		
+		updateSelect();
+
+		// Menu buttons
+		jMenu.find(".edit").click( _->toggleEditor() );
+
 		new RandomUI();
 
 		// Reload last file
@@ -62,7 +57,7 @@ class App extends dn.Process {
 				saveSettings();
 			}
 			else
-				useFile( settings.curFileId );
+				setActiveFile( settings.curFileId );
 		}
 
 
@@ -73,16 +68,65 @@ class App extends dn.Process {
 		// jMainToolbar.find(".clear").click( _->clearOutput() );
 	}
 
+	public function updateSelect() {
+		jSelect.empty();
+		if( settings.curFileId==null )
+			jSelect.append('<option value="">-- Pick one --</option>');
+		
+		for(fid in getAllFileIds())
+			jSelect.append('<option value="${fid}">${dn.FilePath.extractFileName(fid)} ${isSavedLocally(fid)?"*":""}</option>');
+		jSelect.change( _->{
+			var fid = jSelect.val();
+			setActiveFile( fid=="" ? null : fid );
+		});
+		jSelect.val(settings.curFileId);
+	}
+
+	public function toggleEditor() {
+		if( editor!=null )
+			closeEditor();
+		else
+			openEditor();
+	}
+
+	public function openEditor() {
+		if( editor==null )
+			editor = new EditorUI();
+	}
+
+	public function closeEditor() {
+		if( editor!=null ) {
+			editor.destroy();
+			editor = null;
+			dn.Process.updateAll(1); // force GC
+		}
+	}
+
 	public function saveFile(fileId:String, raw:String) {
+		var found = false;
 		for(f in settings.savedFiles)
 			if( f.id==fileId ) {
-				f.raw = raw;
-				saveSettings();
+				f.raw = escape(raw);
+				found = true;
 				break;
 			}
 
-		settings.savedFiles.push({ id:fileId, raw:raw });
+		if( !found )
+			settings.savedFiles.push({ id:fileId, raw:escape(raw) });
 		saveSettings();
+		setActiveFile(fileId);
+	}
+
+	function escape(raw:String) {
+		raw = StringTools.replace(raw, "\\n", "<EOL>");
+		raw = StringTools.replace(raw, "\n", "\\n");
+		return raw;
+	}
+
+	function unescape(raw:String) {
+		raw = StringTools.replace(raw, "\\n", "\n");
+		raw = StringTools.replace(raw, "<EOL>", "\\n");
+		return raw;
 	}
 
 	public function getAllFileIds() {
@@ -107,13 +151,17 @@ class App extends dn.Process {
 		return false;
 	}
 
-	function getFile(fileId:String) : Null<String> {
+	public function getFile(fileId:String) : Null<String> {
 		var raw : String = null;
 		for(f in settings.savedFiles)
 			if( f.id==fileId )
-				return f.raw;
+				return unescape(f.raw);
 
 		return internalFiles.get(fileId);
+	}
+
+	public function getCurrentFileContent() {
+		return getFile(settings.curFileId);
 	}
 
 	/*
@@ -147,7 +195,7 @@ class App extends dn.Process {
 			jBar.find(".reload").click(_->{
 				setEditor(false);
 				allFiles = FileManager.getAllFiles();
-				useFile(settings.curFile);
+				setActiveFile(settings.curFile);
 			});
 		}
 	}
@@ -155,7 +203,7 @@ class App extends dn.Process {
 	function saveEditor() {
 		if( curEditor!=null ) {
 			allFiles.set(settings.curFile, curEditor.getValue());
-			useFile(settings.curFile);
+			setActiveFile(settings.curFile);
 			notify("Saved.");
 		}
 	}
@@ -165,7 +213,7 @@ class App extends dn.Process {
 		storage.writeObject(settings);
 	}
 
-	function useFile(fileId:String) {
+	public function setActiveFile(fileId:String) {
 		var raw = getFile(fileId);
 		if( raw==null ) {
 			notify("Failed to load "+fileId);
@@ -174,7 +222,7 @@ class App extends dn.Process {
 
 		settings.curFileId = fileId;
 		saveSettings();
-		jSelect.val(settings.curFileId);
+		updateSelect();
 
 		for(p in SiteProcess.ALL)
 			p.onFileChanged(raw);
