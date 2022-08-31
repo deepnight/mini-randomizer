@@ -93,6 +93,8 @@ sushi
 Terrain de sport (:sport:)
 Lac
 Route
+Pont
+Tunnel
 Autoroute
 Parc
 Plantation
