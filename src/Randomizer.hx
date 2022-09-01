@@ -9,11 +9,13 @@ class Randomizer {
 		trace('ERROR: $msg');
 	}
 
-	public function draw(key:String) {
+	public function draw(key:String) : String {
 		if( !data.tables.exists(key) )
 			return '<ERR: $key>';
 
 		var table = data.tables.get(key);
+		if( table.length==0 )
+			return "";
 
 		var rlist = new dn.struct.RandList();
 		for(e in table)
@@ -21,14 +23,14 @@ class Randomizer {
 
 		var entry = rlist.draw();
 		var out = entry.raw;
-		var refReg = ~/:([a-z0-9_-]+):/i;
-		var numberReg = ~/^([0-9]+)-([0-9]+)$/i;
+		var refReg = new EReg(RandomParser.REF_REG, "");
+		var countReg = new EReg(RandomParser.COUNT_REG, "");
 		while( refReg.match(out) ) {
 			var k = refReg.matched(1);
-			if( numberReg.match(k) ) {
+			if( countReg.match(k) ) {
 				// Random number
-				var min = Std.parseInt( numberReg.matched(1) );
-				var max = Std.parseInt( numberReg.matched(2) );
+				var min = Std.parseInt( countReg.matched(1) );
+				var max = Std.parseInt( countReg.matched(2) );
 				out = refReg.matchedLeft() + R.irnd(min,max) + refReg.matchedRight();
 			}
 			else {

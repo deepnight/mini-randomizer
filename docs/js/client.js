@@ -1065,8 +1065,8 @@ var App = function() {
 	_g.h["embed/demo.txt"] = "#button Generate random locations (demo) | demo\r\n\r\n>demo\r\n:buildingType:\\n :locationFeature:\\n Inhabitant(s): :inhabitant:\r\n\r\n>buildingType\r\nSupermarket\r\nMansion\r\nSchool\r\nHospital\r\nTrain station\r\nBunker\r\nPrison\r\nMuseum\r\nRestaurant\r\nParking lot\r\nBridge\r\n\r\n>locationFeature\r\nRecently visited\r\nDark place\r\nWalls are painted with bright colors\r\nVery messy\r\nBlood splatters\r\nWeird decoration\r\nWeird smell\r\nWeird noises inside\r\nPresence of radioactivity\r\nStrange tags on walls\r\nFlooded\r\nStrange mist\r\nPresence of lots of insects\r\nAbandoned recently\r\nBurned down\r\nBarricaded\r\nRecently bombed\r\nRepurposed into something else (:buildingType:)\r\n\r\n>inhabitant\r\nNot occupied x2\r\nBandits\r\nMerchant\r\nErmit\r\nCrazy person\r\nGroup of peaceful people x0.5\r\nMinor monsters\r\nOne major monster\r\nRobot";
 	this.internalFiles = _g;
 	var _g = new haxe_ds_StringMap();
-	_g.h["embed/tpl/random.html"] = "<div class=\"toolbar\">\r\n\t<div class=\"row buttons randButtons\"></div>\r\n\t<div class=\"row small\">\r\n\t\t<button class=\"clear\">Clear</button>\r\n\t</div>\r\n</div>\r\n\r\n<div class=\"output\"></div>\r\n";
-	_g.h["embed/tpl/editor.html"] = "<div class=\"toolbar\">\r\n\t<button class=\"close small\">Close</button>\r\n\t<button class=\"save\">...</button>\r\n\t<button class=\"delete\">Delete save</button>\r\n</div>\r\n\r\n<div id=\"ace\"></div>\r\n";
+	_g.h["embed/tpl/random.html"] = "<div class=\"toolbar\">\r\n\t<div class=\"row buttons randButtons\"></div>\r\n\t<div class=\"row small\">\r\n\t\t<button class=\"clear\">Clear</button>\r\n\t</div>\r\n</div>\r\n\r\n<div class=\"output\"></div>\r\n<div class=\"errors\"></div>\r\n";
+	_g.h["embed/tpl/editor.html"] = "<div class=\"toolbar\">\r\n\t<button class=\"close small\">Close</button>\r\n\t<button class=\"save\">...</button>\r\n\t<button class=\"delete small\">Delete save</button>\r\n</div>\r\n\r\n<div id=\"ace\"></div>\r\n";
 	this.templates = _g;
 	this.storage = dn_data_LocalStorage.createJsonStorage("settings");
 	this.loadSettings();
@@ -1079,6 +1079,12 @@ var App = function() {
 	this.jMenu.find(".new").click(function(_) {
 		_gthis.closeEditor();
 		var name = window.prompt("Enter new file name:");
+		if(name == null) {
+			return;
+		}
+		var reg_r = new RegExp("[^a-z0-9_-]","gim".split("u").join(""));
+		name = name.replace(reg_r,"_");
+		_gthis.notify("New file: " + name);
 		_gthis.settings.savedFiles.push({ id : name, raw : ""});
 		_gthis.setActiveFile(name);
 		_gthis.openEditor();
@@ -1918,7 +1924,48 @@ RandomParser.run = function(raw) {
 			rdata.tables.h[curKey].push({ raw : l, probaMul : probaMul});
 		}
 	}
-	return rdata;
+	var errors = [];
+	var _g = 0;
+	var _g1 = rdata.options;
+	while(_g < _g1.length) {
+		var o = _g1[_g];
+		++_g;
+		var k = o.opt;
+		if(k == "button") {
+			if(o.args.length == 0) {
+				errors.push(Std.string("Missing argument in #" + k));
+			}
+		} else {
+			errors.push(Std.string("Unknown option: #" + k));
+		}
+	}
+	var refReg = new EReg(RandomParser.REF_REG,"");
+	var countReg = new EReg(RandomParser.COUNT_REG,"");
+	var h = rdata.tables.h;
+	var table_h = h;
+	var table_keys = Object.keys(h);
+	var table_length = table_keys.length;
+	var table_current = 0;
+	while(table_current < table_length) {
+		var key = table_keys[table_current++];
+		var table_key = key;
+		var table_value = table_h[key];
+		var _g = 0;
+		var _g1 = table_value;
+		while(_g < _g1.length) {
+			var e = _g1[_g];
+			++_g;
+			var tmp = e.raw;
+			while(refReg.match(tmp)) {
+				var k = refReg.matched(1);
+				if(!countReg.match(k) && !Object.prototype.hasOwnProperty.call(rdata.tables.h,k)) {
+					errors.push(Std.string("Unknown key :" + k + ": in >" + table_key));
+				}
+				tmp = refReg.matchedRight();
+			}
+		}
+	}
+	return { data : rdata, errors : errors};
 };
 RandomParser.cleanUp = function(str) {
 	str = StringTools.replace(str,"\r","");
@@ -1944,10 +1991,17 @@ RandomUI.prototype = $extend(SiteProcess.prototype,{
 		SiteProcess.prototype.onFileChanged.call(this,raw);
 		this.clearOutput();
 		this.jRandButtons.empty();
-		var data = RandomParser.run(raw);
-		this.randomizer = new Randomizer(data);
+		var parsed = RandomParser.run(raw);
+		var jErrors = this.jRoot.find(".errors");
+		if(parsed.errors.length == 0) {
+			jErrors.empty();
+		} else {
+			jErrors.html("<pre>" + parsed.errors.join("</pre><pre>") + "</pre>");
+		}
+		haxe_Log.trace(parsed.errors,{ fileName : "src/RandomUI.hx", lineNumber : 32, className : "RandomUI", methodName : "onFileChanged"});
+		this.randomizer = new Randomizer(parsed.data);
 		var _g = 0;
-		var _g1 = data.options;
+		var _g1 = parsed.data.options;
 		while(_g < _g1.length) {
 			var o = [_g1[_g]];
 			++_g;
@@ -2002,6 +2056,9 @@ Randomizer.prototype = {
 			return "<ERR: " + key + ">";
 		}
 		var table = this.data.tables.h[key];
+		if(table.length == 0) {
+			return "";
+		}
 		var rlist = new dn_struct_RandList();
 		var _g = 0;
 		while(_g < table.length) {
@@ -2022,13 +2079,13 @@ Randomizer.prototype = {
 		}
 		var entry = rlist.draw();
 		var out = entry.raw;
-		var refReg = new EReg(":([a-z0-9_-]+):","i");
-		var numberReg = new EReg("^([0-9]+)-([0-9]+)$","i");
+		var refReg = new EReg(RandomParser.REF_REG,"");
+		var countReg = new EReg(RandomParser.COUNT_REG,"");
 		while(refReg.match(out)) {
 			var k = refReg.matched(1);
-			if(numberReg.match(k)) {
-				var min = Std.parseInt(numberReg.matched(1));
-				var max = Std.parseInt(numberReg.matched(2));
+			if(countReg.match(k)) {
+				var min = Std.parseInt(countReg.matched(1));
+				var max = Std.parseInt(countReg.matched(2));
 				out = refReg.matchedLeft() + (min + Std.random(max - min + 1)) + refReg.matchedRight();
 			} else {
 				out = refReg.matchedLeft() + this.draw(k) + refReg.matchedRight();
@@ -34155,6 +34212,8 @@ dn_Process.PROFILER_TIMES = new haxe_ds_StringMap();
 SiteProcess.ALL = [];
 dn_FilePath.WIN_NETWORK_DRIVE_REG = new EReg("^\\\\\\\\([a-z0-9-]+)\\\\(.*)","i");
 dn_FilePath.SLASH_MODE = dn_PathSlashMode.Preserve;
+RandomParser.REF_REG = ":([a-zA-Z0-9_-]+):";
+RandomParser.COUNT_REG = "^([0-9]+)-([0-9]+)$";
 RandomParser.OPTION_REG = new EReg("^#([a-z0-9_-]+)([ \t]+(.+)|)","i");
 RandomParser.KEY_REG = new EReg("^[ \t]*>[ \t]*([a-z0-9_-]+)[ \t]*","i");
 RandomParser.PROBA_MUL_REG = new EReg("[ \t]+x([0-9.]+)[ \t]*$","i");

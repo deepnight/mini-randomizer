@@ -159,26 +159,50 @@ h2 {
 	display: flex;
 }
 
-.output {
-	overflow: auto;
-	padding: 16px;
-	font-size: 12pt;
-	border: 1px solid lightgray;
+#site .column.random {
+	.output {
+		overflow: auto;
+		padding: 16px;
+		font-size: 12pt;
+		border: 1px solid lightgray;
 
-	.entry {
-		pre {
-			margin: 0;
-			white-space: pre-wrap;
-			font-family: Arial, Helvetica, sans-serif;
-			&:first-of-type {
-				font-weight: bold;
+		.entry {
+			pre {
+				margin: 0;
+				white-space: pre-wrap;
+				font-family: Arial, Helvetica, sans-serif;
+				&:first-of-type {
+					font-weight: bold;
+				}
 			}
+		}
+
+		.entry+.entry {
+			padding-top: 10px;
+			margin-top: 10px;
+			border-top: 1px dashed gray;
 		}
 	}
 
-	.entry+.entry {
-		padding-top: 10px;
-		margin-top: 10px;
-		border-top: 1px dashed gray;
+	.errors {
+		border: 1px dashed red;
+		padding: 8px;
+		max-height: 100px;
+		overflow-y: auto;
+		background-color: #ffcccc;
+
+		&:empty {
+			display: none;
+		}
+
+		pre {
+			margin: 0;
+			color: red;
+			font-weight: bold;
+		}
 	}
+}
+
+#site .column.editor {
+	grid-template-rows: min-content 1fr min-content;
 }

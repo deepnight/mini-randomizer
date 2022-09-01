@@ -23,11 +23,17 @@ class RandomUI extends SiteProcess {
 		clearOutput();
 		jRandButtons.empty();
 
-		var data = RandomParser.run(raw);
-		randomizer = new Randomizer(data);
+		var parsed = RandomParser.run(raw);
+		var jErrors = jRoot.find(".errors");
+		if( parsed.errors.length==0 )
+			jErrors.empty();
+		else
+			jErrors.html("<pre>" + parsed.errors.join("</pre><pre>") + "</pre>");
+		trace(parsed.errors);
+		randomizer = new Randomizer(parsed.data);
 
 		// Add buttons
-		for(o in data.options)
+		for(o in parsed.data.options)
 			switch o.opt {
 				case "button":
 					var jBt = new J('<button>${o.args[0]}</button>');
