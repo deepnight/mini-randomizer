@@ -117,7 +117,7 @@ class RandomParser {
 				while( keyRefReg.match(tmp) ) {
 					var k = keyRefReg.matched(1);
 					if( !countReg.match(k) && !rdata.tables.exists(k) )
-						_err('Unknown key :$k: in >${table.key}');
+						_err('Unknown key "@$k" in ">${table.key}"');
 					tmp = keyRefReg.matchedRight();
 				}
 			}
