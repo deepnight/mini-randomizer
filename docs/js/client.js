@@ -66,15 +66,6 @@ var haxe_ds_StringMap = function() {
 $hxClasses["haxe.ds.StringMap"] = haxe_ds_StringMap;
 haxe_ds_StringMap.__name__ = "haxe.ds.StringMap";
 haxe_ds_StringMap.__interfaces__ = [haxe_IMap];
-haxe_ds_StringMap.stringify = function(h) {
-	var s = "{";
-	var first = true;
-	for (var key in h) {
-		if (first) first = false; else s += ',';
-		s += key + ' => ' + Std.string(h[key]);
-	}
-	return s + "}";
-};
 haxe_ds_StringMap.prototype = {
 	iterator: function() {
 		return new haxe_ds__$StringMap_StringMapValueIterator(this.h);
@@ -1075,7 +1066,7 @@ var App = function() {
 	this.internalFiles = _g;
 	var _g = new haxe_ds_StringMap();
 	_g.h["embed/tpl/random.html"] = "<div class=\"toolbar\">\r\n\t<div class=\"row buttons randButtons\"></div>\r\n\t<div class=\"row small\">\r\n\t\t<button class=\"clear\">Clear</button>\r\n\t</div>\r\n</div>\r\n\r\n<div class=\"output\"></div>\r\n<div class=\"errors\"></div>\r\n";
-	_g.h["embed/tpl/editor.html"] = "<div class=\"toolbar\">\r\n\t<button class=\"close small\">Close</button>\r\n\t<button class=\"save\">...</button>\r\n\t<button class=\"delete small\">Delete save</button>\r\n</div>\r\n\r\n<div id=\"ace\"></div>\r\n";
+	_g.h["embed/tpl/editor.html"] = "<div class=\"toolbar\">\r\n\t<button class=\"close small\">Close</button>\r\n\t<button class=\"save\">...</button>\r\n\t<button class=\"download\">Download</button>\r\n\t<button class=\"copy\">Copy</button>\r\n\t<button class=\"upload\">Import</button>\r\n\t<button class=\"delete small\">Delete save</button>\r\n</div>\r\n\r\n<div id=\"ace\"></div>\r\n";
 	this.templates = _g;
 	this.storage = dn_data_LocalStorage.createJsonStorage("settings");
 	this.loadSettings();
@@ -1521,6 +1512,12 @@ var EditorUI = function() {
 	this.jRoot.find(".save").click(function(_) {
 		_gthis.save();
 	});
+	this.jRoot.find(".download").click(function(_) {
+		_gthis.download();
+	});
+	this.jRoot.find(".copy").click(function(_) {
+		_gthis.copy();
+	});
 	this.updateToolbar();
 	this.markSaved();
 };
@@ -1591,6 +1588,24 @@ EditorUI.prototype = $extend(SiteProcess.prototype,{
 		}
 		this.updateToolbar();
 		this.ignoreNextChangeEvent = false;
+	}
+	,download: function() {
+		this.checkAutoSave();
+		var name = App.ME.settings.curFileId + ".txt";
+		var jDl = $("<a/>");
+		jDl.text("test");
+		jDl.attr("download",name);
+		var s = App.ME.getCurrentFileContent();
+		jDl.attr("href","data:text/plain;charset=utf-8," + encodeURIComponent(s));
+		App.ME.jBody.append(jDl);
+		jDl.get(0).click();
+		jDl.remove();
+		App.ME.notify("Downloading " + name + "...");
+	}
+	,copy: function() {
+		this.checkAutoSave();
+		$global.navigator.clipboard.writeText(App.ME.getCurrentFileContent());
+		App.ME.notify("Copied to clipboard");
 	}
 	,update: function() {
 		SiteProcess.prototype.update.call(this);
@@ -1941,7 +1956,6 @@ RandomParser.run = function(raw) {
 			} else {
 				errors.push(Std.string("Unknown option: #" + o));
 			}
-			haxe_Log.trace(o + " " + (args == null ? "null" : haxe_ds_StringMap.stringify(args.h)),{ fileName : "src/RandomParser.hx", lineNumber : 78, className : "RandomParser", methodName : "run"});
 			rdata.options.push({ id : o, args : args});
 			continue;
 		}
@@ -2021,7 +2035,6 @@ RandomUI.prototype = $extend(SiteProcess.prototype,{
 		} else {
 			jErrors.html("<pre>" + parsed.errors.join("</pre><pre>") + "</pre>");
 		}
-		haxe_Log.trace(parsed.errors,{ fileName : "c:\\projects\\mini-randomizer\\src\\RandomUI.hx", lineNumber : 32, className : "RandomUI", methodName : "onFileChanged"});
 		this.randomizer = new Randomizer(parsed.data);
 		var _g = 0;
 		var _g1 = parsed.data.options;

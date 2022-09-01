@@ -26,6 +26,8 @@ class EditorUI extends SiteProcess {
 
 		jRoot.find(".close").click(_->app.closeEditor());
 		jRoot.find(".save").click(_->save());
+		jRoot.find(".download").click(_->download());
+		jRoot.find(".copy").click(_->copy());
 		updateToolbar();
 
 		markSaved();
@@ -109,6 +111,27 @@ class EditorUI extends SiteProcess {
 			setContent(raw);
 		updateToolbar();
 		ignoreNextChangeEvent = false;
+	}
+
+	function download() {
+		checkAutoSave();
+		var name = curFileId+".txt";
+
+		var jDl = new J('<a/>');
+		jDl.text("test");
+		jDl.attr("download", name);
+		jDl.attr("href", 'data:text/plain;charset=utf-8,'+StringTools.urlEncode(app.getCurrentFileContent()));
+		jBody.append(jDl);
+		jDl.get(0).click();
+		jDl.remove();
+
+		notify('Downloading $name...');
+	}
+
+	function copy() {
+		checkAutoSave();
+		js.Browser.navigator.clipboard.writeText( app.getCurrentFileContent() );
+		notify('Copied to clipboard');
 	}
 
 	override function update() {
