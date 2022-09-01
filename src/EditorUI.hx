@@ -13,6 +13,11 @@ class EditorUI extends SiteProcess {
 			bindKey: { win:"Ctrl-s", mac:"Command-s" },
 			exec: (e)->save(),
 		});
+		ace.commands.addCommand({
+			name: "Search",
+			bindKey: { win:"F3", mac:"" },
+			exec: (e)->ace.execCommand("find"),
+		});
 		ace.focus();
 
 		setContent(app.getCurrentFileContent());
