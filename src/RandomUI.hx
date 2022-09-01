@@ -29,7 +29,6 @@ class RandomUI extends SiteProcess {
 			jErrors.empty();
 		else
 			jErrors.html("<pre>" + parsed.errors.join("</pre><pre>") + "</pre>");
-		trace(parsed.errors);
 		randomizer = new Randomizer(parsed.data);
 
 		// Add buttons

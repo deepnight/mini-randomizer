@@ -75,7 +75,6 @@ class RandomParser {
 					case _: _err('Unknown option: #$o');
 				}
 
-				trace(o+" "+args);
 
 				rdata.options.push({
 					id: o,
