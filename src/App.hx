@@ -15,6 +15,7 @@ class App extends dn.Process {
 	public var jSelect : J;
 
 	public var internalFiles : Map<String,String>;
+	public var templates : Map<String,String>;
 	var storage : dn.data.LocalStorage;
 	public var settings : Settings;
 
@@ -30,8 +31,9 @@ class App extends dn.Process {
 		jSite = jBody.find("#site");
 		jMenu = jBody.find("#menu");
 
-		// Load all files content from last compilation
+		// Load embed files
 		internalFiles = FileManager.getAllFiles("txt");
+		templates = FileManager.getAllFiles("html", "tpl");
 
 		// Init cookie
 		storage = dn.data.LocalStorage.createJsonStorage("settings");
@@ -47,6 +49,13 @@ class App extends dn.Process {
 
 		// Menu buttons
 		jMenu.find(".edit").click( _->toggleEditor() );
+		jMenu.find(".new").click( _->{
+			closeEditor();
+			var name = js.Browser.window.prompt("Enter new file name:");
+			settings.savedFiles.push({ id:name, raw:"" });
+			setActiveFile(name);
+			openEditor();
+		} );
 
 		new RandomUI();
 
@@ -59,23 +68,25 @@ class App extends dn.Process {
 			else
 				setActiveFile( settings.curFileId );
 		}
+	}
 
-
-		// Edit button
-		// jMainToolbar.find(".edit").click( _->setEditor( !jBody.hasClass("editing") ) );
-
-		// Clear button
-		// jMainToolbar.find(".clear").click( _->clearOutput() );
+	public function getTemplate(name:String) : Null<String> {
+		for(t in templates.keyValueIterator()) {
+			var fp = dn.FilePath.fromFile(t.key);
+			if( fp.fileName==name )
+				return t.value;
+		}
+		return null;
 	}
 
 	public function updateSelect() {
-		jSelect.empty();
+		jSelect.empty().off();
 		if( settings.curFileId==null )
 			jSelect.append('<option value="">-- Pick one --</option>');
 
 		for(fid in getAllFileIds()) {
 			var fp = dn.FilePath.fromFile(fid);
-			var prefix = fp.directory=="embed" ? "[internal] " : "";
+			var prefix = isInternal(fid) ? "[internal] " : "";
 			jSelect.append('<option value="${fid}">$prefix ${fp.fileName}</option>');
 		}
 		jSelect.change( _->{
@@ -157,10 +168,29 @@ class App extends dn.Process {
 		return all;
 	}
 
+	public function isInternal(fileId:String) {
+		return dn.FilePath.extractDirectoryWithoutSlash(fileId, true) == "embed";
+	}
+
 	public function isSavedLocally(fileId:String) {
 		for(f in settings.savedFiles)
 			if( f.id==fileId )
 				return true;
+		return false;
+	}
+
+	public function deleteFile(fileId:String) {
+		if( isInternal(fileId) )
+			return false;
+
+		for(f in settings.savedFiles)
+			if( f.id==fileId ) {
+				settings.savedFiles.remove(f);
+				if( settings.curFileId==fileId )
+					setActiveFile(null);
+				return true;
+			}
+
 		return false;
 	}
 
@@ -177,61 +207,15 @@ class App extends dn.Process {
 		return getFile(settings.curFileId);
 	}
 
-	/*
-	function setEditor(active:Bool) {
-		// Kill existing editor
-		if( curEditor!=null ) {
-			saveEditor();
-
-			jBody.removeClass("editing");
-			curEditor.destroy();
-			curEditor = null;
-			jBody.find("#editor").empty();
-		}
-
-		// Create editor
-		if( active ) {
-			jBody.find("#editor").text( allFiles.get(settings.curFile) );
-			jBody.addClass("editing");
-			curEditor = AceEditor.edit("editor");
-			curEditor.setTheme("ace/theme/monokai");
-			curEditor.session.setMode("ace/mode/randomizer");
-			curEditor.on("change", ()->saveEditor());
-			curEditor.commands.addCommand({
-				name: "Save",
-				bindKey: { win:"Ctrl-s", mac:"Command-s" },
-				exec: (e)->saveEditor(),
-			});
-
-			var jBar = jBody.find(".column.editor .toolbar");
-			jBar.find(".close").click(_->setEditor(false));
-			jBar.find(".reload").click(_->{
-				setEditor(false);
-				allFiles = FileManager.getAllFiles();
-				setActiveFile(settings.curFile);
-			});
-		}
-	}
-
-	function saveEditor() {
-		if( curEditor!=null ) {
-			allFiles.set(settings.curFile, curEditor.getValue());
-			setActiveFile(settings.curFile);
-			notify("Saved.");
-		}
-	}
-	*/
-
 	public function saveSettings() {
 		storage.writeObject(settings);
 	}
 
 	public function setActiveFile(fileId:String) {
+		if( fileId==null )
+			closeEditor();
+
 		var raw = getFile(fileId);
-		if( raw==null ) {
-			notify("Failed to load "+fileId);
-			return;
-		}
 
 		settings.curFileId = fileId;
 		saveSettings();
@@ -239,28 +223,7 @@ class App extends dn.Process {
 
 		for(p in SiteProcess.ALL)
 			p.onFileChanged(raw);
-		// clearOutput();
-		// jRandButtons.empty();
-
-		// if( raw==null )
-		// 	return;
-
-		// var rdata = RandomParser.run(raw);
-		// new Randomizer(rdata);
-
 	}
-
-	/*
-	public function clearOutput() {
-		jOutput.empty();
-	}
-
-	public function output(str:String) {
-		str = StringTools.htmlEscape(str);
-		str = "<pre>" + str.split("\\n").join("</pre><pre>") + "</pre>";
-		jOutput.prepend('<div class="entry">$str</div>');
-	}
-	*/
 
 	override function onDispose() {
 		super.onDispose();

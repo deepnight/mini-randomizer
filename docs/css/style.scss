@@ -79,22 +79,10 @@ h2 {
 
 	.column {
 		display: grid;
-		grid-template-rows: auto min-content;
+		grid-template-rows: min-content 1fr;
 		gap: 8px;
 		width: 500px;
 		overflow-y: auto;
-
-		&:not(.active) {
-			display: none;
-		}
-
-		&.random {
-			grid-template-rows: 1fr min-content;
-		}
-
-		&.editor {
-			display: none;
-		}
 	}
 
 	.column+.column {
@@ -110,22 +98,6 @@ h2 {
 
 		.output {
 			font-size: 13pt;
-		}
-	}
-}
-
-
-body.editing #site {
-	// max-width: fit-content;
-	grid-template-columns: fit-content fit-content;
-
-	.column.editor {
-		display: grid;
-		grid-template-rows: auto min-content;
-		grid-column: 2/3;
-
-		#editor {
-			height: 100%;
 		}
 	}
 }
@@ -159,11 +131,22 @@ body.editing #site {
 		color: gray;
 		text-transform: uppercase;
 		white-space: nowrap;
-		border: 1px solid lightgray;
-		border-bottom: 2px solid lightgray;
-		cursor: pointer;
 
-		&:hover {
+		&.small {
+			flex: 0 0 0px;
+		}
+
+		&:disabled {
+			opacity: 0.5;
+			border: 1px solid lightgray;
+		}
+		&:not(:disabled) {
+			border: 1px solid lightgray;
+			border-bottom: 2px solid lightgray;
+			cursor: pointer;
+		}
+
+		&:hover:not(:disabled) {
 			color: white;
 			background-color: gray;
 			border-color: black;

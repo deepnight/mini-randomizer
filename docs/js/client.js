@@ -1064,6 +1064,10 @@ var App = function() {
 	_g.h["embed/fallout.txt"] = "#button Lieu | location\r\n#button Campement | camp\r\n#button Rencontre | encounter\r\n#button Loot | loot\r\n#button Test | buildingLocation | 10\r\n\r\n\r\n>location\r\n:buildingLocation: :locationDetails:\r\n:outdoorLocation: :locationDetails:\r\n\r\n>locationDetails\r\n (:condition:)\\n  :locationFeature:\\n  :occupier:\\n  :loot:\r\n\r\n>buildingLocation\r\nManoir x0.5\r\nBunker x0.3\r\nPetit abri anti-atomique\r\nMaison\r\nImmeuble d'habitation\r\nPetite centrale électrique\r\nSite de traitement des eaux\r\nCampement\r\nGymnase\r\nChâteau d'eau\r\nBureaux\r\nSupermarché x0.5\r\nEpicerie\r\nRéparateur\r\nRestaurant :restaurantType:\r\nBar\r\nEcole\r\nCrèche\r\nEntrepôt :storageType:\r\nSalle de sport\r\nHôpital x0.5\r\nCabinet médical\r\nMagasin :shopType:\r\nBoucherie\r\nPoissonerie\r\nArmurier x0.3\r\nGare\r\nGarage :vehicleType:\r\nFourrière :vehicleType:\r\nStation service\r\nCabane\r\nMarché couvert\r\nPrison\r\nUsine\r\nLaboratoire\r\nCommissariat\r\nChenil\r\nMusée\r\nFête forraine\r\nBâtiment administratif\r\nBoîte de nuit\r\n\r\n\r\n>vehicleType\r\nvoiture\r\nmoto\r\ncamion\r\nvélo\r\nvoiture de sport x0.3\r\n\r\n>storageType\r\npièces mécaniques\r\ncomposants électronique\r\nnourriture\r\nvêtements\r\n\r\n>shopType\r\nsport\r\nvêtements\r\nbricolage\r\nlibrairie\r\ninformatique\r\n:vehicleType:\r\n\r\n>restaurantType\r\nfrançais\r\nasiatique\r\nburgers\r\nitalien\r\npizzeria\r\nmexicain\r\ngastronomique\r\nroutier\r\nsushi\r\n\r\n\r\n>outdoorLocation\r\nTerrain de sport (:sport:)\r\nLac\r\nRoute\r\nPont\r\nTunnel\r\nAutoroute\r\nParc\r\nPlantation\r\nCimetière\r\nEglise\r\nChapelle\r\nMonument\r\nStation tramway\r\nAire de jeux\r\nChantier\r\nParking payant\r\nParking de bus\r\nCratère\r\nCamion\r\nGrue de chargement\r\nTrain\r\nMarécage\r\nForêt\r\nCarrière\r\nDécharge\r\nConvoi\r\nParc d'attraction\r\nEolienne\r\nPanneaux solaires\r\nStade\r\nSite d'un crash (:flyingObject:)\r\nSite d'un atterissage en catastrophe (:flyingObject:)\r\nEpave d'un navire\r\nSite de tournage (:buildingLocation:)\r\nScène de concert\r\n\r\n>flyingObject\r\nAvion de ligne\r\nJet\r\nPetit avion\r\nAvion de chasse\r\nHélicoptère civil\r\nHélicoptère militaire\r\nHovercraft\r\nDeltaplane\r\nMontgolfière\r\nDirigeable\r\nDrone\r\nOVNI x0.1\r\n\r\n>sport\r\nGolf\r\nFootball\r\nBasketball\r\nTir x0.5\r\nNatation\r\nAthlétisme\r\nTennis\r\n\r\n>newBuilding\r\nPlace forte\r\nAvant-poste\r\nStockage\r\nHabitation\r\nAtelier\r\nAbri anti-atomique x0.5\r\n\r\n>condition\r\nStructure en bon état x0.2\r\nStructure ancienne x2\r\nStructure récemment rénovée x0.3\r\nStructure rasée x0.4\r\n\r\n>locationFeature\r\nRien de spécial x0.5\r\nIncendié x0.5\r\nBombardé\r\nInnondé\r\nIrradié x0.5\r\nPiégé (:trap:)\r\nDécoration étrange\r\nEnvahi par une végétation dense (:natureBehaviour:)\r\nEnvahi par des champignons (:natureBehaviour:)\r\nBeaucoup d'insectes (:natureBehaviour:)\r\nBrume très localisée\r\nObjet notable incongru: :weirdLargeProp: x0.7\r\nPrésence de nombreux [:weirdItem:] sur le lieu x0.6\r\nAmbiance sonore étrange\r\nOdeur anormale\r\nInscriptions sur les murs\r\nTrès encombré\r\nCamouflé\r\nAmbiance glauque\r\nOgive nucléaire non-activée x0.1\r\nTransformé en :newBuilding:\r\nPrésence de :newTool:\r\n\r\n>trap\r\nConserves d'alarme\r\nAlarme puissante\r\nMines anti-personnelles\r\nExplosif artisanal puissant\r\nVéhicule piégé (:vehicleType:)\r\nObus non-explosés\r\nChausses-trappes\r\nArbalètes\r\n\r\n>newTool\r\nPuits\r\nAtelier\r\nEmetteur radio\r\nEquipements informatiques\r\n\r\n>weirdLargeProp\r\nMannequins\r\nInstruments de musique\r\nCercueil\r\nMise en scène macabre: :encounter:\r\nAutel religieux\r\nAutel comportant de nombreux [:weirdItem:]\r\nDessins étranges\r\nPentagramme\r\nRefrigérateur au contenu bizarre\r\nTable de JdR\r\nPiscine\r\n\r\n>weirdItem\r\nCarte à jouer\r\nOrigami\r\nFigurine jouet\r\nPoupée\r\nTasse colorée\r\nValise\r\nSymbole religieux\r\nOssement humain\r\nBouteille vide\r\nPetit fanion\r\nSculpture en bois\r\nCasque\r\nChapeau\r\nVieux téléviseur cathodique\r\nPoisson mort\r\nMines anti-personnelles factices\r\nPages d'un magazine à reconstituer\r\n\r\n>occupier\r\nAucun occupant x7\r\n:encounter: [:presence:] x5\r\nPetite communauté [:npcStatus:, :behaviour:] x0.2\r\nDéfenses automatisées [:robotStatus:]\r\n\r\n>encounter\r\nMonstres mineurs\r\nMonstre majeur\r\nAnimal non agressif\r\nGrosse créature non agressive x0.3\r\nVermine\r\nPillards\r\n:race: Marchand (:trading:) avec escorte\r\n:race: Ermite [:npcAspect:, :npcStatus:, :behaviour:]\r\n:race: Fou [:npcAspect:, :npcStatus:, :behaviour:]\r\nGroupe d'aventuriers [:npcAspect:, :npcStatus:, :behaviour:] x0.2\r\nRobot [:robotStatus:, :behaviour:]\r\nConfrérie de l'Acier [:npcStatus:, :behaviour:] x0.2\r\n\r\n>race\r\nHumain x5\r\nMutant\r\nSuper mutant x0.1\r\n\r\n>npcAspect\r\nCostume et cravate\r\nTenue de sport\r\nTreillis militaire\r\nCostume excentrique\r\nVêtements trop petits\r\nArmure de fortune\r\nTenue militaire avancée x0.5\r\nNu x0.2\r\nCostume médiéval\r\nTenue d'habitant d'un abri (:10-40:)\r\nHaillons\r\nBleu de travail\r\nT-shirt geek\r\nManteau long\r\nTenue de cowboy\r\nCostume ancien\r\nCosplay furry x0.2\r\n\r\n\r\n>behaviour\r\nAmical x0.3\r\nAttitude neutre x4\r\nHostile x2\r\nHostile (:specialBehaviour:)\r\nMort(s) x0.3\r\n\r\n>natureBehaviour\r\nAttitude neutre x2\r\nHostile\r\n\r\n>specialBehaviour\r\nMéfiant x5\r\nPeur des PJs\r\nProtège une babiole x0.3\r\nCache un secret x0.2\r\nCannibale x0.3\r\n\r\n>npcStatus\r\nBonne santé x5\r\nEndormi x0.7\r\nAffamé\r\nAssoiffé\r\nFou\r\nMalade\r\nIrradié\r\nBlessé\r\nEstropié\r\n\r\n>robotStatus\r\nEn état de marche\r\nConception artisanale\r\nEstropié\r\nEtrangement décoré\r\nRecouvert de végétation x0.6\r\nRôle modifié\r\nFortement customisé\r\n\r\n>presence\r\nAbsent pour le moment\r\nCaché x0.3\r\nPrésent x10\r\n\r\n>trading\r\nNourriture/Eau x2\r\nMunitions\r\nArmes\r\nArmures\r\nMods\r\n\r\n>loot\r\nBabiole\r\nObjet précieux\r\nNourriture\r\nEau\r\nArme\r\nArmure\r\nMod d'arme\r\nMod d'armure\r\nMunitions\r\n\r\n\r\n>camp\r\n:campEvent:\\n  :weather:\r\n\r\n>campEvent\r\nRien de spécial x5\r\nRencontre : :encounter: x3\r\n:1-2: voleur(s)\r\nMaraudeur non agressif\r\nPassage d'un robot/drone\r\nPassage : :flyingObject:\r\nPassage : :vehicleType:\r\nQuelque chose tombant du ciel: :skyFall: x0.2\r\nObservateur étrange\r\nLumières au loin\r\nBruit non identifié\r\nOmbres dans la nuit\r\nLumières dans le ciel\r\nAppareil volant x0.2\r\nIncendie au loin x0.2\r\nCoups de feu\r\nExplosion\r\nBruits lointains de moteur\r\nCraquements\r\nGrognements\r\nMusique\r\n\r\n>skyFall\r\n:flyingObject:\r\ncaisse (:loot:)\r\n\r\n\r\n>weather\r\nTemps clair x8\r\nPluie légère x3\r\nPluie intense\r\nBrouillard x3\r\nBrouillard radioactif x0.3\r\nPluie radioactive x0.5\r\nOrage\r\nOrage magnétique x0.6\r\nGrand vent\r\n";
 	_g.h["embed/demo.txt"] = "#button Generate random locations (demo) | demo\r\n\r\n>demo\r\n:buildingType:\\n :locationFeature:\\n Inhabitant(s): :inhabitant:\r\n\r\n>buildingType\r\nSupermarket\r\nMansion\r\nSchool\r\nHospital\r\nTrain station\r\nBunker\r\nPrison\r\nMuseum\r\nRestaurant\r\nParking lot\r\nBridge\r\n\r\n>locationFeature\r\nRecently visited\r\nDark place\r\nWalls are painted with bright colors\r\nVery messy\r\nBlood splatters\r\nWeird decoration\r\nWeird smell\r\nWeird noises inside\r\nPresence of radioactivity\r\nStrange tags on walls\r\nFlooded\r\nStrange mist\r\nPresence of lots of insects\r\nAbandoned recently\r\nBurned down\r\nBarricaded\r\nRecently bombed\r\nRepurposed into something else (:buildingType:)\r\n\r\n>inhabitant\r\nNot occupied x2\r\nBandits\r\nMerchant\r\nErmit\r\nCrazy person\r\nGroup of peaceful people x0.5\r\nMinor monsters\r\nOne major monster\r\nRobot";
 	this.internalFiles = _g;
+	var _g = new haxe_ds_StringMap();
+	_g.h["embed/tpl/random.html"] = "<div class=\"toolbar\">\r\n\t<div class=\"row buttons randButtons\"></div>\r\n\t<div class=\"row small\">\r\n\t\t<button class=\"clear\">Clear</button>\r\n\t</div>\r\n</div>\r\n\r\n<div class=\"output\"></div>\r\n";
+	_g.h["embed/tpl/editor.html"] = "<div class=\"toolbar\">\r\n\t<button class=\"close small\">Close</button>\r\n\t<button class=\"save\">Save</button>\r\n\t<button class=\"delete\">Delete save</button>\r\n</div>\r\n\r\n<div id=\"ace\"></div>\r\n";
+	this.templates = _g;
 	this.storage = dn_data_LocalStorage.createJsonStorage("settings");
 	this.settings = this.storage.readObject({ curFileId : null, savedFiles : []});
 	this.saveSettings();
@@ -1071,6 +1075,13 @@ var App = function() {
 	this.updateSelect();
 	this.jMenu.find(".edit").click(function(_) {
 		_gthis.toggleEditor();
+	});
+	this.jMenu.find(".new").click(function(_) {
+		_gthis.closeEditor();
+		var name = window.prompt("Enter new file name:");
+		_gthis.settings.savedFiles.push({ id : name, raw : ""});
+		_gthis.setActiveFile(name);
+		_gthis.openEditor();
 	});
 	new RandomUI();
 	if(this.settings.curFileId != null) {
@@ -1086,9 +1097,28 @@ $hxClasses["App"] = App;
 App.__name__ = "App";
 App.__super__ = dn_Process;
 App.prototype = $extend(dn_Process.prototype,{
-	updateSelect: function() {
+	getTemplate: function(name) {
+		var h = this.templates.h;
+		var t_h = h;
+		var t_keys = Object.keys(h);
+		var t_length = t_keys.length;
+		var t_current = 0;
+		while(t_current < t_length) {
+			var key = t_keys[t_current++];
+			var t_key = key;
+			var t_value = t_h[key];
+			var p = new dn_FilePath();
+			p.parse(t_key,true);
+			var fp = p;
+			if(fp.fileName == name) {
+				return t_value;
+			}
+		}
+		return null;
+	}
+	,updateSelect: function() {
 		var _gthis = this;
-		this.jSelect.empty();
+		this.jSelect.empty().off();
 		if(this.settings.curFileId == null) {
 			this.jSelect.append("<option value=\"\">-- Pick one --</option>");
 		}
@@ -1100,7 +1130,7 @@ App.prototype = $extend(dn_Process.prototype,{
 			var p = new dn_FilePath();
 			p.parse(fid,true);
 			var fp = p;
-			var prefix = fp.directory == "embed" ? "[internal] " : "";
+			var prefix = this.isInternal(fid) ? "[internal] " : "";
 			this.jSelect.append("<option value=\"" + fid + "\">" + prefix + " " + fp.fileName + "</option>");
 		}
 		this.jSelect.change(function(_) {
@@ -1184,6 +1214,30 @@ App.prototype = $extend(dn_Process.prototype,{
 		}
 		return all;
 	}
+	,isInternal: function(fileId) {
+		var p = new dn_FilePath();
+		p.parse(fileId,true);
+		return p.directory == "embed";
+	}
+	,deleteFile: function(fileId) {
+		if(this.isInternal(fileId)) {
+			return false;
+		}
+		var _g = 0;
+		var _g1 = this.settings.savedFiles;
+		while(_g < _g1.length) {
+			var f = _g1[_g];
+			++_g;
+			if(f.id == fileId) {
+				HxOverrides.remove(this.settings.savedFiles,f);
+				if(this.settings.curFileId == fileId) {
+					this.setActiveFile(null);
+				}
+				return true;
+			}
+		}
+		return false;
+	}
 	,getFile: function(fileId) {
 		var raw = null;
 		var _g = 0;
@@ -1204,11 +1258,10 @@ App.prototype = $extend(dn_Process.prototype,{
 		this.storage.writeObject(this.settings);
 	}
 	,setActiveFile: function(fileId) {
-		var raw = this.getFile(fileId);
-		if(raw == null) {
-			this.notify("Failed to load " + fileId);
-			return;
+		if(fileId == null) {
+			this.closeEditor();
 		}
+		var raw = this.getFile(fileId);
 		this.settings.curFileId = fileId;
 		this.saveSettings();
 		this.updateSelect();
@@ -1382,11 +1435,20 @@ EReg.prototype = {
 	}
 	,__class__: EReg
 };
-var SiteProcess = function(blockId,p) {
+var SiteProcess = function(name,p) {
 	dn_Process.call(this,p == null ? App.ME : p);
+	this.name = name;
 	SiteProcess.ALL.push(this);
-	this.jRoot = App.ME.jSite.find("#" + blockId);
-	this.jRoot.off();
+	var jColumns = App.ME.jSite.find(".columns");
+	jColumns.remove(".column." + name);
+	this.jRoot = $("<div class=\"column " + name + "\"/>");
+	jColumns.append(this.jRoot);
+	var tpl = App.ME.getTemplate(name);
+	if(tpl != null) {
+		this.jRoot.html(tpl);
+	} else {
+		this.jRoot.append("hello " + name);
+	}
 	this.jRoot.addClass("active");
 };
 $hxClasses["SiteProcess"] = SiteProcess;
@@ -1398,7 +1460,7 @@ SiteProcess.prototype = $extend(dn_Process.prototype,{
 	,onDispose: function() {
 		dn_Process.prototype.onDispose.call(this);
 		HxOverrides.remove(SiteProcess.ALL,this);
-		this.jRoot.removeClass("active");
+		this.jRoot.empty().remove();
 	}
 	,__class__: SiteProcess
 });
@@ -1412,23 +1474,52 @@ var EditorUI = function() {
 	this.ace.on("change",function() {
 		_gthis.onChange();
 	});
+	this.ace.commands.addCommand({ name : "Save", bindKey : { win : "Ctrl-s", mac : "Command-s"}, exec : function(e) {
+		_gthis.save();
+	}});
+	this.ace.focus();
 	this.setContent(App.ME.getCurrentFileContent());
 	this.jRoot.find(".close").click(function(_) {
 		App.ME.closeEditor();
 	});
-	this.jRoot.find(".reload").click(function(_) {
-		_gthis.clearSave();
+	this.jRoot.find(".save").click(function(_) {
+		_gthis.save();
 	});
+	this.updateToolbar();
+	this.markSaved();
 };
 $hxClasses["EditorUI"] = EditorUI;
 EditorUI.__name__ = "EditorUI";
 EditorUI.__super__ = SiteProcess;
 EditorUI.prototype = $extend(SiteProcess.prototype,{
-	onDispose: function() {
+	updateToolbar: function() {
+		var _gthis = this;
+		var jDelete = this.jRoot.find(".delete");
+		jDelete.off();
+		if(App.ME.isInternal(App.ME.settings.curFileId)) {
+			jDelete.hide();
+		} else {
+			jDelete.show().click(function(_) {
+				if(window.confirm("This will delete the file from browser storage!\nTHERE IS NO TURNING BACK!")) {
+					App.ME.deleteFile(App.ME.settings.curFileId);
+				}
+			});
+		}
+	}
+	,onDispose: function() {
 		SiteProcess.prototype.onDispose.call(this);
 		this.ace.destroy();
+		this.jRoot.find("#ace").off().remove();
+		this.ace = null;
+	}
+	,markSaved: function() {
+		this.jRoot.find(".save").prop("disabled",true).text("Saved.");
+	}
+	,markUnsaved: function() {
+		this.jRoot.find(".save").prop("disabled",false).text("Save");
 	}
 	,onChange: function() {
+		this.markUnsaved();
 		this.delayer.cancelById("autoSave");
 		this.delayer.addS("autoSave",$bind(this,this.save),0.3);
 	}
@@ -1441,7 +1532,7 @@ EditorUI.prototype = $extend(SiteProcess.prototype,{
 		}
 	}
 	,save: function() {
-		haxe_Log.trace("save",{ fileName : "src/EditorUI.hx", lineNumber : 37, className : "EditorUI", methodName : "save"});
+		this.markSaved();
 		this.delayer.cancelById("autoSave");
 		var raw = this.ace.getValue();
 		if(raw != App.ME.internalFiles.h[App.ME.settings.curFileId]) {
@@ -1449,21 +1540,7 @@ EditorUI.prototype = $extend(SiteProcess.prototype,{
 			App.ME.saveFile(App.ME.settings.curFileId,raw);
 		}
 	}
-	,clearSave: function() {
-		var _g = 0;
-		var _g1 = App.ME.settings.savedFiles;
-		while(_g < _g1.length) {
-			var f = _g1[_g];
-			++_g;
-			if(f.id == App.ME.settings.curFileId) {
-				HxOverrides.remove(App.ME.settings.savedFiles,f);
-				break;
-			}
-		}
-		App.ME.setActiveFile(App.ME.settings.curFileId);
-	}
 	,setContent: function(raw) {
-		haxe_Log.trace("setContent",{ fileName : "src/EditorUI.hx", lineNumber : 56, className : "EditorUI", methodName : "setContent"});
 		var cursor = this.ace.getCursorPosition();
 		this.ace.setValue(raw,-1);
 		this.ace.moveCursorTo(cursor.row,cursor.column);
@@ -1475,6 +1552,7 @@ EditorUI.prototype = $extend(SiteProcess.prototype,{
 		if(!this.ignoreNextChangeEvent) {
 			this.setContent(raw);
 		}
+		this.updateToolbar();
 		this.ignoreNextChangeEvent = false;
 	}
 	,__class__: EditorUI
@@ -1845,6 +1923,7 @@ RandomUI.prototype = $extend(SiteProcess.prototype,{
 	onFileChanged: function(raw) {
 		var _gthis = this;
 		SiteProcess.prototype.onFileChanged.call(this,raw);
+		this.clearOutput();
 		this.jRandButtons.empty();
 		var data = RandomParser.run(raw);
 		this.randomizer = new Randomizer(data);

@@ -9,14 +9,24 @@ class SiteProcess extends dn.Process {
 	var jRoot : J;
 	var curFileId(get,never) : String; inline function get_curFileId() return app.settings.curFileId;
 
-	public function new(blockId:String, ?p) {
+	public function new(name:String, ?p) {
 		super(p==null ? App.ME : p);
 
+		this.name = name;
 		ALL.push(this);
 
-		jRoot = jSite.find('#$blockId');
-		jRoot.off();
-		jRoot.addClass("active");
+		var jColumns = jSite.find(".columns");
+		jColumns.remove('.column.$name');
+		jRoot = new J('<div class="column $name"/>');
+		jColumns.append(jRoot);
+
+		var tpl = app.getTemplate(name);
+		if( tpl!=null )
+			jRoot.html(tpl);
+		else
+			jRoot.append("hello "+name);
+
+		jRoot.addClass("active"); // HACK
 	}
 
 	public function onFileChanged(raw:String) {
@@ -27,6 +37,6 @@ class SiteProcess extends dn.Process {
 	override function onDispose() {
 		super.onDispose();
 		ALL.remove(this);
-		jRoot.removeClass("active");
+		jRoot.empty().remove();
 	}
 }

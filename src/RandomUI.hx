@@ -20,6 +20,7 @@ class RandomUI extends SiteProcess {
 	override function onFileChanged(raw:String) {
 		super.onFileChanged(raw);
 
+		clearOutput();
 		jRandButtons.empty();
 
 		var data = RandomParser.run(raw);
