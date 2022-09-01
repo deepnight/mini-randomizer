@@ -93,6 +93,7 @@ class EditorUI extends SiteProcess {
 		ace.moveCursorTo(cursor.row, cursor.column);
 		delayer.cancelById("autoSave");
 		ace.session.getUndoManager().reset();
+		markSaved();
 	}
 
 	override function onFileChanged(raw:String) {
