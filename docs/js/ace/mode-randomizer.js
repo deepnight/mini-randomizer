@@ -5,33 +5,33 @@ var RandomizerHighlightRules = function () {
     this.$rules = {
         "start": [
             {
-                token: "keyword",
-                regex: '^#[a-zA-Z0-9]+[ \t$]',
-                next: "keywordArg"
+                token: "option",
+                regex: '^#[a-zA-Z0-9]+'
+                // next: "optionArg"
             }, {
-                token: "variable",
+                token: "keyDef",
                 regex: '^>[a-zA-Z0-9_-]+$'
             }, {
-                token: "constant.numeric",
+                token: "keyRef",
+                regex: '@([a-zA-Z0-9_-]+)'
+            }, {
+                token: "count",
                 regex: ':[0-9]+-[0-9]+:'
             }, {
-                token: "string",
-                regex: ':[a-zA-Z0-9_-]+:'
-            }, {
-                token: "variable.parameter",
+                token: "mul",
                 regex: 'x[0-9.]+'
             }, {
                 token: "constant.numeric",
                 regex: "[+-]?\\d+(?:(?:\\.\\d*)?(?:[eE][+-]?\\d+)?)?\\b"
             }
         ],
-        "keywordArg": [
+        "optionArg": [
             {
-                token: "variable.parameter",
+                token: "optionArg",
                 regex: '$',
                 next: "start"
             }, {
-                defaultToken : "variable.parameter"
+                defaultToken : "optionArg"
             }
         ]
     };

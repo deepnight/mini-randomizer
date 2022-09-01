@@ -5,7 +5,7 @@ class EditorUI extends SiteProcess {
 		super("editor");
 
 		ace = aceEditor.AceEditor.edit("ace");
-		ace.setTheme("ace/theme/solarized-light");
+		ace.setTheme("ace/theme/randomizer");
 		ace.session.setMode("ace/mode/randomizer");
 
 		ace.on("change", ()->onChange());
