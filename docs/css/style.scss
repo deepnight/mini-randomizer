@@ -167,6 +167,10 @@ h2 {
 #site .column.random {
 	max-width: 600px;
 
+	@media (max-width:800px) {
+		max-width: none;
+	}
+
 	.output {
 		overflow: auto;
 		padding: 16px;
