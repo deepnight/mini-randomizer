@@ -31,7 +31,7 @@ class App extends dn.Process {
 		jMenu = jBody.find("#menu");
 
 		// Load all files content from last compilation
-		internalFiles = FileManager.getAllFiles();
+		internalFiles = FileManager.getAllFiles("txt");
 
 		// Init cookie
 		storage = dn.data.LocalStorage.createJsonStorage("settings");
@@ -72,9 +72,12 @@ class App extends dn.Process {
 		jSelect.empty();
 		if( settings.curFileId==null )
 			jSelect.append('<option value="">-- Pick one --</option>');
-		
-		for(fid in getAllFileIds())
-			jSelect.append('<option value="${fid}">${dn.FilePath.extractFileName(fid)} ${isSavedLocally(fid)?"*":""}</option>');
+
+		for(fid in getAllFileIds()) {
+			var fp = dn.FilePath.fromFile(fid);
+			var prefix = fp.directory=="embed" ? "[internal] " : "";
+			jSelect.append('<option value="${fid}">$prefix ${fp.fileName}</option>');
+		}
 		jSelect.change( _->{
 			var fid = jSelect.val();
 			setActiveFile( fid=="" ? null : fid );
@@ -103,6 +106,9 @@ class App extends dn.Process {
 	}
 
 	public function saveFile(fileId:String, raw:String) {
+		fileId = dn.FilePath.extractFileName(fileId); // remove directory
+
+		// Overwrite existing
 		var found = false;
 		for(f in settings.savedFiles)
 			if( f.id==fileId ) {
@@ -111,8 +117,10 @@ class App extends dn.Process {
 				break;
 			}
 
+		// New save
 		if( !found )
 			settings.savedFiles.push({ id:fileId, raw:escape(raw) });
+
 		saveSettings();
 		setActiveFile(fileId);
 	}
@@ -132,14 +140,19 @@ class App extends dn.Process {
 	public function getAllFileIds() {
 		var dones = new Map();
 		var all = [];
+
+		// Internals
+		for(fid in internalFiles.keys())
+			if( !dones.exists(fid) )
+				all.push(fid);
+
+		// Saved locally
 		for(f in settings.savedFiles) {
 			dones.set(f.id,true);
 			all.push(f.id);
 		}
 
-		for(fid in internalFiles.keys())
-			if( !dones.exists(fid) )
-				all.push(fid);
+		// all.sort( (a,b)->Reflect.compare(a,b) );
 
 		return all;
 	}
