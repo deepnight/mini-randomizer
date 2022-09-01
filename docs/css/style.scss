@@ -42,7 +42,6 @@ h2 {
 	grid-template-rows: min-content auto;
 	gap: 8px;
 	overflow: hidden;
-	width: fit-content;
 
 	height: 100vh;
 	padding: 4px;
@@ -70,30 +69,29 @@ h2 {
 	}
 
 	.columns {
-		display: grid;
+		display: flex;
+		width: 100%;
 		gap: 4px;
-		grid-auto-flow: column;
-		grid-auto-columns: 500px;
-
 		overflow: hidden;
+
+		.column {
+			flex: 1 1 auto;
+			display: grid;
+			grid-template-rows: min-content 1fr;
+			gap: 8px;
+			overflow-y: auto;
+		}
+
+		.column+.column {
+			padding-left: 4px;
+			border-left: 1px dashed gray;
+			box-sizing: border-box;
+		}
 	}
 
-	.column {
-		display: grid;
-		grid-template-rows: min-content 1fr;
-		gap: 8px;
-		width: 500px;
-		overflow-y: auto;
-	}
-
-	.column+.column {
-		padding-left: 4px;
-		border-left: 1px dashed gray;
-		box-sizing: border-box;
-	}
 
 
-	@media (max-width:500px) {
+	@media (max-width:1000px) {
 		margin: 0;
 		border: none;
 
@@ -167,6 +165,8 @@ h2 {
 }
 
 #site .column.random {
+	max-width: 600px;
+
 	.output {
 		overflow: auto;
 		padding: 16px;
