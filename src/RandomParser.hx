@@ -11,12 +11,11 @@ typedef RandTableEntry = {
 	Inspired by RandomGen from Orteil (https://orteil.dashnet.org/randomgen/)
 **/
 class RandomParser {
-	public static var REF_REG = ":([a-zA-Z0-9_-]+):";
+	public static var KEY_DEFINITION_REG = "^[ \t]*>[ \t]*([a-zA-Z0-9_-]+)\\s*$";
+	public static var KEY_REFERENCE_REG = "@([a-zA-Z0-9_-]+)";
 	public static var COUNT_REG = "^([0-9]+)-([0-9]+)$";
-
-	public static var OPTION_REG = ~/^#([a-z0-9_-]+)([ \t]+(.+)|)/i;
-	public static var KEY_REG = ~/^[ \t]*>[ \t]*([a-z0-9_-]+)[ \t]*/i;
-	public static var PROBA_MUL_REG = ~/[ \t]+x([0-9.]+)[ \t]*$/i;
+	public static var OPTION_REG = "^#([a-zA-Z0-9_-]+)([ \t]+(.+)|)";
+	public static var PROBA_MUL_REG = "[ \t]+x([0-9.]+)[ \t]*$";
 
 	public static function run(raw:String) : { data:Null<RandData>, errors:Array<String> } {
 		if( raw==null )
@@ -30,15 +29,20 @@ class RandomParser {
 		var lines = raw.split("\n");
 		var curKey : Null<String> = null;
 
+		var optionReg = new EReg(OPTION_REG,"");
+		var keyDefinionReg = new EReg(KEY_DEFINITION_REG,"");
+		var keyReferenceReg = new EReg(KEY_REFERENCE_REG,"");
+		var probaMulReg = new EReg(PROBA_MUL_REG,"");
+
 		for( l in lines ) {
 			l = cleanUp(l);
 			if( l.length==0 )
 				continue;
 
 			// Option
-			if( OPTION_REG.match(l) ) {
-				var o = OPTION_REG.matched(1);
-				var rawArgs = OPTION_REG.matched(3);
+			if( optionReg.match(l) ) {
+				var o = optionReg.matched(1);
+				var rawArgs = optionReg.matched(3);
 				var args = [];
 				if( rawArgs!=null )
 					for(a in rawArgs.split("|"))
@@ -51,20 +55,20 @@ class RandomParser {
 				continue;
 			}
 
-			if( KEY_REG.match(l) ) {
+			if( keyDefinionReg.match(l) ) {
 				// New table key
-				curKey = KEY_REG.matched(1);
+				curKey = keyDefinionReg.matched(1);
 				if( !rdata.tables.exists(curKey) )
 					rdata.tables.set(curKey, []);
 			}
 			else if( curKey!=null ) {
 				var probaMul = 1.;
-				if( PROBA_MUL_REG.match(l) ) {
+				if( probaMulReg.match(l) ) {
 					// Custom probability
-					probaMul = Std.parseFloat( PROBA_MUL_REG.matched(1) );
+					probaMul = Std.parseFloat( probaMulReg.matched(1) );
 					if( !M.isValidNumber(probaMul) )
 						probaMul = 1;
-					l = PROBA_MUL_REG.matchedLeft();
+					l = probaMulReg.matchedLeft();
 				}
 				// Store table entry
 				rdata.tables.get(curKey).push({
@@ -89,16 +93,16 @@ class RandomParser {
 		}
 
 		// Check key refs
-		var refReg = new EReg(REF_REG,"");
+		var keyRefReg = new EReg(KEY_REFERENCE_REG,"");
 		var countReg = new EReg(COUNT_REG,"");
 		for(table in rdata.tables.keyValueIterator())
 			for(e in table.value) {
 				var tmp = e.raw;
-				while( refReg.match(tmp) ) {
-					var k = refReg.matched(1);
+				while( keyRefReg.match(tmp) ) {
+					var k = keyRefReg.matched(1);
 					if( !countReg.match(k) && !rdata.tables.exists(k) )
 						_err('Unknown key :$k: in >${table.key}');
-					tmp = refReg.matchedRight();
+					tmp = keyRefReg.matchedRight();
 				}
 			}
 

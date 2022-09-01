@@ -6,11 +6,11 @@
 
 
 >location
-:buildingLocation: :locationDetails:
-:outdoorLocation: :locationDetails:
+@buildingLocation @locationDetails
+@outdoorLocation @locationDetails
 
 >locationDetails
- (:condition:)\n  :locationFeature:\n  :occupier:\n  :loot:
+ (@condition)\n  @locationFeature\n  @occupier\n  @loot
 
 >buildingLocation
 Manoir x0.5
@@ -27,21 +27,21 @@ Bureaux
 Supermarché x0.5
 Epicerie
 Réparateur
-Restaurant :restaurantType:
+Restaurant @restaurantType
 Bar
 Ecole
 Crèche
-Entrepôt :storageType:
+Entrepôt @storageType
 Salle de sport
 Hôpital x0.5
 Cabinet médical
-Magasin :shopType:
+Magasin @shopType
 Boucherie
 Poissonerie
 Armurier x0.3
 Gare
-Garage :vehicleType:
-Fourrière :vehicleType:
+Garage @vehicleType
+Fourrière @vehicleType
 Station service
 Cabane
 Marché couvert
@@ -75,7 +75,7 @@ vêtements
 bricolage
 librairie
 informatique
-:vehicleType:
+@vehicleType
 
 >restaurantType
 français
@@ -90,7 +90,7 @@ sushi
 
 
 >outdoorLocation
-Terrain de sport (:sport:)
+Terrain de sport (@sport)
 Lac
 Route
 Pont
@@ -120,10 +120,10 @@ Parc d'attraction
 Eolienne
 Panneaux solaires
 Stade
-Site d'un crash (:flyingObject:)
-Site d'un atterissage en catastrophe (:flyingObject:)
+Site d'un crash (@flyingObject)
+Site d'un atterissage en catastrophe (@flyingObject)
 Epave d'un navire
-Site de tournage (:buildingLocation:)
+Site de tournage (@buildingLocation)
 Scène de concert
 
 >flyingObject
@@ -169,14 +169,14 @@ Incendié x0.5
 Bombardé
 Innondé
 Irradié x0.5
-Piégé (:trap:)
+Piégé (@trap)
 Décoration étrange
-Envahi par une végétation dense (:natureBehaviour:)
-Envahi par des champignons (:natureBehaviour:)
-Beaucoup d'insectes (:natureBehaviour:)
+Envahi par une végétation dense (@natureBehaviour)
+Envahi par des champignons (@natureBehaviour)
+Beaucoup d'insectes (@natureBehaviour)
 Brume très localisée
-Objet notable incongru: :weirdLargeProp: x0.7
-Présence de nombreux [:weirdItem:] sur le lieu x0.6
+Objet notable incongru: @weirdLargeProp x0.7
+Présence de nombreux [@weirdItem] sur le lieu x0.6
 Ambiance sonore étrange
 Odeur anormale
 Inscriptions sur les murs
@@ -184,15 +184,15 @@ Très encombré
 Camouflé
 Ambiance glauque
 Ogive nucléaire non-activée x0.1
-Transformé en :newBuilding:
-Présence de :newTool:
+Transformé en @newBuilding
+Présence de @newTool
 
 >trap
 Conserves d'alarme
 Alarme puissante
 Mines anti-personnelles
 Explosif artisanal puissant
-Véhicule piégé (:vehicleType:)
+Véhicule piégé (@vehicleType)
 Obus non-explosés
 Chausses-trappes
 Arbalètes
@@ -207,9 +207,9 @@ Equipements informatiques
 Mannequins
 Instruments de musique
 Cercueil
-Mise en scène macabre: :encounter:
+Mise en scène macabre: @encounter
 Autel religieux
-Autel comportant de nombreux [:weirdItem:]
+Autel comportant de nombreux [@weirdItem]
 Dessins étranges
 Pentagramme
 Refrigérateur au contenu bizarre
@@ -237,9 +237,9 @@ Pages d'un magazine à reconstituer
 
 >occupier
 Aucun occupant x7
-:encounter: [:presence:] x5
-Petite communauté [:npcStatus:, :behaviour:] x0.2
-Défenses automatisées [:robotStatus:]
+@encounter [@presence] x5
+Petite communauté [@npcStatus, @behaviour] x0.2
+Défenses automatisées [@robotStatus]
 
 >encounter
 Monstres mineurs
@@ -248,12 +248,12 @@ Animal non agressif
 Grosse créature non agressive x0.3
 Vermine
 Pillards
-:race: Marchand (:trading:) avec escorte
-:race: Ermite [:npcAspect:, :npcStatus:, :behaviour:]
-:race: Fou [:npcAspect:, :npcStatus:, :behaviour:]
-Groupe d'aventuriers [:npcAspect:, :npcStatus:, :behaviour:] x0.2
-Robot [:robotStatus:, :behaviour:]
-Confrérie de l'Acier [:npcStatus:, :behaviour:] x0.2
+@race Marchand (@trading) avec escorte
+@race Ermite [@npcAspect, @npcStatus, @behaviour]
+@race Fou [@npcAspect, @npcStatus, @behaviour]
+Groupe d'aventuriers [@npcAspect, @npcStatus, @behaviour] x0.2
+Robot [@robotStatus, @behaviour]
+Confrérie de l'Acier [@npcStatus, @behaviour] x0.2
 
 >race
 Humain x5
@@ -270,7 +270,7 @@ Armure de fortune
 Tenue militaire avancée x0.5
 Nu x0.2
 Costume médiéval
-Tenue d'habitant d'un abri (:10-40:)
+Tenue d'habitant d'un abri (@10-40)
 Haillons
 Bleu de travail
 T-shirt geek
@@ -284,7 +284,7 @@ Cosplay furry x0.2
 Amical x0.3
 Attitude neutre x4
 Hostile x2
-Hostile (:specialBehaviour:)
+Hostile (@specialBehaviour)
 Mort(s) x0.3
 
 >natureBehaviour
@@ -343,17 +343,17 @@ Munitions
 
 
 >camp
-:campEvent:\n  :weather:
+@campEvent\n  @weather
 
 >campEvent
 Rien de spécial x5
-Rencontre : :encounter: x3
-:1-2: voleur(s)
+Rencontre : @encounter x3
+@1-2 voleur(s)
 Maraudeur non agressif
 Passage d'un robot/drone
-Passage : :flyingObject:
-Passage : :vehicleType:
-Quelque chose tombant du ciel: :skyFall: x0.2
+Passage : @flyingObject
+Passage : @vehicleType
+Quelque chose tombant du ciel: @skyFall x0.2
 Observateur étrange
 Lumières au loin
 Bruit non identifié
@@ -369,8 +369,8 @@ Grognements
 Musique
 
 >skyFall
-:flyingObject:
-caisse (:loot:)
+@flyingObject
+caisse (@loot)
 
 
 >weather

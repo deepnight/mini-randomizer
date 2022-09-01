@@ -23,7 +23,7 @@ class Randomizer {
 
 		var entry = rlist.draw();
 		var out = entry.raw;
-		var refReg = new EReg(RandomParser.REF_REG, "");
+		var refReg = new EReg(RandomParser.KEY_REFERENCE_REG, "");
 		var countReg = new EReg(RandomParser.COUNT_REG, "");
 		while( refReg.match(out) ) {
 			var k = refReg.matched(1);

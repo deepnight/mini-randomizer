@@ -1,7 +1,7 @@
 #button Generate random locations (demo) | demo
 
 >demo
-:buildingType:\n :locationFeature:\n Inhabitant(s): :inhabitant:
+@buildingType\n @locationFeature\n Inhabitant(s): @inhabitant
 
 >buildingType
 Supermarket
@@ -34,7 +34,7 @@ Abandoned recently
 Burned down
 Barricaded
 Recently bombed
-Repurposed into something else (:buildingType:)
+Repurposed into something else (@buildingType)
 
 >inhabitant
 Not occupied x2
