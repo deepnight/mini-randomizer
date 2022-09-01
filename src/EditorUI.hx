@@ -113,7 +113,7 @@ class EditorUI extends SiteProcess {
 
 	override function update() {
 		super.update();
-		if( !ace.isFocused() )
-			ace.focus();
+		// if( !ace.isFocused() )
+			// ace.focus();
 	}
 }
