@@ -1066,10 +1066,10 @@ var App = function() {
 	this.internalFiles = _g;
 	var _g = new haxe_ds_StringMap();
 	_g.h["embed/tpl/random.html"] = "<div class=\"toolbar\">\r\n\t<div class=\"row buttons randButtons\"></div>\r\n\t<div class=\"row small\">\r\n\t\t<button class=\"clear\">Clear</button>\r\n\t</div>\r\n</div>\r\n\r\n<div class=\"output\"></div>\r\n";
-	_g.h["embed/tpl/editor.html"] = "<div class=\"toolbar\">\r\n\t<button class=\"close small\">Close</button>\r\n\t<button class=\"save\">Save</button>\r\n\t<button class=\"delete\">Delete save</button>\r\n</div>\r\n\r\n<div id=\"ace\"></div>\r\n";
+	_g.h["embed/tpl/editor.html"] = "<div class=\"toolbar\">\r\n\t<button class=\"close small\">Close</button>\r\n\t<button class=\"save\">...</button>\r\n\t<button class=\"delete\">Delete save</button>\r\n</div>\r\n\r\n<div id=\"ace\"></div>\r\n";
 	this.templates = _g;
 	this.storage = dn_data_LocalStorage.createJsonStorage("settings");
-	this.settings = this.storage.readObject({ curFileId : null, savedFiles : []});
+	this.loadSettings();
 	this.saveSettings();
 	this.jSelect = this.jBody.find("#files");
 	this.updateSelect();
@@ -1169,13 +1169,13 @@ App.prototype = $extend(dn_Process.prototype,{
 			var f = _g1[_g];
 			++_g;
 			if(f.id == fileId) {
-				f.raw = this.escape(raw);
+				f.raw = raw;
 				found = true;
 				break;
 			}
 		}
 		if(!found) {
-			this.settings.savedFiles.push({ id : fileId, raw : this.escape(raw)});
+			this.settings.savedFiles.push({ id : fileId, raw : raw});
 		}
 		this.saveSettings();
 		this.setActiveFile(fileId);
@@ -1246,7 +1246,7 @@ App.prototype = $extend(dn_Process.prototype,{
 			var f = _g1[_g];
 			++_g;
 			if(f.id == fileId) {
-				return this.unescape(f.raw);
+				return f.raw;
 			}
 		}
 		return this.internalFiles.h[fileId];
@@ -1254,8 +1254,27 @@ App.prototype = $extend(dn_Process.prototype,{
 	,getCurrentFileContent: function() {
 		return this.getFile(this.settings.curFileId);
 	}
+	,loadSettings: function() {
+		var def = { curFileId : null, savedFiles : []};
+		this.settings = this.storage.readObject(def);
+		var _g = 0;
+		var _g1 = this.settings.savedFiles;
+		while(_g < _g1.length) {
+			var f = _g1[_g];
+			++_g;
+			f.raw = this.unescape(f.raw);
+		}
+	}
 	,saveSettings: function() {
-		this.storage.writeObject(this.settings);
+		var copy = haxe_Unserializer.run(haxe_Serializer.run(this.settings));
+		var _g = 0;
+		var _g1 = copy.savedFiles;
+		while(_g < _g1.length) {
+			var f = _g1[_g];
+			++_g;
+			f.raw = this.escape(f.raw);
+		}
+		this.storage.writeObject(copy);
 	}
 	,setActiveFile: function(fileId) {
 		if(fileId == null) {
@@ -1437,8 +1456,8 @@ EReg.prototype = {
 };
 var SiteProcess = function(name,p) {
 	dn_Process.call(this,p == null ? App.ME : p);
-	this.name = name;
 	SiteProcess.ALL.push(this);
+	this.name = name;
 	var jColumns = App.ME.jSite.find(".columns");
 	jColumns.remove(".column." + name);
 	this.jRoot = $("<div class=\"column " + name + "\"/>");
@@ -1449,7 +1468,6 @@ var SiteProcess = function(name,p) {
 	} else {
 		this.jRoot.append("hello " + name);
 	}
-	this.jRoot.addClass("active");
 };
 $hxClasses["SiteProcess"] = SiteProcess;
 SiteProcess.__name__ = "SiteProcess";
@@ -1546,6 +1564,7 @@ EditorUI.prototype = $extend(SiteProcess.prototype,{
 		this.ace.moveCursorTo(cursor.row,cursor.column);
 		this.delayer.cancelById("autoSave");
 		this.ace.session.getUndoManager().reset();
+		this.markSaved();
 	}
 	,onFileChanged: function(raw) {
 		SiteProcess.prototype.onFileChanged.call(this,raw);
@@ -1941,6 +1960,7 @@ RandomUI.prototype = $extend(SiteProcess.prototype,{
 						}
 						var count = o[0].args[2] == null ? 1 : Std.parseInt(o[0].args[2]);
 						if(ev.shiftKey) {
+							_gthis.clearOutput();
 							count = 10;
 						}
 						var _g = 0;
