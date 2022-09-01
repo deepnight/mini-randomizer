@@ -36,8 +36,10 @@ class RandomUI extends SiteProcess {
 							return;
 
 						var count = o.args[2]==null ? 1 : Std.parseInt(o.args[2]);
-						if( ev.shiftKey )
+						if( ev.shiftKey ) {
+							clearOutput();
 							count = 10;
+						}
 						for(i in 0...count)
 							output( randomizer.draw(o.args[1]) );
 					});
