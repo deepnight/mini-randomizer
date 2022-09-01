@@ -71,6 +71,7 @@ h2 {
 
 	.columns {
 		display: grid;
+		gap: 4px;
 		grid-auto-flow: column;
 		grid-auto-columns: 500px;
 
@@ -86,9 +87,9 @@ h2 {
 	}
 
 	.column+.column {
-		margin-left: 4px;
 		padding-left: 4px;
 		border-left: 1px dashed gray;
+		box-sizing: border-box;
 	}
 
 
