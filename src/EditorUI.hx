@@ -7,7 +7,9 @@ class EditorUI extends SiteProcess {
 		ace = aceEditor.AceEditor.edit("ace");
 		ace.setTheme("ace/theme/solarized-light");
 		ace.session.setMode("ace/mode/randomizer");
+
 		ace.on("change", ()->onChange());
+
 		ace.commands.addCommand({
 			name: "Save",
 			bindKey: { win:"Ctrl-s", mac:"Command-s" },
@@ -107,5 +109,11 @@ class EditorUI extends SiteProcess {
 			setContent(raw);
 		updateToolbar();
 		ignoreNextChangeEvent = false;
+	}
+
+	override function update() {
+		super.update();
+		if( !ace.isFocused() )
+			ace.focus();
 	}
 }

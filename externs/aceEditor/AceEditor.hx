@@ -12,10 +12,12 @@ package aceEditor;
 	public function destroy() : Void;
 	public function getValue() : String;
 	public function setValue(v:String, ?cursorPos:Int) : Void;
-	public function blur() : String;
-	public function focus() : String;
+	public function blur() : Void;
+	public function focus() : Void;
 	public function on(eventId:String, cb:Void->Void) : Void;
 	public function execCommand(cmd:String) : Void;
+
+	public function isFocused() : Bool;
 
 	public function getCursorPosition() : { row:Int, column:Int }
 	public function moveCursorTo(row:Int, column:Int) : Void;
