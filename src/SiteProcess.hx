@@ -12,26 +12,24 @@ class SiteProcess extends dn.Process {
 	public function new(name:String, ?p) {
 		super(p==null ? App.ME : p);
 
-		this.name = name;
 		ALL.push(this);
+		this.name = name;
 
+		// Init root
 		var jColumns = jSite.find(".columns");
 		jColumns.remove('.column.$name');
 		jRoot = new J('<div class="column $name"/>');
 		jColumns.append(jRoot);
 
+		// Load template
 		var tpl = app.getTemplate(name);
 		if( tpl!=null )
 			jRoot.html(tpl);
 		else
 			jRoot.append("hello "+name);
-
-		jRoot.addClass("active"); // HACK
 	}
 
-	public function onFileChanged(raw:String) {
-	}
-
+	public function onFileChanged(raw:String) {}
 	inline function notify(str:String) app.notify(str);
 
 	override function onDispose() {
