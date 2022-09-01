@@ -49,6 +49,11 @@ class App extends dn.Process {
 		jMenu.find(".new").click( _->{
 			closeEditor();
 			var name = js.Browser.window.prompt("Enter new file name:");
+			if( name==null )
+				return;
+			var reg = ~/[^a-z0-9_-]/gim;
+			name = reg.replace(name, "_");
+			notify("New file: "+name);
 			settings.savedFiles.push({ id:name, raw:"" });
 			setActiveFile(name);
 			openEditor();
