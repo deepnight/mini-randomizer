@@ -35,12 +35,9 @@ class App extends dn.Process {
 		internalFiles = FileManager.getAllFiles("txt");
 		templates = FileManager.getAllFiles("html", "tpl");
 
-		// Init cookie
+		// Init local storage
 		storage = dn.data.LocalStorage.createJsonStorage("settings");
-		settings = storage.readObject({
-			curFileId: null,
-			savedFiles: [],
-		});
+		loadSettings();
 		saveSettings();
 
 		// Init select
@@ -123,14 +120,14 @@ class App extends dn.Process {
 		var found = false;
 		for(f in settings.savedFiles)
 			if( f.id==fileId ) {
-				f.raw = escape(raw);
+				f.raw = raw;
 				found = true;
 				break;
 			}
 
 		// New save
 		if( !found )
-			settings.savedFiles.push({ id:fileId, raw:escape(raw) });
+			settings.savedFiles.push({ id:fileId, raw:raw });
 
 		saveSettings();
 		setActiveFile(fileId);
@@ -198,7 +195,7 @@ class App extends dn.Process {
 		var raw : String = null;
 		for(f in settings.savedFiles)
 			if( f.id==fileId )
-				return unescape(f.raw);
+				return f.raw;
 
 		return internalFiles.get(fileId);
 	}
@@ -207,8 +204,23 @@ class App extends dn.Process {
 		return getFile(settings.curFileId);
 	}
 
+	public function loadSettings() {
+		var def : Settings = {
+			curFileId: null,
+			savedFiles: [],
+		}
+		settings = storage.readObject(def);
+
+		for(f in settings.savedFiles)
+			f.raw = unescape(f.raw);
+	}
+
 	public function saveSettings() {
-		storage.writeObject(settings);
+		var copy : Settings = haxe.Unserializer.run( haxe.Serializer.run(settings) );
+		for(f in copy.savedFiles)
+			f.raw = escape(f.raw);
+
+		storage.writeObject(copy);
 	}
 
 	public function setActiveFile(fileId:String) {
