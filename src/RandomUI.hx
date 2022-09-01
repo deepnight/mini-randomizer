@@ -34,24 +34,24 @@ class RandomUI extends SiteProcess {
 
 		// Add buttons
 		for(o in parsed.data.options)
-			switch o.opt {
+			switch o.id {
 				case "button":
-					var jBt = new J('<button>${o.args[0]}</button>');
+					var jBt = new J('<button>${o.args.get("label")}</button>');
 					jBt.click( (ev:js.jquery.Event)->{
 						if( app.editor!=null && app.editor.checkAutoSave() )
 							return;
 
-						var count = o.args[2]==null ? 1 : Std.parseInt(o.args[2]);
+						var count = Std.parseInt( o.args.get("count") );
 						if( ev.shiftKey ) {
 							clearOutput();
 							count = 10;
 						}
 						for(i in 0...count)
-							output( randomizer.draw(o.args[1]) );
+							output( randomizer.draw( o.args.get("key") ) );
 					});
 					jRandButtons.append(jBt);
 
-				case _: notify('Unknown option: ${o.opt}');
+				case _: notify('Unknown option: ${o.id}');
 			}
 
 		clearOutput();

@@ -1,4 +1,4 @@
-#button Generate random locations (demo) | demo
+#button Generate random location @demo
 
 >demo
 @buildingType\n @locationFeature\n Inhabitant(s): @inhabitant

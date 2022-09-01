@@ -1,9 +1,6 @@
-#button Lieu | location
-#button Campement | camp
-#button Rencontre | encounter
-#button Loot | loot
-#button Test | buildingLocation | 10
-
+#button Lieu @location
+#button Campement @camp
+#button Rencontre @encounter
 
 >location
 @buildingLocation @locationDetails

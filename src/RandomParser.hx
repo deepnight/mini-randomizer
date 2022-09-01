@@ -1,6 +1,6 @@
 typedef RandData = {
 	var tables: Map<String, Array<RandTableEntry>>;
-	var options: Array<{ opt:String, args:Array<String> }>;
+	var options: Array<{ id:String, args:Map<String, String> }>;
 }
 typedef RandTableEntry = {
 	var raw : String;
@@ -21,10 +21,13 @@ class RandomParser {
 		if( raw==null )
 			return null;
 
+
 		var rdata : RandData = {
 			tables: new Map(),
 			options: [],
 		}
+		var errors = [];
+		inline function _err(e:Dynamic) errors.push( Std.string(e) );
 
 		var lines = raw.split("\n");
 		var curKey : Null<String> = null;
@@ -33,6 +36,7 @@ class RandomParser {
 		var keyDefinionReg = new EReg(KEY_DEFINITION_REG,"");
 		var keyReferenceReg = new EReg(KEY_REFERENCE_REG,"");
 		var probaMulReg = new EReg(PROBA_MUL_REG,"");
+		// var countReg = new EReg(COUNT_REG,"");
 
 		for( l in lines ) {
 			l = cleanUp(l);
@@ -43,13 +47,38 @@ class RandomParser {
 			if( optionReg.match(l) ) {
 				var o = optionReg.matched(1);
 				var rawArgs = optionReg.matched(3);
-				var args = [];
-				if( rawArgs!=null )
-					for(a in rawArgs.split("|"))
-						args.push( cleanUp(a) );
+				var args = new Map();
+
+				switch o {
+					case "button":
+						args.set("label", "???");
+						if( rawArgs==null )
+							_err('Missing argument for #$o');
+						else {
+							if( keyReferenceReg.match(rawArgs) ) {
+								args.set("key", keyReferenceReg.matched(1));
+								rawArgs = keyReferenceReg.matchedLeft() + keyReferenceReg.matchedRight();
+							}
+							if( probaMulReg.match(rawArgs) ) {
+								args.set( "count", probaMulReg.matched(1) );
+								rawArgs = probaMulReg.matchedLeft() + probaMulReg.matchedRight();
+							}
+							else
+								args.set( "count", "1" );
+
+							var label = StringTools.trim(rawArgs);
+							if( label.length==0 && args.exists("key") )
+								label = args.get("key");
+							args.set("label", label);
+						}
+
+					case _: _err('Unknown option: #$o');
+				}
+
+				trace(o+" "+args);
 
 				rdata.options.push({
-					opt: o,
+					id: o,
 					args: args,
 				});
 				continue;
@@ -78,19 +107,6 @@ class RandomParser {
 			}
 		}
 
-		var errors = [];
-		inline function _err(e:Dynamic) errors.push( Std.string(e) );
-
-		// Check options errors
-		for(o in rdata.options) {
-			var k = o.opt;
-			switch k {
-				case "button":
-					if( o.args.length==0 )
-						_err('Missing argument in #$k');
-				case _: _err('Unknown option: #$k');
-			}
-		}
 
 		// Check key refs
 		var keyRefReg = new EReg(KEY_REFERENCE_REG,"");
@@ -115,7 +131,7 @@ class RandomParser {
 	public static function debugRandData(rdata:RandData) {
 		trace("OPTIONS:");
 		for(o in rdata.options)
-			trace("  "+o.opt+" => "+o.args);
+			trace("  "+o.id+" => "+o.args);
 		trace("TABLES:");
 		for(t in rdata.tables.keyValueIterator())
 			trace("  "+t.key+" => "+t.value.map(e->e.raw+"["+M.round(e.probaMul*100)+"%]").join(", "));
