@@ -1,6 +1,7 @@
 #button Lieu @location
 #button Campement @camp
 #button Rencontre @encounter
+#button @trinket
 
 >location
 @buildingLocation @locationDetails
@@ -291,7 +292,7 @@ Hostile
 >specialBehaviour
 Méfiant x5
 Peur des PJs
-Protège une babiole x0.3
+Protège une babiole (@trinket) x0.3
 Cache un secret x0.2
 Cannibale x0.3
 
@@ -328,8 +329,8 @@ Armures
 Mods
 
 >loot
-Babiole
-Objet précieux
+Babiole (@trinket)
+Objet précieux (@trinket)
 Nourriture
 Eau
 Arme
@@ -380,3 +381,32 @@ Pluie radioactive x0.5
 Orage
 Orage magnétique x0.6
 Grand vent
+
+>trinket
+Pile usagée
+Couverts
+Casquette @popTheme
+Pull @popTheme
+Drap @popTheme
+Mug @popTheme
+Gant de baseball
+Téléphone portable
+Gourde
+Gants
+Boucles d'oreilles
+Pendentif @popTheme
+Bracelet @popTheme
+Montre @popTheme
+Blouson @popTheme
+Foulard @popTheme
+
+>popTheme
+Pat'Patrouille
+Spiderman
+Dragon Ball
+Batman
+Marvel
+La reine des neiges
+Le roi lion
+Donjons et Dragons
+
