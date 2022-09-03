@@ -34,10 +34,33 @@ class EditorUI extends SiteProcess {
 	}
 
 	public function showErrors(errors:Array<RandomParser.Error>) {
-		ace.session.clearAnnotations();
+		clearErrors();
+
+		// Show in editor
 		ace.session.setAnnotations(
 			errors.map( e->{ row:e.line-1, text:e.err, type:"error", column:0 })
 		);
+
+		// Errors listing
+		var jErrors = jRoot.find(".errors");
+		if( errors.length==0 )
+			jErrors.empty();
+		else {
+			jErrors.empty();
+			for(e in errors) {
+				var jError = new J('<pre>Line ${e.line} -- <strong>${e.err}</strong></pre>');
+				jError.click(_->{
+					app.openEditor();
+					app.editor.gotoLine(e.line);
+				});
+				jErrors.append(jError);
+			}
+		}
+	}
+
+	public function clearErrors() {
+		ace.session.clearAnnotations();
+		jRoot.find(".errors").empty();
 	}
 
 	public function gotoLine(l:Int) {
@@ -65,7 +88,7 @@ class EditorUI extends SiteProcess {
 	}
 
 	function markSaved() {
-		jRoot.find(".save").prop("disabled", true).text("Saved.");
+		jRoot.find(".save").prop("disabled", true).text("✔️ Saved.");
 	}
 
 	function markUnsaved() {

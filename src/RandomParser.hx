@@ -1,7 +1,7 @@
 typedef RandData = {
 	var keys: Array<{ key:String, line:Int }>;
 	var tables: Map<String, Array<RandTableEntry>>;
-	var options: Array<{ id:String, args:Map<String, String> }>;
+	var options: Array<{ id:String, line:Int, args:Map<String, String> }>;
 }
 typedef RandTableEntry = {
 	var raw : String;
@@ -46,6 +46,7 @@ class RandomParser {
 		var probaMulReg = new EReg(PROBA_MUL_REG,"");
 		// var countReg = new EReg(COUNT_REG,"");
 
+		var hasAnyButton = false;
 		var lineIdx = 0;
 		for( l in lines ) {
 			lineIdx++;
@@ -70,6 +71,8 @@ class RandomParser {
 								args.set("key", keyReferenceReg.matched(1));
 								rawArgs = keyReferenceReg.matchedLeft() + keyReferenceReg.matchedRight();
 							}
+							else
+								_err('Missing key name (ex: "@myKey") in #button', lineIdx);
 							if( probaMulReg.match(rawArgs) ) {
 								args.set( "count", probaMulReg.matched(1) );
 								rawArgs = probaMulReg.matchedLeft() + probaMulReg.matchedRight();
@@ -81,6 +84,7 @@ class RandomParser {
 							if( label.length==0 && args.exists("key") )
 								label = args.get("key");
 							args.set("label", label);
+							hasAnyButton = true;
 						}
 
 					case _: _err('Unknown option: #$o', lineIdx);
@@ -89,6 +93,7 @@ class RandomParser {
 
 				rdata.options.push({
 					id: o,
+					line: lineIdx,
 					args: args,
 				});
 				continue;
@@ -120,7 +125,17 @@ class RandomParser {
 		}
 
 
-		// Check key refs
+		// Add some default button
+		if( !hasAnyButton && rdata.keys.length>0 ) {
+			var k = rdata.keys[0].key;
+			rdata.options.push({
+				id: "button",
+				line: 1,
+				args: [ "key"=>k, "label"=>k, "count"=>"1" ],
+			});
+		}
+
+		// Check key refs in tables
 		var keyRefReg = new EReg(KEY_REFERENCE_REG,"");
 		var countReg = new EReg(COUNT_REG,"");
 		for(table in rdata.tables.keyValueIterator())
@@ -132,6 +147,15 @@ class RandomParser {
 						_err('Unknown key "@$k" in ">${table.key}"', e.line);
 					tmp = keyRefReg.matchedRight();
 				}
+			}
+
+		// Check key refs in options
+		for(o in rdata.options)
+			switch o.id {
+				case "button":
+					var k = o.args.get("key");
+					if( k!=null && !rdata.tables.exists(k) )
+						_err('Unknown key "@$k" in #button', o.line);
 			}
 
 		return {

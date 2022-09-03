@@ -24,32 +24,20 @@ class RandomUI extends SiteProcess {
 		jRandButtons.empty();
 
 		var parsed = RandomParser.run(raw);
-		var jErrors = jRoot.find(".errors");
-		if( parsed.errors.length==0 )
-			jErrors.empty();
-		else {
-			jErrors.empty();
-			for(e in parsed.errors) {
-				var jError = new J('<pre>Line ${e.line} -- <strong>${e.err}</strong></pre>');
-				jError.click(_->{
-					app.openEditor();
-					app.editor.gotoLine(e.line);
-				});
-				jErrors.append(jError);
-			}
-		}
 		randomizer = new Randomizer(parsed.data);
 
 		if( parsed.errors.length>0 ) {
 			app.openEditor();
 			app.editor.showErrors(parsed.errors);
 		}
+		else if( app.editor!=null )
+			app.editor.clearErrors();
 
 		// Add buttons
 		for(o in parsed.data.options)
 			switch o.id {
 				case "button":
-					var jBt = new J('<button>${o.args.get("label")}</button>');
+					var jBt = new J('<button>🎲 ${o.args.get("label")}</button>');
 					jBt.click( (ev:js.jquery.Event)->{
 						if( app.editor!=null && app.editor.checkAutoSave() )
 							return;

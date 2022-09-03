@@ -194,13 +194,18 @@ h2 {
 			border-top: 1px dashed gray;
 		}
 	}
+}
+
+#site .column.editor {
+	grid-template-rows: min-content 1fr min-content;
 
 	.errors {
 		border: 1px dashed red;
 		padding: 2px;
-		max-height: 100px;
+		max-height: 200px;
 		overflow-y: auto;
 		background-color: #ffcccc;
+		min-height: 50px;
 
 		&:empty {
 			display: none;
@@ -218,8 +223,4 @@ h2 {
 			}
 		}
 	}
-}
-
-#site .column.editor {
-	grid-template-rows: min-content 1fr min-content;
 }

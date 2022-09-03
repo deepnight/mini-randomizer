@@ -1065,8 +1065,8 @@ var App = function() {
 	_g.h["embed/demo.txt"] = "#button Generate random location @demo\r\n\r\n>demo\r\n@buildingType\\n @locationFeature\\n Inhabitant(s): @inhabitant\r\n\r\n>buildingType\r\nSupermarket\r\nMansion\r\nSchool\r\nHospital\r\nTrain station\r\nBunker\r\nPrison\r\nMuseum\r\nRestaurant\r\nParking lot\r\nBridge\r\n\r\n>locationFeature\r\nRecently visited\r\nDark place\r\nWalls are painted with bright colors\r\nVery messy\r\nBlood splatters\r\nWeird decoration\r\nWeird smell\r\nWeird noises inside\r\nPresence of radioactivity\r\nStrange tags on walls\r\nFlooded\r\nStrange mist\r\nPresence of lots of insects\r\nAbandoned recently\r\nBurned down\r\nBarricaded\r\nRecently bombed\r\nRepurposed into something else (@buildingType)\r\n\r\n>inhabitant\r\nNot occupied x2\r\nBandits\r\nMerchant\r\nErmit\r\nCrazy person\r\nGroup of peaceful people x0.5\r\nMinor monsters\r\nOne major monster\r\nRobot";
 	this.internalFiles = _g;
 	var _g = new haxe_ds_StringMap();
-	_g.h["embed/tpl/random.html"] = "<div class=\"toolbar\">\r\n\t<div class=\"row buttons randButtons\"></div>\r\n\t<div class=\"row small\">\r\n\t\t<button class=\"clear\">Clear</button>\r\n\t</div>\r\n</div>\r\n\r\n<div class=\"output\"></div>\r\n<div class=\"errors\"></div>\r\n";
-	_g.h["embed/tpl/editor.html"] = "<div class=\"toolbar\">\r\n\t<button class=\"close small\">Close</button>\r\n\t<button class=\"save\">...</button>\r\n\t<button class=\"download\">Download</button>\r\n\t<button class=\"copy\">Copy</button>\r\n\t<button class=\"upload\">Import</button>\r\n\t<button class=\"delete small\">Delete save</button>\r\n</div>\r\n\r\n<div id=\"ace\"></div>\r\n";
+	_g.h["embed/tpl/random.html"] = "<div class=\"toolbar\">\r\n\t<div class=\"row buttons randButtons\"></div>\r\n\t<div class=\"row small\">\r\n\t\t<button class=\"clear\">Clear</button>\r\n\t</div>\r\n</div>\r\n\r\n<div class=\"output\"></div>\r\n";
+	_g.h["embed/tpl/editor.html"] = "<div class=\"toolbar\">\r\n\t<button class=\"close small\">Close</button>\r\n\t<button class=\"save\">...</button>\r\n\t<button class=\"download\">📥 Download</button>\r\n\t<button class=\"upload\">📁 Upload</button>\r\n\t<button class=\"copy\">📄 Copy</button>\r\n\t<button class=\"delete small\">🗑️ Delete save</button>\r\n</div>\r\n\r\n<div id=\"ace\"></div>\r\n<div class=\"errors\"></div>\r\n";
 	this.templates = _g;
 	this.storage = dn_data_LocalStorage.createJsonStorage("settings");
 	this.loadSettings();
@@ -1525,7 +1525,47 @@ $hxClasses["EditorUI"] = EditorUI;
 EditorUI.__name__ = "EditorUI";
 EditorUI.__super__ = SiteProcess;
 EditorUI.prototype = $extend(SiteProcess.prototype,{
-	updateToolbar: function() {
+	showErrors: function(errors) {
+		var _gthis = this;
+		this.clearErrors();
+		var tmp = this.ace.session;
+		var result = new Array(errors.length);
+		var _g = 0;
+		var _g1 = errors.length;
+		while(_g < _g1) {
+			var i = _g++;
+			var e = errors[i];
+			result[i] = { row : e.line - 1, text : e.err, type : "error", column : 0};
+		}
+		tmp.setAnnotations(result);
+		var jErrors = this.jRoot.find(".errors");
+		if(errors.length == 0) {
+			jErrors.empty();
+		} else {
+			jErrors.empty();
+			var _g = 0;
+			while(_g < errors.length) {
+				var e = [errors[_g]];
+				++_g;
+				var jError = $("<pre>Line " + e[0].line + " -- <strong>" + e[0].err + "</strong></pre>");
+				jError.click((function(e) {
+					return function(_) {
+						App.ME.openEditor();
+						App.ME.editor.gotoLine(e[0].line);
+					};
+				})(e));
+				jErrors.append(jError);
+			}
+		}
+	}
+	,clearErrors: function() {
+		this.ace.session.clearAnnotations();
+		this.jRoot.find(".errors").empty();
+	}
+	,gotoLine: function(l) {
+		this.ace.gotoLine(l,0,true);
+	}
+	,updateToolbar: function() {
 		var _gthis = this;
 		var jDelete = this.jRoot.find(".delete");
 		jDelete.off();
@@ -1546,7 +1586,7 @@ EditorUI.prototype = $extend(SiteProcess.prototype,{
 		this.ace = null;
 	}
 	,markSaved: function() {
-		this.jRoot.find(".save").prop("disabled",true).text("Saved.");
+		this.jRoot.find(".save").prop("disabled",true).text("✔️ Saved.");
 	}
 	,markUnsaved: function() {
 		this.jRoot.find(".save").prop("disabled",false).text("Save");
@@ -1566,6 +1606,7 @@ EditorUI.prototype = $extend(SiteProcess.prototype,{
 	}
 	,save: function() {
 		this.markSaved();
+		this.ace.session.clearAnnotations();
 		this.delayer.cancelById("autoSave");
 		var raw = this.ace.getValue();
 		if(raw != App.ME.internalFiles.h[App.ME.settings.curFileId]) {
@@ -1910,7 +1951,7 @@ RandomParser.run = function(raw) {
 	if(raw == null) {
 		return null;
 	}
-	var rdata = { tables : new haxe_ds_StringMap(), options : []};
+	var rdata = { keys : [], tables : new haxe_ds_StringMap(), options : []};
 	var errors = [];
 	var lines = raw.split("\n");
 	var curKey = null;
@@ -1918,10 +1959,13 @@ RandomParser.run = function(raw) {
 	var keyDefinionReg = new EReg(RandomParser.KEY_DEFINITION_REG,"");
 	var keyReferenceReg = new EReg(RandomParser.KEY_REFERENCE_REG,"");
 	var probaMulReg = new EReg(RandomParser.PROBA_MUL_REG,"");
+	var hasAnyButton = false;
+	var lineIdx = 0;
 	var _g = 0;
 	while(_g < lines.length) {
 		var l = lines[_g];
 		++_g;
+		var lineIdx1 = ++lineIdx;
 		l = RandomParser.cleanUp(l);
 		if(l.length == 0) {
 			continue;
@@ -1933,12 +1977,14 @@ RandomParser.run = function(raw) {
 			if(o == "button") {
 				args.h["label"] = "???";
 				if(rawArgs == null) {
-					errors.push(Std.string("Missing argument for #" + o));
+					errors.push({ err : Std.string("Missing argument for #" + o), line : lineIdx1});
 				} else {
 					if(keyReferenceReg.match(rawArgs)) {
 						var value = keyReferenceReg.matched(1);
 						args.h["key"] = value;
 						rawArgs = keyReferenceReg.matchedLeft() + keyReferenceReg.matchedRight();
+					} else {
+						errors.push({ err : "Missing key name (ex: \"@myKey\") in #button", line : lineIdx1});
 					}
 					if(probaMulReg.match(rawArgs)) {
 						var value1 = probaMulReg.matched(1);
@@ -1952,15 +1998,17 @@ RandomParser.run = function(raw) {
 						label = args.h["key"];
 					}
 					args.h["label"] = label;
+					hasAnyButton = true;
 				}
 			} else {
-				errors.push(Std.string("Unknown option: #" + o));
+				errors.push({ err : Std.string("Unknown option: #" + o), line : lineIdx1});
 			}
-			rdata.options.push({ id : o, args : args});
+			rdata.options.push({ id : o, line : lineIdx1, args : args});
 			continue;
 		}
 		if(keyDefinionReg.match(l)) {
 			curKey = keyDefinionReg.matched(1);
+			rdata.keys.push({ key : curKey, line : lineIdx1});
 			if(!Object.prototype.hasOwnProperty.call(rdata.tables.h,curKey)) {
 				rdata.tables.h[curKey] = [];
 			}
@@ -1973,8 +2021,17 @@ RandomParser.run = function(raw) {
 				}
 				l = probaMulReg.matchedLeft();
 			}
-			rdata.tables.h[curKey].push({ raw : l, probaMul : probaMul});
+			rdata.tables.h[curKey].push({ line : lineIdx1, raw : l, probaMul : probaMul});
 		}
+	}
+	if(!hasAnyButton && rdata.keys.length > 0) {
+		var k = rdata.keys[0].key;
+		var rdata1 = rdata.options;
+		var _g = new haxe_ds_StringMap();
+		_g.h["key"] = k;
+		_g.h["label"] = k;
+		_g.h["count"] = "1";
+		rdata1.push({ id : "button", line : 1, args : _g});
 	}
 	var keyRefReg = new EReg(RandomParser.KEY_REFERENCE_REG,"");
 	var countReg = new EReg(RandomParser.COUNT_REG,"");
@@ -1996,9 +2053,21 @@ RandomParser.run = function(raw) {
 			while(keyRefReg.match(tmp)) {
 				var k = keyRefReg.matched(1);
 				if(!countReg.match(k) && !Object.prototype.hasOwnProperty.call(rdata.tables.h,k)) {
-					errors.push(Std.string("Unknown key \"@" + k + "\" in \">" + table_key + "\""));
+					errors.push({ err : Std.string("Unknown key \"@" + k + "\" in \">" + table_key + "\""), line : e.line});
 				}
 				tmp = keyRefReg.matchedRight();
+			}
+		}
+	}
+	var _g = 0;
+	var _g1 = rdata.options;
+	while(_g < _g1.length) {
+		var o = _g1[_g];
+		++_g;
+		if(o.id == "button") {
+			var k = o.args.h["key"];
+			if(k != null && !Object.prototype.hasOwnProperty.call(rdata.tables.h,k)) {
+				errors.push({ err : Std.string("Unknown key \"@" + k + "\" in #button"), line : o.line});
 			}
 		}
 	}
@@ -2029,20 +2098,20 @@ RandomUI.prototype = $extend(SiteProcess.prototype,{
 		this.clearOutput();
 		this.jRandButtons.empty();
 		var parsed = RandomParser.run(raw);
-		var jErrors = this.jRoot.find(".errors");
-		if(parsed.errors.length == 0) {
-			jErrors.empty();
-		} else {
-			jErrors.html("<pre>" + parsed.errors.join("</pre><pre>") + "</pre>");
-		}
 		this.randomizer = new Randomizer(parsed.data);
+		if(parsed.errors.length > 0) {
+			App.ME.openEditor();
+			App.ME.editor.showErrors(parsed.errors);
+		} else if(App.ME.editor != null) {
+			App.ME.editor.clearErrors();
+		}
 		var _g = 0;
 		var _g1 = parsed.data.options;
 		while(_g < _g1.length) {
 			var o = [_g1[_g]];
 			++_g;
 			if(o[0].id == "button") {
-				var jBt = $("<button>" + o[0].args.h["label"] + "</button>");
+				var jBt = $("<button>🎲 " + o[0].args.h["label"] + "</button>");
 				jBt.click((function(o) {
 					return function(ev) {
 						if(App.ME.editor != null && App.ME.editor.checkAutoSave()) {
