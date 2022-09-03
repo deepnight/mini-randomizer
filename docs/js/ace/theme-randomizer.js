@@ -19,6 +19,7 @@ var css = [
     ".ace_keyDef { background-color:orange; color:white; border-radius:3px; padding: 0 1px }",
     ".ace_keyRef { color:orange; font-weight:bold; text-decoration:underline }",
     ".ace_mul { color:#779FC5; font-style:italic }",
+    ".ace_quickList { color:orange; font-style:italic }",
     ""
 ];
 

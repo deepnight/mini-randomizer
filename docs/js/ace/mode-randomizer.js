@@ -4,35 +4,13 @@ var TextHighlightRules = require("./text_highlight_rules").TextHighlightRules;
 var RandomizerHighlightRules = function () {
     this.$rules = {
         "start": [
-            {
-                token: "option",
-                regex: '^#[a-zA-Z0-9]+'
-                // next: "optionArg"
-            }, {
-                token: "keyDef",
-                regex: '^>[a-zA-Z0-9_-]+$'
-            }, {
-                token: "keyRef",
-                regex: '@([a-zA-Z0-9_-]+)'
-            }, {
-                token: "count",
-                regex: ':[0-9]+-[0-9]+:'
-            }, {
-                token: "mul",
-                regex: 'x[0-9.]+'
-            }, {
-                token: "constant.numeric",
-                regex: "[+-]?\\d+(?:(?:\\.\\d*)?(?:[eE][+-]?\\d+)?)?\\b"
-            }
-        ],
-        "optionArg": [
-            {
-                token: "optionArg",
-                regex: '$',
-                next: "start"
-            }, {
-                defaultToken : "optionArg"
-            }
+            { token: "option", regex: '^#[a-zA-Z0-9]+' },
+            { token: "keyDef", regex: '^>[a-zA-Z0-9_-]+$' },
+            { token: "keyRef", regex: '@([a-zA-Z0-9_-]+)' },
+            { token: "count", regex: ':[0-9]+-[0-9]+:' },
+            { token: "quickList", regex: '\\[(.*?)\\]' },
+            { token: "mul", regex: 'x[0-9.]+' },
+            { token: "constant.numeric", regex: "[+-]?\\d+(?:(?:\\.\\d*)?(?:[eE][+-]?\\d+)?)?\\b" }
         ]
     };
 };
