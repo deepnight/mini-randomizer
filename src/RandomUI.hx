@@ -27,9 +27,23 @@ class RandomUI extends SiteProcess {
 		var jErrors = jRoot.find(".errors");
 		if( parsed.errors.length==0 )
 			jErrors.empty();
-		else
-			jErrors.html("<pre>" + parsed.errors.join("</pre><pre>") + "</pre>");
+		else {
+			jErrors.empty();
+			for(e in parsed.errors) {
+				var jError = new J('<pre>Line ${e.line} -- <strong>${e.err}</strong></pre>');
+				jError.click(_->{
+					app.openEditor();
+					app.editor.gotoLine(e.line);
+				});
+				jErrors.append(jError);
+			}
+		}
 		randomizer = new Randomizer(parsed.data);
+
+		if( parsed.errors.length>0 ) {
+			app.openEditor();
+			app.editor.showErrors(parsed.errors);
+		}
 
 		// Add buttons
 		for(o in parsed.data.options)

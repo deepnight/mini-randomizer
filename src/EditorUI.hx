@@ -33,6 +33,17 @@ class EditorUI extends SiteProcess {
 		markSaved();
 	}
 
+	public function showErrors(errors:Array<RandomParser.Error>) {
+		ace.session.clearAnnotations();
+		ace.session.setAnnotations(
+			errors.map( e->{ row:e.line-1, text:e.err, type:"error", column:0 })
+		);
+	}
+
+	public function gotoLine(l:Int) {
+		ace.gotoLine(l, 0, true);
+	}
+
 	function updateToolbar() {
 		var jDelete = jRoot.find(".delete");
 		jDelete.off();
@@ -79,6 +90,7 @@ class EditorUI extends SiteProcess {
 	var ignoreNextChangeEvent = false;
 	function save() {
 		markSaved();
+		ace.session.clearAnnotations();
 		delayer.cancelById("autoSave");
 		var raw = ace.getValue();
 		if( raw!=app.internalFiles.get(curFileId) ) {

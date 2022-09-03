@@ -1,10 +1,17 @@
 typedef RandData = {
+	var keys: Array<{ key:String, line:Int }>;
 	var tables: Map<String, Array<RandTableEntry>>;
 	var options: Array<{ id:String, args:Map<String, String> }>;
 }
 typedef RandTableEntry = {
 	var raw : String;
+	var line : Int;
 	var probaMul : Float;
+}
+
+typedef Error = {
+	var line: Int;
+	var err: String;
 }
 
 /**
@@ -17,17 +24,18 @@ class RandomParser {
 	public static var OPTION_REG = "^#([a-zA-Z0-9_-]+)([ \t]+(.+)|)";
 	public static var PROBA_MUL_REG = "[ \t]+x([0-9.]+)[ \t]*$";
 
-	public static function run(raw:String) : { data:Null<RandData>, errors:Array<String> } {
+	public static function run(raw:String) : { data:Null<RandData>, errors:Array<Error> } {
 		if( raw==null )
 			return null;
 
 
 		var rdata : RandData = {
+			keys: [],
 			tables: new Map(),
 			options: [],
 		}
 		var errors = [];
-		inline function _err(e:Dynamic) errors.push( Std.string(e) );
+		inline function _err(e:Dynamic, line:Int) errors.push({ err:Std.string(e), line:line });
 
 		var lines = raw.split("\n");
 		var curKey : Null<String> = null;
@@ -38,7 +46,10 @@ class RandomParser {
 		var probaMulReg = new EReg(PROBA_MUL_REG,"");
 		// var countReg = new EReg(COUNT_REG,"");
 
+		var lineIdx = 0;
 		for( l in lines ) {
+			lineIdx++;
+			var lineIdx = lineIdx; // local copy
 			l = cleanUp(l);
 			if( l.length==0 )
 				continue;
@@ -53,7 +64,7 @@ class RandomParser {
 					case "button":
 						args.set("label", "???");
 						if( rawArgs==null )
-							_err('Missing argument for #$o');
+							_err('Missing argument for #$o', lineIdx);
 						else {
 							if( keyReferenceReg.match(rawArgs) ) {
 								args.set("key", keyReferenceReg.matched(1));
@@ -72,7 +83,7 @@ class RandomParser {
 							args.set("label", label);
 						}
 
-					case _: _err('Unknown option: #$o');
+					case _: _err('Unknown option: #$o', lineIdx);
 				}
 
 
@@ -86,6 +97,7 @@ class RandomParser {
 			if( keyDefinionReg.match(l) ) {
 				// New table key
 				curKey = keyDefinionReg.matched(1);
+				rdata.keys.push({ key:curKey, line:lineIdx });
 				if( !rdata.tables.exists(curKey) )
 					rdata.tables.set(curKey, []);
 			}
@@ -100,6 +112,7 @@ class RandomParser {
 				}
 				// Store table entry
 				rdata.tables.get(curKey).push({
+					line: lineIdx,
 					raw: l,
 					probaMul: probaMul,
 				});
@@ -116,7 +129,7 @@ class RandomParser {
 				while( keyRefReg.match(tmp) ) {
 					var k = keyRefReg.matched(1);
 					if( !countReg.match(k) && !rdata.tables.exists(k) )
-						_err('Unknown key "@$k" in ">${table.key}"');
+						_err('Unknown key "@$k" in ">${table.key}"', e.line);
 					tmp = keyRefReg.matchedRight();
 				}
 			}

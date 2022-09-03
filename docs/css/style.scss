@@ -197,7 +197,7 @@ h2 {
 
 	.errors {
 		border: 1px dashed red;
-		padding: 8px;
+		padding: 2px;
 		max-height: 100px;
 		overflow-y: auto;
 		background-color: #ffcccc;
@@ -208,8 +208,14 @@ h2 {
 
 		pre {
 			margin: 0;
+			padding: 3px;
 			color: red;
 			font-weight: bold;
+			cursor: pointer;
+			&:hover {
+				background-color: #ffdede;
+				outline: 1px solid white;
+			}
 		}
 	}
 }
