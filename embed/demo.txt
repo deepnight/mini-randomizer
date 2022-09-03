@@ -23,9 +23,9 @@ Walls are painted with bright colors
 Very messy
 Blood splatters
 Weird decoration
-Weird smell
+[Terrible,Nice,Weird,Putrid] smell
 Weird noises inside
-Presence of radioactivity
+[Low,High] levels of radioactivity
 Strange tags on walls
 Flooded
 Strange mist
