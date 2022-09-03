@@ -21,22 +21,31 @@ class Randomizer {
 		for(e in table)
 			rlist.add(e, M.ceil(e.probaMul*100));
 
+		// Quick draw lists, eg. [red,blue]
 		var entry = rlist.draw();
 		var out = entry.raw;
-		var refReg = new EReg(RandomParser.KEY_REFERENCE_REG, "");
+		var quickListReg = new EReg(RandomParser.QUICK_LIST_REG, "");
+		while( quickListReg.match(out) ) {
+			var list = quickListReg.matched(1);
+			var sep = list.indexOf("|")>=0 ? "|" : ",";
+			var all = list.split(sep);
+			var e = StringTools.trim( R.pick(all) );
+			out = quickListReg.matchedLeft() + e + quickListReg.matchedRight();
+		}
+
+		// Random numbers
 		var countReg = new EReg(RandomParser.COUNT_REG, "");
+		while( countReg.match(out) ) {
+			var min = Std.parseInt( countReg.matched(1) );
+			var max = Std.parseInt( countReg.matched(2) );
+			out = countReg.matchedLeft() + R.irnd(min,max) + countReg.matchedRight();
+		}
+
+		// Key references
+		var refReg = new EReg(RandomParser.KEY_REFERENCE_REG, "");
 		while( refReg.match(out) ) {
 			var k = refReg.matched(1);
-			if( countReg.match(k) ) {
-				// Random number
-				var min = Std.parseInt( countReg.matched(1) );
-				var max = Std.parseInt( countReg.matched(2) );
-				out = refReg.matchedLeft() + R.irnd(min,max) + refReg.matchedRight();
-			}
-			else {
-				// Key reference
-				out = refReg.matchedLeft() + draw(k) + refReg.matchedRight();
-			}
+			out = refReg.matchedLeft() + draw(k) + refReg.matchedRight();
 		}
 
 		if( out=="-" )

@@ -20,7 +20,8 @@ typedef Error = {
 class RandomParser {
 	public static var KEY_DEFINITION_REG = "^[ \t]*>[ \t]*([a-zA-Z0-9_-]+)\\s*$";
 	public static var KEY_REFERENCE_REG = "@([a-zA-Z0-9_-]+)";
-	public static var COUNT_REG = "^([0-9]+)-([0-9]+)$";
+	public static var QUICK_LIST_REG = "\\[(.*?)\\]";
+	public static var COUNT_REG = "([0-9]+)-([0-9]+)";
 	public static var OPTION_REG = "^#([a-zA-Z0-9_-]+)([ \t]+(.+)|)";
 	public static var PROBA_MUL_REG = "[ \t]+x([0-9.]+)[ \t]*$";
 
