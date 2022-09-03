@@ -4,12 +4,12 @@
 @buildingType\n @locationFeature\n Inhabitant(s): @inhabitant
 
 >buildingType
-Supermarket
+[Super,Mini]market
 Mansion
-School
+[Public, Private] school
 Hospital
-Train station
-Bunker
+[Train,Tramway,Bus] station
+[Personal, Military] bunker
 Prison
 Museum
 Restaurant
@@ -38,11 +38,11 @@ Repurposed into something else (@buildingType)
 
 >inhabitant
 Not occupied x2
-Bandits
+2-5 bandits
 Merchant
 Ermit
 Crazy person
-Group of peaceful people x0.5
-Minor monsters
+Group of 5-10 peaceful people x0.5
+2-4 minor monsters
 One major monster
 Robot

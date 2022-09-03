@@ -183,7 +183,7 @@ Camouflé
 Ambiance glauque
 Ogive nucléaire non-activée x0.1
 Transformé en @newBuilding
-Présence de @newTool
+Présence de @locationTool
 
 >trap
 Conserves d'alarme
@@ -195,7 +195,7 @@ Obus non-explosés
 Chausses-trappes
 Arbalètes
 
->newTool
+>locationTool
 Puits
 Atelier
 Emetteur radio
@@ -268,7 +268,7 @@ Armure de fortune
 Tenue militaire avancée x0.5
 Nu x0.2
 Costume médiéval
-Tenue d'habitant d'un abri (@10-40)
+Tenue d'habitant d'un abri (10-40)
 Haillons
 Bleu de travail
 T-shirt geek
@@ -346,7 +346,7 @@ Munitions
 >campEvent
 Rien de spécial x5
 Rencontre : @encounter x3
-@1-2 voleur(s)
+1-2 voleur(s)
 Maraudeur non agressif
 Passage d'un robot/drone
 Passage : @flyingObject
@@ -405,8 +405,8 @@ Pat'Patrouille
 Spiderman
 Dragon Ball
 Batman
-Marvel
+Iron Man
 La reine des neiges
 Le roi lion
 Donjons et Dragons
-
+Twilight
