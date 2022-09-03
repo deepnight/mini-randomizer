@@ -1515,6 +1515,9 @@ var EditorUI = function() {
 	this.jRoot.find(".download").click(function(_) {
 		_gthis.download();
 	});
+	this.jRoot.find(".upload").click(function(_) {
+		App.ME.notify("Not implemented yet");
+	});
 	this.jRoot.find(".copy").click(function(_) {
 		_gthis.copy();
 	});

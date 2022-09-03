@@ -27,6 +27,7 @@ class EditorUI extends SiteProcess {
 		jRoot.find(".close").click(_->app.closeEditor());
 		jRoot.find(".save").click(_->save());
 		jRoot.find(".download").click(_->download());
+		jRoot.find(".upload").click(_->notify("Not implemented yet"));
 		jRoot.find(".copy").click(_->copy());
 		updateToolbar();
 
