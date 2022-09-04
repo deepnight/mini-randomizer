@@ -10,6 +10,10 @@ class Randomizer {
 	}
 
 	public function draw(key:String) : String {
+		return drawRec(key, new Map());
+	}
+
+	function drawRec(key:String, alreadyDones:Map<Int,Bool>) : String {
 		if( !data.tables.exists(key) )
 			return '<ERR: $key>';
 
@@ -17,13 +21,26 @@ class Randomizer {
 		if( table.length==0 )
 			return "";
 
+		// Init rand list
 		var rlist = new dn.struct.RandList();
+		var count = 0;
 		for(e in table)
-			rlist.add(e, M.ceil(e.probaMul*100));
+			if( !alreadyDones.exists(e.line) ) {
+				rlist.add(e, M.ceil(e.probaMul*100));
+				count++;
+			}
+
+		// All values were already used, re-use full list
+		if( count==0 )
+			for(e in table)
+				rlist.add(e, M.ceil(e.probaMul*100));
+
+		// Pick value
+		var entry : RandomParser.RandTableEntry = rlist.draw();
+		alreadyDones.set(entry.line, true);
+		var out = entry.raw;
 
 		// Quick draw lists, eg. [red,blue]
-		var entry = rlist.draw();
-		var out = entry.raw;
 		var quickListReg = new EReg(RandomParser.QUICK_LIST_REG, "");
 		while( quickListReg.match(out) ) {
 			var list = quickListReg.matched(1);
@@ -45,7 +62,7 @@ class Randomizer {
 		var refReg = new EReg(RandomParser.KEY_REFERENCE_REG, "");
 		while( refReg.match(out) ) {
 			var k = refReg.matched(1);
-			out = refReg.matchedLeft() + draw(k) + refReg.matchedRight();
+			out = refReg.matchedLeft() + drawRec(k,alreadyDones) + refReg.matchedRight();
 		}
 
 		if( out=="-" )
