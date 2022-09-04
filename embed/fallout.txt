@@ -1,7 +1,9 @@
 #button Lieu @location
 #button Campement @camp
 #button Rencontre @encounter
+#button @loot
 #button @trinket
+
 
 >location
 @buildingLocation @locationDetails
@@ -174,7 +176,7 @@ Envahi par des champignons (@natureBehaviour)
 Beaucoup d'insectes (@natureBehaviour)
 Brume très localisée
 Objet notable incongru: @weirdLargeProp x0.7
-Présence de nombreux [@weirdItem] sur le lieu x0.6
+Présence de nombreux "@weirdItem" sur le lieu x0.6
 Ambiance sonore étrange
 Odeur anormale
 Inscriptions sur les murs
@@ -207,7 +209,7 @@ Instruments de musique
 Cercueil
 Mise en scène macabre: @encounter
 Autel religieux
-Autel comportant de nombreux [@weirdItem]
+Autel comportant de nombreux @weirdItem
 Dessins étranges
 Pentagramme
 Refrigérateur au contenu bizarre
@@ -235,9 +237,9 @@ Pages d'un magazine à reconstituer
 
 >occupier
 Aucun occupant x7
-@encounter [@presence] x5
-Petite communauté [@npcStatus, @behaviour] x0.2
-Défenses automatisées [@robotStatus]
+@encounter x5
+Petite communauté (@npcStatus) x0.2
+Défenses automatisées (@robotStatus)
 
 >encounter
 Monstres mineurs
@@ -245,13 +247,26 @@ Monstre majeur
 Animal non agressif
 Grosse créature non agressive x0.3
 Vermine
-Pillards
-@race Marchand (@trading) avec escorte
-@race Ermite [@npcAspect, @npcStatus, @behaviour]
-@race Fou [@npcAspect, @npcStatus, @behaviour]
-Groupe d'aventuriers [@npcAspect, @npcStatus, @behaviour] x0.2
-Robot [@robotStatus, @behaviour]
-Confrérie de l'Acier [@npcStatus, @behaviour] x0.2
+Pillards (@npcObjective)
+Marchand @race (@trading) avec escorte
+Ermite @race (@npcAspect, @npcStatus)
+@race fou (@npcAspect, @npcStatus)
+Groupe d'aventuriers (@npcAspect, @npcStatus, @npcObjective) x0.2
+Robot (@robotStatus, @behaviour, @npcObjective)
+Confrérie de l'Acier (@npcObjective) x0.2
+
+>npcStatus
+@behaviour, @health
+Mort(s) x0.1
+
+>npcObjective
+à la recherche [de nourriture,d'eau]
+à la recherche de médicaments x0.3
+à la recherche un objet précis x0.1
+en patrouille
+fouille la zone
+traque une créature
+a établi un campement
 
 >race
 Humain x5
@@ -286,7 +301,6 @@ Amical x0.3
 Attitude neutre x4
 Hostile x2
 Hostile (@specialBehaviour)
-Mort(s) x0.3
 
 >natureBehaviour
 Attitude neutre x2
@@ -299,7 +313,7 @@ Protège une babiole (@trinket) x0.3
 Cache un secret x0.2
 Cannibale x0.3
 
->npcStatus
+>health
 Bonne santé x5
 Endormi x0.7
 Affamé
@@ -319,11 +333,6 @@ Recouvert de végétation x0.6
 Rôle modifié
 Fortement customisé
 
->presence
-Absent pour le moment
-Caché x0.3
-Présent x10
-
 >trading
 Nourriture/Eau x2
 Munitions
@@ -333,9 +342,9 @@ Mods
 
 >loot
 @trinket
-@usefulLoot x10
-@usefulLoot + @trinket x2
-@usefulLoot + @usefulLoot x1000
+@usefulLoot x20
+@usefulLoot + @trinket x4
+@usefulLoot + @usefulLoot
 
 >usefulLoot
 Nourriture
@@ -406,15 +415,14 @@ Bracelet @popTheme
 Montre @popTheme
 Blouson @popTheme
 Foulard @popTheme
-Vieux pneu tracteur
-Scie à bois émoussé
+Scie à bois émoussée
 Houe de jardin
 Oeil de verre
 Caddie
 Kit de couture personnelle
 Clochette sur un manche
 Aiguilles à tricoter
-1d20 ornements de Noël
+2-5 boules de Noël
 Tasse à café
 Ours en peluche
 Stylo plume
@@ -444,7 +452,8 @@ Radio
 Canard en caoutchouc
 Torchon brodé
 Calendrier 2050-2076
-Oreiller
+Oreiller @popTheme
+Coussin (@color)
 Louche en @metal
 Ceinture en cuir
 Boîte de 2-30 ampoules
@@ -487,6 +496,8 @@ Boîte à bijoux contenant une clé en @metal
 Carte magnétique portant le numéro @shelterID
 Écharpe en lambeaux
 Main momifiée avec six doigts
+Machoire humaine avec 35-40 dents
+Photo floue d'un OVNI
 3-5 pots de cuisine contenant des épices
 Alliance en @metal
 Œuf de gecko éclos
@@ -695,6 +706,10 @@ Ruban à mesurer en tissu
 Couverture déchirée (@color)
 Ballon de foot dégonflé [dédicacé,]
 Rasoir vintage
+Stylo en @metal
+Monocle
+Livre dont vous êtes le héros
+Livre de règles d'un jeu de rôles
 
 >color
 rouge
@@ -720,3 +735,6 @@ La reine des neiges
 Le roi lion
 Donjons et Dragons
 Twilight
+Superman
+James Bond
+Naruto
