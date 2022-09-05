@@ -501,6 +501,10 @@ Photo floue d'un OVNI
 3-5 pots de cuisine contenant des épices
 Alliance en @metal
 Œuf de gecko éclos
+Petit gecko empaillé
+Jouet brahmine en bois
+Photo d'un lieu (@outdoorLocation) avec @mysteriousNote au dos <<<
+Post-it avec des coordonnées GPS et la mention @mysteriousNote <<<
 Carte postale représentant une explosion nucléaire
 Nez de clown
 Champignons séchés dans un boîte en bois
@@ -539,12 +543,13 @@ Livre emprunté à une bibliothèque en 2010-2040
 Collection de rouges à lèvres
 Pot tribal contenant de la Poudre de guérison
 Montre à gousset en @metal
-Perles en bois de chapelet
+Chapelet composé de 10-20 perles en bois
 2-3 balles de caoutchouc
 Globe de neige
 Balle de tennis
-Tabac Coyote
+Tabac de la marque Coyote
 Ceinture à outils
+Pistolet @color tirant des flêchettes en mousse (6-12 munitions) <<<
 Perruque
 Épée en bois
 Paquet de 20-50 cartes de Magic
@@ -719,6 +724,14 @@ mauve
 jaune
 orange
 rose
+
+>mysteriousNote
+"???"
+"Attention!"
+"trappe ?"
+"abri @shelterID ?"
+"1000-9999"
+"1-9 / 10-99 / 1-9"
 
 >metal
 or x2
