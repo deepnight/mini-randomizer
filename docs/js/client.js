@@ -1061,12 +1061,12 @@ var App = function() {
 	this.jSite = this.jBody.find("#site");
 	this.jMenu = this.jBody.find("#menu");
 	var _g = new haxe_ds_StringMap();
-	_g.h["embed/fallout.txt"] = "#button Lieu @location\r\n#button Campement @camp\r\n#button Rencontre @encounter\r\n#button @loot\r\n#button @trinket\r\n\r\n\r\n>location\r\n@buildingLocation @locationDetails\r\n@outdoorLocation @locationDetails\r\n\r\n>locationDetails\r\n (@condition)\\n  @locationFeature\\n  @occupier\\n  @loot\r\n\r\n>buildingLocation\r\nManoir x0.5\r\nBunker x0.3\r\nPetit abri anti-atomique\r\nMaison\r\nImmeuble d'habitation\r\nPetite centrale électrique\r\nSite de traitement des eaux\r\nCampement\r\nGymnase\r\nChâteau d'eau\r\nBureaux\r\nSupermarché x0.5\r\nEpicerie\r\nRéparateur\r\nRestaurant @restaurantType\r\nBar\r\nEcole\r\nCrèche\r\nEntrepôt @storageType\r\nSalle de sport\r\nHôpital x0.5\r\nCabinet médical\r\nMagasin @shopType\r\nBoucherie\r\nPoissonerie\r\nArmurier x0.3\r\nGare\r\nGarage @vehicleType\r\nFourrière @vehicleType\r\nStation service\r\nCabane\r\nMarché couvert\r\nPrison\r\nUsine\r\nLaboratoire\r\nCommissariat\r\nChenil\r\nMusée\r\nFête forraine\r\nBâtiment administratif\r\nBoîte de nuit\r\n\r\n\r\n>vehicleType\r\nvoiture\r\nmoto\r\ncamion\r\nvélo\r\nvoiture de sport x0.3\r\n\r\n>storageType\r\npièces mécaniques\r\ncomposants électronique\r\nnourriture\r\nvêtements\r\n\r\n>shopType\r\nsport\r\nvêtements\r\nbricolage\r\nlibrairie\r\ninformatique\r\n@vehicleType\r\n\r\n>restaurantType\r\nfrançais\r\nasiatique\r\nburgers\r\nitalien\r\npizzeria\r\nmexicain\r\ngastronomique\r\nroutier\r\nsushi\r\n\r\n\r\n>outdoorLocation\r\nTerrain de sport (@sport)\r\nLac\r\nRoute\r\nPont\r\nTunnel\r\nAutoroute\r\nParc\r\nPlantation\r\nCimetière\r\nEglise\r\nChapelle\r\nMonument\r\nStation tramway\r\nAire de jeux\r\nChantier\r\nParking payant\r\nParking de bus\r\nCratère\r\nCamion\r\nGrue de chargement\r\nTrain\r\nMarécage\r\nForêt\r\nCarrière\r\nDécharge\r\nConvoi\r\nParc d'attraction\r\nEolienne\r\nPanneaux solaires\r\nStade\r\nSite d'un crash (@flyingObject)\r\nSite d'un atterissage en catastrophe (@flyingObject)\r\nEpave d'un navire\r\nSite de tournage (@buildingLocation)\r\nScène de concert\r\n\r\n>flyingObject\r\nAvion de ligne\r\nJet\r\nPetit avion\r\nAvion de chasse\r\nHélicoptère civil\r\nHélicoptère militaire\r\nHovercraft\r\nDeltaplane\r\nMontgolfière\r\nDirigeable\r\nDrone\r\nOVNI x0.1\r\n\r\n>sport\r\nGolf\r\nFootball\r\nBasketball\r\nTir x0.5\r\nNatation\r\nAthlétisme\r\nTennis\r\n\r\n>newBuilding\r\nPlace forte\r\nAvant-poste\r\nStockage\r\nHabitation\r\nAtelier\r\nAbri anti-atomique x0.5\r\n\r\n>condition\r\nStructure en bon état x0.2\r\nStructure ancienne x2\r\nStructure récemment rénovée x0.3\r\nStructure rasée x0.4\r\n\r\n>locationFeature\r\nRien de spécial x0.5\r\nIncendié x0.5\r\nBombardé\r\nInnondé\r\nIrradié x0.5\r\nPiégé (@trap)\r\nDécoration étrange\r\nEnvahi par une végétation dense (@natureBehaviour)\r\nEnvahi par des champignons (@natureBehaviour)\r\nBeaucoup d'insectes (@natureBehaviour)\r\nBrume très localisée\r\nObjet notable incongru: @weirdLargeProp x0.7\r\nPrésence de nombreux \"@weirdItem\" sur le lieu x0.6\r\nAmbiance sonore étrange\r\nOdeur anormale\r\nInscriptions sur les murs\r\nTrès encombré\r\nCamouflé\r\nAmbiance glauque\r\nOgive nucléaire non-activée x0.1\r\nTransformé en @newBuilding\r\nPrésence de @locationTool\r\n\r\n>trap\r\nConserves d'alarme\r\nAlarme puissante\r\nMines anti-personnelles\r\nExplosif artisanal puissant\r\nVéhicule piégé (@vehicleType)\r\nObus non-explosés\r\nChausses-trappes\r\nArbalètes\r\n\r\n>locationTool\r\nPuits\r\nAtelier\r\nEmetteur radio\r\nEquipements informatiques\r\n\r\n>weirdLargeProp\r\nMannequins\r\nInstruments de musique\r\nCercueil\r\nMise en scène macabre: @encounter\r\nAutel religieux\r\nAutel comportant de nombreux @weirdItem\r\nDessins étranges\r\nPentagramme\r\nRefrigérateur au contenu bizarre\r\nTable de JdR\r\nPiscine\r\n\r\n>weirdItem\r\nCarte à jouer\r\nOrigami\r\nFigurine jouet\r\nPoupée\r\nTasse colorée\r\nValise\r\nSymbole religieux\r\nOssement humain\r\nBouteille vide\r\nPetit fanion\r\nSculpture en bois\r\nCasque\r\nChapeau\r\nVieux téléviseur cathodique\r\nPoisson mort\r\nMines anti-personnelles factices\r\nPages d'un magazine à reconstituer\r\n\r\n>occupier\r\nAucun occupant x7\r\n@encounter x5\r\nPetite communauté (@npcStatus) x0.2\r\nDéfenses automatisées (@robotStatus)\r\n\r\n>encounter\r\nMonstres mineurs\r\nMonstre majeur\r\nAnimal non agressif\r\nGrosse créature non agressive x0.3\r\nVermine\r\nPillards (@npcObjective)\r\nMarchand @race (@trading) avec escorte\r\nErmite @race (@npcAspect, @npcStatus)\r\n@race fou (@npcAspect, @npcStatus)\r\nGroupe d'aventuriers (@npcAspect, @npcStatus, @npcObjective) x0.2\r\nRobot (@robotStatus, @behaviour, @npcObjective)\r\nConfrérie de l'Acier (@npcObjective) x0.2\r\n\r\n>npcStatus\r\n@behaviour, @health\r\nMort(s) x0.1\r\n\r\n>npcObjective\r\nà la recherche [de nourriture,d'eau]\r\nà la recherche de médicaments x0.3\r\nà la recherche un objet précis x0.1\r\nen patrouille\r\nfouille la zone\r\ntraque une créature\r\na établi un campement\r\n\r\n>race\r\nHumain x5\r\nMutant\r\nSuper mutant x0.1\r\n\r\n>npcAspect\r\nCostume et cravate\r\nTenue de sport\r\nTreillis militaire\r\nCostume excentrique\r\nVêtements trop petits\r\nArmure de fortune\r\nTenue militaire avancée x0.5\r\nNu x0.2\r\nCostume médiéval\r\nTenue d'habitant d'un abri (@shelterID)\r\nHaillons\r\nBleu de travail\r\nT-shirt geek\r\nManteau long\r\nTenue de cowboy\r\nCostume ancien\r\nCosplay furry x0.2\r\n\r\n>shelterID\r\n10-40\r\n\r\n\r\n>behaviour\r\nAmical x0.3\r\nAttitude neutre x4\r\nHostile x2\r\nHostile (@specialBehaviour)\r\n\r\n>natureBehaviour\r\nAttitude neutre x2\r\nHostile\r\n\r\n>specialBehaviour\r\nMéfiant x5\r\nPeur des PJs\r\nProtège une babiole (@trinket) x0.3\r\nCache un secret x0.2\r\nCannibale x0.3\r\n\r\n>health\r\nBonne santé x5\r\nEndormi x0.7\r\nAffamé\r\nAssoiffé\r\nFou\r\nMalade\r\nIrradié\r\nBlessé\r\nEstropié\r\n\r\n>robotStatus\r\nEn état de marche\r\nConception artisanale\r\nEstropié\r\nEtrangement décoré\r\nRecouvert de végétation x0.6\r\nRôle modifié\r\nFortement customisé\r\n\r\n>trading\r\nNourriture/Eau x2\r\nMunitions\r\nArmes\r\nArmures\r\nMods\r\n\r\n>loot\r\n@trinket\r\n@usefulLoot x20\r\n@usefulLoot + @trinket x4\r\n@usefulLoot + @usefulLoot\r\n\r\n>usefulLoot\r\nNourriture\r\nEau\r\nArme\r\nArmure\r\nMod d'arme\r\nMod d'armure\r\nMunitions\r\n\r\n\r\n>camp\r\n@campEvent\\n  @weather\r\n\r\n>campEvent\r\nRien de spécial x5\r\nRencontre : @encounter x3\r\n1-2 voleur(s)\r\nMaraudeur non agressif\r\nPassage d'un robot/drone\r\nPassage : @flyingObject\r\nPassage : @vehicleType\r\nQuelque chose tombant du ciel: @skyFall x0.2\r\nObservateur étrange\r\nLumières au loin\r\nBruit non identifié\r\nOmbres dans la nuit\r\nLumières dans le ciel\r\nAppareil volant x0.2\r\nIncendie au loin x0.2\r\nCoups de feu\r\nExplosion\r\nBruits lointains de moteur\r\nCraquements\r\nGrognements\r\nMusique\r\n\r\n>skyFall\r\n@flyingObject\r\ncaisse (@loot)\r\n\r\n\r\n>weather\r\nTemps clair x8\r\nPluie légère x3\r\nPluie intense\r\nBrouillard x3\r\nBrouillard radioactif x0.3\r\nPluie radioactive x0.5\r\nOrage\r\nOrage magnétique x0.6\r\nGrand vent\r\n\r\n>trinket\r\nPile usagée\r\nCouverts\r\nCasquette @popTheme\r\nPull @popTheme\r\nDrap @popTheme\r\nMug @popTheme\r\nGant de baseball\r\nTéléphone portable\r\nGourde\r\nGants\r\nBoucles d'oreilles\r\nPendentif @popTheme\r\nBracelet @popTheme\r\nMontre @popTheme\r\nBlouson @popTheme\r\nFoulard @popTheme\r\nScie à bois émoussée\r\nHoue de jardin\r\nOeil de verre\r\nCaddie\r\nKit de couture personnelle\r\nClochette sur un manche\r\nAiguilles à tricoter\r\n2-5 boules de Noël\r\nTasse à café\r\nOurs en peluche\r\nStylo plume\r\nImage encadrée d'un politicien du vieux monde\r\nMenu d'un restaurant\r\nPetite voiture\r\nTruelle de jardinage\r\nNuka Cola collector\r\nGrand tube intérieur\r\nLivre intact\r\n1d30 perles de verre ornementales\r\nPoche de pièces de monnaie\r\nVolant en fourrure\r\nTricycle\r\nMiroir à main\r\nParapluie\r\nEnregistrement en vinyle\r\nBocks de 2-10 figurines en bois\r\nBoîte d'allumettes\r\nSac de 4-12 billes\r\nLivre d'histoires pour enfant\r\nBougie paraphine\r\nPierre à aiguiser\r\nMagazine pour adultes\r\nMusic Box\r\nRadio\r\nCanard en caoutchouc\r\nTorchon brodé\r\nCalendrier 2050-2076\r\nOreiller @popTheme\r\nCoussin (@color)\r\nLouche en @metal\r\nCeinture en cuir\r\nBoîte de 2-30 ampoules\r\nSac de ciment usagé\r\n1-5 dents en or\r\nFœtus mariné\r\nCanif suisse\r\nZippo plus léger\r\nTringle à rideau\r\nLampe de poche\r\nFil de barbelé (10-30 mètres)\r\nPlan d'un bâtiment indiquant un passage secret\r\nPatte de lapin\r\nFourchette en @metal\r\nCuillère en @metal\r\nCouteau en @metal\r\nDiagramme carbonisé d'une puce d'eau\r\nPoupée parlante\r\nBoîte à déjeuner\r\nBoîte noire avec une lumière rouge clignotante\r\nMédaillon de Santa Nuka Cola\r\nBras cybernétique cassé\r\nMasque de clown\r\nCasque Astronaught\r\nJournal personnel (quelque chose sur des plantes parlantes)\r\n2 Talkies walkies (doit être réparé)\r\nTopographie sous-marine des lacs les plus proches avec une croix rouge\r\nRobe/Costume de marié(e) sale\r\nBouteille de whisky\r\nFétiche tribal\r\nBouton de porte en @metal\r\n1-6 billes en @metal\r\n2-3 aiguilles hypodermiques utilisées\r\nCrâne humain avec une malformation étrang\r\nTête de manequin cachant une clé collée dedans\r\nCrucifix en @metal\r\nTambourin avec 1-2 bâton(s)\r\nPropogande anti-mutants\r\nBoîte à bijoux contenant une clé en @metal\r\nCarte magnétique portant le numéro @shelterID\r\nÉcharpe en lambeaux\r\nMain momifiée avec six doigts\r\nMachoire humaine avec 35-40 dents\r\nPhoto floue d'un OVNI\r\n3-5 pots de cuisine contenant des épices\r\nAlliance en @metal\r\nŒuf de gecko éclos\r\nPetit gecko empaillé\r\nJouet brahmine en bois\r\nPhoto d'un lieu (@outdoorLocation) avec @mysteriousNote au dos <<<\r\nPost-it avec des coordonnées GPS et la mention @mysteriousNote <<<\r\nCarte postale représentant une explosion nucléaire\r\nNez de clown\r\nChampignons séchés dans un boîte en bois\r\nHolotape des codes de lancement de missiles\r\nBible\r\nCoran\r\nMain squelettique couverte de coquillages\r\nScalpel neuf\r\nCamion jouet nuka cola\r\nGant de dentelle blanche\r\nBoîte de biscuits en métal\r\nAimant\r\nCanne de marche (peut compter comme Baton)\r\nSavon\r\nMontre luxueuse en @metal\r\nBol en @metal\r\n3-6 marqueurs séchés\r\nJouet robot\r\nManteau d'hiver\r\nBoussole\r\nCerveau conservé\r\nPhotographie d'un top modèle d'avant guerre\r\nGuitare\r\nLunettes de soleil\r\nBD\r\nPiercing en @metal\r\n2-4 dés à [6,8,10,12,20] faces\r\nJeu de cartes à jouer\r\nCollier de chien avec un médaillon en @metal\r\nRuban adhésif\r\nBouteille de vin de 2020-2040\r\nDent de gecko\r\nParties d'un prototype d'arme incomplet\r\nLe kama-sutra\r\nLivre emprunté à une bibliothèque en 2010-2040\r\nCollection de rouges à lèvres\r\nPot tribal contenant de la Poudre de guérison\r\nMontre à gousset en @metal\r\nChapelet composé de 10-20 perles en bois\r\n2-3 balles de caoutchouc\r\nGlobe de neige\r\nBalle de tennis\r\nTabac de la marque Coyote\r\nCeinture à outils\r\nPistolet @color tirant des flêchettes en mousse (6-12 munitions) <<<\r\nPerruque\r\nÉpée en bois\r\nPaquet de 20-50 cartes de Magic\r\nTubes en cuivre (1-4 mètres)\r\nTrépied d'appareil photo\r\nAvis de recherche\r\n2-8 flêchettes\r\n[Rame,Pagaie]\r\nRouleau à pâtisserie\r\nPate de loup conservée\r\nGants de jardinage\r\nCarnet d'adresses en cuir\r\nPompe à air manuelle\r\nBloc-notes\r\nBouteille d'Antivenom\r\nBiberon en verre\r\nMobile pour enfant\r\nGant de baseball [dédicacé,]\r\nBatte de baseball [dédicacée,]\r\nPomme de douche en or\r\nDraps de lit @popTheme\r\nClochette en @metal\r\nJumelles\r\nBoîte de Monopoly\r\nQuille de bowling\r\nCutter\r\nGants de boxe\r\nOuvre-boîte\r\nCiseaux\r\nMarteau\r\nCafetière italienne\r\n5-10 crayons\r\nCoucou d'une horloge\r\nPoêle à cuisson en métal\r\nAgrafeuse\r\nBouilloire retro\r\nLivre de croquis avec des dessins de mutants\r\nVentilateur de poche\r\n1-20 feuilles de papier A4\r\nExtincteur vide\r\nTrousse de premiers secours périmée\r\nBol à poisson\r\nBoîte d'ameçons\r\nCanne à pêche\r\nFlûte\r\nPoêle à frire\r\nEntonnoir\r\nTuyau de jardin (12 mètres)\r\n2-8 balles de golf\r\nSac de golf\r\nClub de golf\r\nTaille haies\r\nCrosse de hockey [dédicacée,]\r\nGuirlande de Noël\r\n2 pinces crocodiles avec câbles\r\nValise\r\nMaillet en caoutchouc\r\nAvion en jouet\r\nPinceau\r\nPot d'encre non séchée\r\nCriterium\r\nTableau célèbre [avec,sans] cadre\r\nMédicaments d'avant-guerre\r\nQueue de billard\r\nPapier de verre\r\nSandales\r\nVeste explosive\r\nSac de couchage\r\nMain de singe séchée\r\nBougie d'allumage\r\nBoîte de [1000,2000,3000,4000] agrafes\r\nStéthoscope\r\nPassoire de pâtes\r\nBoîte de [10,20,100] masques chirurgicaux\r\nLunettes de plongée\r\nCoffre à pêche\r\nRaquette de tennis [dédicacée,]\r\nThermomètre au mercure\r\nGrille-pain\r\nBoîte à outils vide\r\nBrosse à dents\r\nServiette de plage @popTheme\r\nEssence de térébenthine\r\nHorloge murale\r\nMasque de soudure\r\nPelote de laine (@color)\r\nCompteur geiger à réparer\r\nDard de radscorpion\r\nMédaillon en @metal\r\nPlusieurs clés numérotées\r\nUrne de cendres\r\nFlasque de vodka\r\nFleurs séchées\r\n10-30 billets de banque\r\nJournal comptable\r\nMoisissure biolumineuse\r\nPresse-papiers en @metal\r\nDossier médical étrange\r\nOrdre de lancement de missile\r\nSilex\r\nBalle bondissante (@color)\r\nMine terrestre désarmée\r\nFlacon de poison\r\nCarte de presse\r\nSex-toy\r\nPaquet de cigarettes\r\nPaquet de cartes à jouer marquées\r\nOreille humaine avec un tatouage étrange\r\nInsigne de shérif\r\nPetite statuette inquiétante\r\nTalisman religieux\r\nDétergent\r\n2-4 figurines en plomb\r\nCendrier en @metal\r\nBroche en @metal\r\nScie à os\r\nTag de la confrérie d'acier\r\nCouteau à beurre\r\nCarton de cigarettes (10-20 paquets)\r\nÉchiquier\r\nNain de jardin cassé\r\nGriffe de griffemort\r\nVerre à whiskey\r\nFusible électrique\r\nHarmonica\r\nUkulélé\r\nRéchaud\r\nSous-vêtements du sexe opposé\r\nLame de tondeuse à gazon\r\nPistolet à peinture\r\nLampe baladeuse de chantier\r\nBoule de billard\r\nPetite cocote minute\r\nRâteau\r\nLivre de partitions\r\nVerre à liqueur\r\nSpatules en bois\r\nViolon [intact,abimé]\r\nTriangle\r\nPince à épiler en [acier,or,argent]\r\n2-20 jetons de poker\r\nPasseport\r\nJouet dinosaure\r\nMinuteur\r\nFusée en jouet\r\nLivre détaillant les empires historiques\r\nPanneau stop\r\nMasque de Donald Duck\r\nMasque de squelette\r\nMasque du Père Noël\r\n2-4 dentiers dont un en @metal\r\nLivre de mathématiques\r\nCravate (@color)\r\nSaxophone\r\nTrombone\r\nMachine à écrire\r\nPetit vase en @metal\r\nRuban à mesurer en tissu\r\nCouverture déchirée (@color)\r\nBallon de foot dégonflé [dédicacé,]\r\nRasoir vintage\r\nStylo en @metal\r\nMonocle\r\nLivre dont vous êtes le héros\r\nLivre de règles d'un jeu de rôles\r\n\r\n>color\r\nrouge\r\nvert\r\nbleu\r\nmauve\r\njaune\r\norange\r\nrose\r\n\r\n>mysteriousNote\r\n\"???\"\r\n\"Attention!\"\r\n\"trappe ?\"\r\n\"abri @shelterID ?\"\r\n\"1000-9999\"\r\n\"1-9 / 10-99 / 1-9\"\r\n\r\n>metal\r\nor x2\r\nargent x10\r\nargent incrusté d'une pierre précieuse x0.5\r\n\r\n>popTheme\r\nPat'Patrouille\r\nSpiderman\r\nDragon Ball\r\nBatman\r\nIron Man\r\nLa reine des neiges\r\nLe roi lion\r\nDonjons et Dragons\r\nTwilight\r\nSuperman\r\nJames Bond\r\nNaruto\r\n";
+	_g.h["embed/fallout.txt"] = "#button Lieu @location\r\n#button Campement @camp\r\n#button Rencontre @encounter\r\n#button @loot\r\n#button @trinket\r\n\r\n>location\r\n@buildingLocation @locationDetails\r\n@outdoorLocation @locationDetails\r\n\r\n>locationDetails\r\n (@condition)\\n  @locationFeature\\n  @occupier\\n  @loot\r\n\r\n>buildingLocation\r\nManoir x0.5\r\nBunker x0.3\r\nPetit abri anti-atomique\r\nMaison\r\nImmeuble d'habitation\r\nPetite centrale électrique\r\nSite de traitement des eaux\r\nCampement\r\nGymnase\r\nChâteau d'eau\r\nBureaux\r\nSupermarché x0.5\r\nEpicerie\r\nRéparateur\r\nRestaurant @restaurantType\r\nBar\r\nEcole\r\nCrèche\r\nEntrepôt @storageType\r\nSalle de sport\r\nHôpital x0.5\r\nCabinet médical\r\nMagasin @shopType\r\nBoucherie\r\nPoissonerie\r\nArmurier x0.3\r\nGare [de trains,routière]\r\nGarage @vehicleType\r\nFourrière @vehicleType\r\nStation service\r\nCabane\r\nMarché couvert\r\nPrison\r\nUsine\r\nLaboratoire\r\nCommissariat\r\nChenil\r\nMusée\r\nFête forraine\r\nBâtiment administratif\r\nBoîte de nuit\r\n\r\n\r\n>vehicleType\r\nvoiture\r\nmoto\r\ncamion\r\nvélo\r\nvoiture de sport x0.3\r\n\r\n>storageType\r\npièces mécaniques\r\ncomposants électronique\r\nnourriture\r\nvêtements\r\n\r\n>shopType\r\nsport\r\nvêtements\r\nbricolage\r\nlibrairie\r\ninformatique\r\n@vehicleType\r\n\r\n>restaurantType\r\nfrançais\r\nasiatique\r\nburgers\r\nitalien\r\npizzeria\r\nmexicain\r\ngastronomique\r\nroutier\r\nsushi\r\n\r\n\r\n>outdoorLocation\r\nTerrain de sport (@sport)\r\nLac\r\nRoute\r\nPont\r\nTunnel\r\nAutoroute\r\nParc\r\nPlantation\r\nCimetière\r\nEglise\r\nChapelle\r\nMonument\r\nStation tramway\r\nAire de jeux\r\nChantier\r\nParking payant\r\nParking de bus\r\nCratère\r\nCamion\r\nGrue de chargement\r\nTrain\r\nMarécage\r\nForêt\r\nCarrière\r\nDécharge\r\nConvoi\r\nParc d'attraction\r\nEolienne\r\nPanneaux solaires\r\nStade\r\nSite d'un crash : @flyingObject\r\nEpave d'un navire\r\nPlateau de tournage : @buildingLocation x0.3\r\nScène de concert\r\n\r\n>flyingObject\r\nAvion de ligne\r\nJet luxueux\r\nPetit avion\r\nAvion de chasse\r\nHélicoptère civil\r\nHélicoptère militaire\r\nDeltaplane x0.3\r\nHovercraft\r\nDeltaplane\r\nMontgolfière\r\nDirigeable\r\nDrone\r\nOVNI x0.1\r\n\r\n>sport\r\nGolf\r\nFootball\r\nBasketball\r\nTir x0.5\r\nNatation\r\nAthlétisme\r\nTennis\r\nSkatepark\r\n\r\n>newBuilding\r\nPlace forte\r\nAvant-poste\r\nStockage\r\nHabitation\r\nAtelier\r\nAbri anti-atomique x0.5\r\n\r\n>condition\r\nStructure en bon état x0.2\r\nStructure ancienne x2\r\nStructure récemment rénovée x0.3\r\nStructure rasée x0.4\r\n\r\n>locationFeature\r\nRien de spécial x0.5\r\nIncendié x0.5\r\nBombardé\r\nInnondé\r\nIrradié x0.5\r\nPiégé (@trap)\r\nDécoration étrange\r\nEnvahi par une végétation dense (@natureBehaviour)\r\nEnvahi par des champignons (@natureBehaviour)\r\nBeaucoup d'insectes (@natureBehaviour)\r\nBrume très localisée\r\nObjet notable incongru: @weirdLargeProp x0.7\r\nPrésence de nombreux \"@weirdItem\" sur le lieu x0.6\r\nAmbiance sonore étrange\r\nOdeur anormale\r\nInscriptions sur les murs\r\nTrès encombré\r\nCamouflé\r\nAmbiance glauque\r\nOgive nucléaire non-activée x0.1\r\nTransformé en @newBuilding\r\nPrésence de @locationTool\r\n\r\n>trap\r\nConserves d'alarme\r\nAlarme puissante\r\nMines anti-personnelles\r\nExplosif artisanal puissant\r\nVéhicule piégé (@vehicleType)\r\nObus non-explosés\r\nChausses-trappes\r\nArbalètes\r\n\r\n>locationTool\r\nPuits\r\nAtelier\r\nEmetteur radio\r\nEquipements informatiques\r\n\r\n>weirdLargeProp\r\nMannequins\r\nInstruments de musique\r\nCercueil\r\nMise en scène macabre: @encounter\r\nAutel religieux\r\nAutel comportant de nombreux @weirdItem\r\nDessins étranges\r\nPentagramme\r\nRefrigérateur au contenu bizarre\r\nTable de JdR\r\nPiscine\r\n\r\n>weirdItem\r\nCarte à jouer\r\nOrigami\r\nFigurine jouet\r\nPoupée\r\nTasse colorée\r\nValise\r\nSymbole religieux\r\nOssement humain\r\nBouteille vide\r\nPetit fanion\r\nSculpture en bois\r\nCasque\r\nChapeau\r\nVieux téléviseur cathodique\r\nPoisson mort\r\nMines anti-personnelles factices\r\nPages d'un magazine à reconstituer\r\n\r\n>occupier\r\nAucun occupant x7\r\n@encounter x5\r\nPetite communauté (@npcStatus) x0.2\r\nDéfenses automatisées (@robotStatus)\r\n\r\n>encounter\r\nMonstres mineurs\r\nMonstre majeur\r\nAnimal non agressif\r\nGrosse créature non agressive x0.3\r\nVermine\r\nPillards (@npcObjective)\r\nMarchand @race (@trading) avec escorte\r\nErmite @race (@npcAspect, @npcStatus)\r\n@race fou (@npcAspect, @npcStatus)\r\nGroupe d'aventuriers (@npcAspect, @npcStatus, @npcObjective) x0.2\r\nRobot (@robotStatus, @behaviour, @npcObjective)\r\nConfrérie de l'Acier (@npcObjective) x0.2\r\n\r\n>npcStatus\r\n@behaviour, @health\r\nMort(s) x0.1\r\n\r\n>npcObjective\r\nà la recherche [de nourriture,d'eau]\r\nà la recherche de médicaments x0.3\r\nà la recherche un objet précis x0.1\r\nen patrouille\r\nfouille la zone\r\ntraque une créature\r\na établi un campement\r\n\r\n>race\r\nHumain x5\r\nMutant\r\nSuper mutant x0.1\r\n\r\n>npcAspect\r\nCostume et cravate\r\nTenue de sport\r\nTreillis militaire\r\nCostume excentrique\r\nVêtements trop petits\r\nArmure de fortune\r\nTenue militaire avancée x0.5\r\nNu x0.2\r\nCostume médiéval\r\nTenue d'habitant d'un abri (@shelterID)\r\nHaillons\r\nBleu de travail\r\nT-shirt geek\r\nManteau long\r\nTenue de cowboy\r\nCostume ancien\r\nCosplay furry x0.2\r\n\r\n>shelterID\r\n10-40\r\n\r\n\r\n>behaviour\r\nAmical x0.3\r\nAttitude neutre x4\r\nHostile x2\r\nHostile (@specialBehaviour)\r\n\r\n>natureBehaviour\r\nAttitude neutre x2\r\nHostile\r\n\r\n>specialBehaviour\r\nMéfiant x5\r\nPeur des PJs\r\nProtège une babiole (@trinket) x0.3\r\nCache un secret x0.2\r\nCannibale x0.3\r\n\r\n>health\r\nBonne santé x5\r\nEndormi x0.7\r\nAffamé\r\nAssoiffé\r\nFou\r\nMalade\r\nIrradié\r\nBlessé\r\nEstropié\r\n\r\n>robotStatus\r\nEn état de marche\r\nConception artisanale\r\nEstropié\r\nEtrangement décoré\r\nRecouvert de végétation x0.6\r\nRôle modifié\r\nFortement customisé\r\n\r\n>trading\r\nNourriture/Eau x2\r\nMunitions\r\nArmes\r\nArmures\r\nMods\r\n\r\n>loot\r\n@trinket\r\n@usefulLoot x20\r\n@usefulLoot + @trinket x4\r\n@usefulLoot + @usefulLoot\r\n\r\n>usefulLoot\r\nNourriture\r\nEau\r\nArme\r\nArmure\r\nMod d'arme\r\nMod d'armure\r\nMunitions\r\n\r\n\r\n>camp\r\n@campEvent\\n  @weather\r\n\r\n>campEvent\r\nRien de spécial x5\r\nRencontre : @encounter x3\r\n1-2 voleur(s)\r\nMaraudeur non agressif\r\nPassage d'un robot/drone\r\nPassage : @flyingObject\r\nPassage : @vehicleType\r\nQuelque chose tombant du ciel: @skyFall x0.2\r\nObservateur étrange\r\nLumières au loin\r\nBruit non identifié\r\nOmbres dans la nuit\r\nLumières dans le ciel\r\nAppareil volant x0.2\r\nIncendie au loin x0.2\r\nCoups de feu\r\nExplosion\r\nBruits lointains de moteur\r\nCraquements\r\nGrognements\r\nMusique\r\n\r\n>skyFall\r\n@flyingObject\r\ncaisse (@loot)\r\n\r\n\r\n>weather\r\nTemps clair x8\r\nPluie légère x3\r\nPluie intense\r\nBrouillard x3\r\nBrouillard radioactif x0.3\r\nPluie radioactive x0.5\r\nOrage\r\nOrage magnétique x0.6\r\nGrand vent\r\n\r\n>trinket\r\nPile usagée\r\nCouverts\r\nCasquette @popTheme\r\nPull @popTheme\r\nDrap @popTheme\r\nMug @popTheme\r\nGant de baseball\r\nTéléphone portable\r\nGourde\r\nGants\r\nBoucles d'oreilles\r\nPendentif @popTheme\r\nBracelet @popTheme\r\nMontre @popTheme\r\nBlouson @popTheme\r\nFoulard @popTheme\r\nScie à bois émoussée\r\nHoue de jardin\r\nOeil de verre\r\nCaddie\r\nKit de couture personnelle\r\nClochette sur un manche\r\nAiguilles à tricoter\r\n2-5 boules de Noël\r\nTasse à café\r\nOurs en peluche\r\nStylo plume\r\nImage encadrée d'un politicien du vieux monde\r\nMenu d'un restaurant\r\nPetite voiture\r\nTruelle de jardinage\r\nNuka Cola collector\r\nGrand tube intérieur\r\nLivre intact\r\n1d30 perles de verre ornementales\r\nPoche de pièces de monnaie\r\nVolant en fourrure\r\nTricycle\r\nMiroir à main\r\nParapluie\r\nEnregistrement en vinyle\r\nBocks de 2-10 figurines en bois\r\nBoîte d'allumettes\r\nSac de 4-12 billes\r\nLivre d'histoires pour enfant\r\nBougie paraphine\r\nPierre à aiguiser\r\nMagazine pour adultes\r\nMusic Box\r\nRadio\r\nCanard en caoutchouc\r\nTorchon brodé\r\nCalendrier 2050-2076\r\nOreiller @popTheme\r\nCoussin (@color)\r\nLouche en @metal\r\nCeinture en cuir\r\nBoîte de 2-30 ampoules\r\nSac de ciment usagé\r\n1-5 dents en or\r\nFœtus mariné\r\nCanif suisse\r\nZippo plus léger\r\nTringle à rideau\r\nLampe de poche\r\nFil de barbelé (10-30 mètres)\r\nPlan d'un bâtiment indiquant un passage secret\r\nPatte de lapin\r\nFourchette en @metal\r\nCuillère en @metal\r\nCouteau en @metal\r\nDiagramme carbonisé d'une puce d'eau\r\nPoupée parlante\r\nBoîte à déjeuner\r\nBoîte noire avec une lumière rouge clignotante\r\nMédaillon de Santa Nuka Cola\r\nBras cybernétique cassé\r\nMasque de clown\r\nCasque Astronaught\r\nJournal personnel (quelque chose sur des plantes parlantes)\r\n2 Talkies walkies (doit être réparé)\r\nTopographie sous-marine des lacs les plus proches avec une croix rouge\r\nRobe/Costume de marié(e) sale\r\nBouteille de whisky\r\nFétiche tribal\r\nBouton de porte en @metal\r\n1-6 billes en @metal\r\n2-3 aiguilles hypodermiques utilisées\r\nCrâne humain avec une malformation étrang\r\nTête de manequin cachant une clé collée dedans\r\nCrucifix en @metal\r\nTambourin avec 1-2 bâton(s)\r\nPropogande anti-mutants\r\nBoîte à bijoux contenant une clé en @metal\r\nCarte magnétique portant le numéro @shelterID\r\nÉcharpe en lambeaux\r\nMain momifiée avec six doigts\r\nMachoire humaine avec 35-40 dents\r\nPhoto floue d'un OVNI\r\n3-5 pots de cuisine contenant des épices\r\nAlliance en @metal\r\nŒuf de gecko éclos\r\nPetit gecko empaillé\r\nJouet brahmine en bois\r\nPhoto d'un lieu (@outdoorLocation) avec @mysteriousNote au dos\r\nPost-it avec des coordonnées GPS et la mention @mysteriousNote\r\nCarte postale représentant une explosion nucléaire\r\nNez de clown\r\nChampignons séchés dans un boîte en bois\r\nHolotape des codes de lancement de missiles\r\nBible\r\nCoran\r\nMain squelettique couverte de coquillages\r\nScalpel neuf\r\nCamion jouet nuka cola\r\nGant de dentelle blanche\r\nBoîte de biscuits en métal\r\nAimant\r\nCanne de marche (peut compter comme Baton)\r\nSavon\r\nMontre luxueuse en @metal\r\nBol en @metal\r\n3-6 marqueurs séchés\r\nJouet robot\r\nManteau d'hiver\r\nBoussole\r\nCerveau conservé\r\nPhotographie d'un top modèle d'avant guerre\r\nGuitare\r\nLunettes de soleil\r\nBD\r\nPiercing en @metal\r\n2-4 dés à [6,8,10,12,20] faces\r\nJeu de cartes à jouer\r\nCollier de chien avec un médaillon en @metal\r\nRuban adhésif\r\nBouteille de vin de 2020-2040\r\nDent de gecko\r\nParties d'un prototype d'arme incomplet\r\nLe kama-sutra\r\nLivre emprunté à une bibliothèque en 2010-2040\r\nCollection de rouges à lèvres\r\nPot tribal contenant de la Poudre de guérison\r\nMontre à gousset en @metal\r\nChapelet composé de 10-20 perles en bois\r\n2-3 balles de caoutchouc\r\nGlobe de neige\r\nBalle de tennis\r\nTabac de la marque Coyote\r\nCeinture à outils\r\nPistolet @color tirant des flêchettes en mousse (6-12 munitions)\r\nPerruque\r\nÉpée en bois\r\nPaquet de 20-50 cartes de Magic\r\nTubes en cuivre (1-4 mètres)\r\nTrépied d'appareil photo\r\nAvis de recherche\r\n2-8 flêchettes\r\n[Rame,Pagaie]\r\nRouleau à pâtisserie\r\nPate de loup conservée\r\nGants de jardinage\r\nCarnet d'adresses en cuir\r\nPompe à air manuelle\r\nBloc-notes\r\nBouteille d'Antivenom\r\nBiberon en verre\r\nMobile pour enfant\r\nGant de baseball [dédicacé,]\r\nBatte de baseball [dédicacée,]\r\nPomme de douche en or\r\nDraps de lit @popTheme\r\nClochette en @metal\r\nJumelles\r\nBoîte de Monopoly\r\nQuille de bowling\r\nCutter\r\nGants de boxe\r\nOuvre-boîte\r\nCiseaux\r\nMarteau\r\nCafetière italienne\r\n5-10 crayons\r\nCoucou d'une horloge\r\nPoêle à cuisson en métal\r\nAgrafeuse\r\nBouilloire retro\r\nLivre de croquis avec des dessins de mutants\r\nVentilateur de poche\r\n1-20 feuilles de papier A4\r\nExtincteur vide\r\nTrousse de premiers secours périmée\r\nBol à poisson\r\nBoîte d'ameçons\r\nCanne à pêche\r\nFlûte\r\nPoêle à frire\r\nEntonnoir\r\nTuyau de jardin (12 mètres)\r\n2-8 balles de golf\r\nSac de golf\r\nClub de golf\r\nTaille haies\r\nCrosse de hockey [dédicacée,]\r\nGuirlande de Noël\r\n2 pinces crocodiles avec câbles\r\nValise\r\nMaillet en caoutchouc\r\nAvion en jouet\r\nPinceau\r\nPot d'encre non séchée\r\nCriterium\r\nTableau célèbre [avec,sans] cadre\r\nMédicaments d'avant-guerre\r\nQueue de billard\r\nPapier de verre\r\nSandales\r\nVeste explosive\r\nSac de couchage\r\nMain de singe séchée\r\nBougie d'allumage\r\nBoîte de [1000,2000,3000,4000] agrafes\r\nStéthoscope\r\nPassoire de pâtes\r\nBoîte de [10,20,100] masques chirurgicaux\r\nLunettes de plongée\r\nCoffre à pêche\r\nRaquette de tennis [dédicacée,]\r\nThermomètre au mercure\r\nGrille-pain\r\nBoîte à outils vide\r\nBrosse à dents\r\nServiette de plage @popTheme\r\nEssence de térébenthine\r\nHorloge murale\r\nMasque de soudure\r\nPelote de laine (@color)\r\nCompteur geiger à réparer\r\nDard de radscorpion\r\nMédaillon en @metal\r\nPlusieurs clés numérotées\r\nUrne de cendres\r\nFlasque de vodka\r\nFleurs séchées\r\n10-30 billets de banque\r\nJournal comptable\r\nMoisissure biolumineuse\r\nPresse-papiers en @metal\r\nDossier médical étrange\r\nOrdre de lancement de missile\r\nSilex\r\nBalle bondissante (@color)\r\nMine terrestre désarmée\r\nFlacon de poison\r\nCarte de presse\r\nSex-toy\r\nPaquet de cigarettes\r\nPaquet de cartes à jouer marquées\r\nOreille humaine avec un tatouage étrange\r\nInsigne de shérif\r\nPetite statuette inquiétante\r\nTalisman religieux\r\nDétergent\r\n2-4 figurines en plomb\r\nCendrier en @metal\r\nBroche en @metal\r\nScie à os\r\nTag de la confrérie d'acier\r\nCouteau à beurre\r\nCarton de cigarettes (10-20 paquets)\r\nÉchiquier\r\nNain de jardin cassé\r\nGriffe de griffemort\r\nVerre à whiskey\r\nFusible électrique\r\nHarmonica\r\nUkulélé\r\nRéchaud\r\nSous-vêtements du sexe opposé\r\nLame de tondeuse à gazon\r\nPistolet à peinture\r\nLampe baladeuse de chantier\r\nBoule de billard\r\nPetite cocote minute\r\nRâteau\r\nLivre de partitions\r\nVerre à liqueur\r\nSpatules en bois\r\nViolon [intact,abimé]\r\nTriangle\r\nPince à épiler en [acier,or,argent]\r\n2-20 jetons de poker\r\nPasseport\r\nJouet dinosaure\r\nMinuteur\r\nFusée en jouet\r\nLivre détaillant les empires historiques\r\nPanneau stop\r\nMasque de Donald Duck\r\nMasque de squelette\r\nMasque du Père Noël\r\n2-4 dentiers dont un en @metal\r\nLivre de mathématiques\r\nCravate (@color)\r\nSaxophone\r\nTrombone\r\nMachine à écrire\r\nPetit vase en @metal\r\nRuban à mesurer en tissu\r\nCouverture déchirée (@color)\r\nBallon de foot dégonflé [dédicacé,]\r\nRasoir vintage\r\nStylo en @metal\r\nMonocle\r\nLivre dont vous êtes le héros\r\nLivre de règles d'un jeu de rôles\r\n\r\n>color\r\nrouge\r\nvert\r\nbleu\r\nmauve\r\njaune\r\norange\r\nrose\r\n\r\n>mysteriousNote\r\n\"???\"\r\n\"Attention!\"\r\n\"trappe ?\"\r\n\"abri @shelterID ?\"\r\n\"1000-9999\"\r\n\"1-9 / 10-99 / 1-9\"\r\n\r\n>metal\r\nor x2\r\nargent x10\r\nargent incrusté d'une pierre précieuse x0.5\r\n\r\n>popTheme\r\nPat'Patrouille\r\nSpiderman\r\nDragon Ball\r\nBatman\r\nIron Man\r\nLa reine des neiges\r\nLe roi lion\r\nDonjons et Dragons\r\nTwilight\r\nSuperman\r\nJames Bond\r\nNaruto\r\n";
 	_g.h["embed/demo.txt"] = "#button Generate random location @demo\r\n\r\n>demo\r\n@buildingType\\n @locationFeature\\n Inhabitant(s): @inhabitant\r\n\r\n>buildingType\r\n[Super,Mini]market\r\nMansion\r\n[Public, Private] school\r\nHospital\r\n[Train,Tramway,Bus] station\r\n[Personal, Military] bunker\r\nPrison\r\nMuseum\r\nRestaurant\r\nParking lot\r\nBridge\r\n\r\n>locationFeature\r\nRecently visited\r\nDark place\r\nWalls are painted with bright colors\r\nVery messy\r\nBlood splatters\r\nWeird decoration\r\n[Terrible,Nice,Weird,Putrid] smell\r\nWeird noises inside\r\n[Low,High] levels of radioactivity\r\nStrange tags on walls\r\nFlooded\r\nStrange mist\r\nPresence of lots of insects\r\nAbandoned recently\r\nBurned down\r\nBarricaded\r\nRecently bombed\r\nRepurposed into something else (@buildingType)\r\n\r\n>inhabitant\r\nNot occupied x2\r\n2-5 bandits\r\nMerchant\r\nErmit\r\nCrazy person\r\nGroup of 5-10 peaceful people x0.5\r\n2-4 minor monsters\r\nOne major monster\r\nRobot";
 	this.internalFiles = _g;
 	var _g = new haxe_ds_StringMap();
 	_g.h["embed/tpl/random.html"] = "<div class=\"toolbar\">\r\n\t<div class=\"row buttons randButtons\"></div>\r\n\t<div class=\"row small\">\r\n\t\t<button class=\"clear\">Clear</button>\r\n\t</div>\r\n</div>\r\n\r\n<div class=\"output\"></div>\r\n";
-	_g.h["embed/tpl/editor.html"] = "<div class=\"toolbar\">\r\n\t<button class=\"close small\">Close</button>\r\n\t<button class=\"save\">...</button>\r\n\t<button class=\"download\">📥 Download</button>\r\n\t<button class=\"upload\">📁 Upload</button>\r\n\t<button class=\"copy\">📄 Copy</button>\r\n\t<button class=\"delete small\">🗑️ Delete save</button>\r\n</div>\r\n\r\n<div id=\"ace\"></div>\r\n<div class=\"log\"></div>\r\n";
+	_g.h["embed/tpl/editor.html"] = "<div class=\"toolbar\">\r\n\t<button class=\"close small\">Close</button>\r\n\t<button class=\"save\">...</button>\r\n\t<button class=\"download\">📥 Download</button>\r\n\t<button class=\"upload\">📁 Upload</button>\r\n\t<button class=\"copy\">📄 Copy</button>\r\n\t<button class=\"delete small\">🗑️ Delete save</button>\r\n</div>\r\n\r\n<ul class=\"map\">map map</ul>\r\n<div id=\"ace\"></div>\r\n<div class=\"log\"></div>\r\n";
 	this.templates = _g;
 	this.storage = dn_data_LocalStorage.createJsonStorage("settings");
 	this.loadSettings();
@@ -1290,12 +1290,16 @@ App.prototype = $extend(dn_Process.prototype,{
 		this.settings.curFileId = fileId;
 		this.saveSettings();
 		this.updateSelect();
+		var rdata = RandomParser.run(raw);
+		if(rdata.errors.length > 0) {
+			this.openEditor();
+		}
 		var _g = 0;
 		var _g1 = SiteProcess.ALL;
 		while(_g < _g1.length) {
 			var p = _g1[_g];
 			++_g;
-			p.onFileChanged(raw);
+			p.onFileChanged(rdata);
 		}
 	}
 	,onDispose: function() {
@@ -1479,7 +1483,7 @@ $hxClasses["SiteProcess"] = SiteProcess;
 SiteProcess.__name__ = "SiteProcess";
 SiteProcess.__super__ = dn_Process;
 SiteProcess.prototype = $extend(dn_Process.prototype,{
-	onFileChanged: function(raw) {
+	onFileChanged: function(rdata) {
 	}
 	,onDispose: function() {
 		dn_Process.prototype.onDispose.call(this);
@@ -1490,14 +1494,19 @@ SiteProcess.prototype = $extend(dn_Process.prototype,{
 });
 var EditorUI = function() {
 	this.ignoreNextChangeEvent = false;
+	this.invalidatedMapCurrent = true;
 	var _gthis = this;
 	SiteProcess.call(this,"editor");
 	this.jLog = this.jRoot.find(".log");
+	this.jMap = this.jRoot.find(".map");
 	this.ace = ace.edit("ace");
 	this.ace.setTheme("ace/theme/randomizer");
 	this.ace.session.setMode("ace/mode/randomizer");
 	this.ace.on("change",function() {
 		_gthis.onChange();
+	});
+	this.ace.on("changeSelection",function() {
+		_gthis.invalidateMapCurrent();
 	});
 	this.ace.commands.removeCommand("removeline",true);
 	this.ace.commands.removeCommand("duplicateSelection",true);
@@ -1651,14 +1660,137 @@ EditorUI.prototype = $extend(SiteProcess.prototype,{
 		this.delayer.cancelById("autoSave");
 		this.ace.session.getUndoManager().reset();
 		this.markSaved();
+		this.updateMap();
 	}
-	,onFileChanged: function(raw) {
-		SiteProcess.prototype.onFileChanged.call(this,raw);
+	,updateMap: function() {
+		var _gthis = this;
+		this.jMap.empty();
+		var _g = 0;
+		var _g1 = this.lastRData.keys;
+		while(_g < _g1.length) {
+			var k = [_g1[_g]];
+			++_g;
+			var jKey = $("<li id=\"key-" + k[0].key + "\">" + k[0].key + "</li>");
+			jKey.click((function(k) {
+				return function(_) {
+					_gthis.gotoLine(k[0].line + 1);
+					_gthis.updateMapCurrent();
+				};
+			})(k));
+			this.jMap.append(jKey);
+		}
+		this.updateMapCurrent();
+	}
+	,invalidateMapCurrent: function() {
+		this.invalidatedMapCurrent = true;
+		if(!this.cd.fastCheck.h.hasOwnProperty(20971520)) {
+			var _this = this.cd;
+			var frames = 0.3 * this.cd.baseFps;
+			var allowLower = true;
+			var onComplete = null;
+			if(allowLower == null) {
+				allowLower = true;
+			}
+			var cur = _this._getCdObject(20971520);
+			if(!(cur != null && frames < cur.frames && !allowLower)) {
+				if(frames <= 0) {
+					if(cur != null) {
+						_this.fastCheck.remove(cur.k);
+						var _this1 = _this.cds;
+						var _g = 0;
+						var _g1 = _this1.nalloc;
+						while(_g < _g1) {
+							var i = _g++;
+							if(_this1.pool[i] == cur) {
+								if(i >= 0 && i < _this1.nalloc) {
+									if(_this1.nalloc > 1) {
+										var tmp = _this1.pool[i];
+										_this1.pool[i] = _this1.pool[_this1.nalloc - 1];
+										_this1.pool[_this1.nalloc - 1] = tmp;
+										_this1.nalloc--;
+									} else {
+										_this1.nalloc = 0;
+									}
+								}
+								break;
+							}
+						}
+					}
+				} else {
+					_this.fastCheck.h[20971520] = true;
+					if(cur != null) {
+						cur.frames = frames;
+						cur.initial = frames;
+					} else {
+						var _this1 = _this.cds;
+						if(_this1.nalloc >= _this1.size) {
+							throw haxe_Exception.thrown("RecyclablePool limit reached (" + _this1.size + ")");
+						}
+						var e = _this1.pool[_this1.nalloc++];
+						e.recycle();
+						var cd = e;
+						cd.k = 20971520;
+						cd.frames = frames;
+						cd.initial = frames;
+					}
+				}
+				if(onComplete != null) {
+					if(frames <= 0) {
+						onComplete();
+					} else {
+						var cd = _this._getCdObject(20971520);
+						if(cd == null) {
+							throw haxe_Exception.thrown("cannot bind onComplete(" + 20971520 + "): cooldown " + 20971520 + " isn't running");
+						}
+						cd.onCompleteOnce = onComplete;
+					}
+				}
+			}
+		}
+	}
+	,updateMapCurrent: function() {
+		this.invalidatedMapCurrent = false;
+		this.jMap.find(".current").removeClass("current");
+		if(this.lastRData == null) {
+			return;
+		}
+		var curLine = this.ace.getSelectionRange().start.row;
+		var curKey = null;
+		var _g = 0;
+		var _g1 = this.lastRData.keys;
+		while(_g < _g1.length) {
+			var k = _g1[_g];
+			++_g;
+			if(k.line - 1 <= curLine) {
+				curKey = k;
+			} else {
+				break;
+			}
+		}
+		if(curKey != null) {
+			this.jMap.find("#key-" + curKey.key).addClass("current");
+		}
+	}
+	,onFileChanged: function(rdata) {
+		SiteProcess.prototype.onFileChanged.call(this,rdata);
+		this.lastRData = rdata;
 		if(!this.ignoreNextChangeEvent) {
-			this.setContent(raw);
+			this.setContent(rdata.rawFile);
 		}
 		this.updateToolbar();
 		this.ignoreNextChangeEvent = false;
+		App.ME.editor.clearLog();
+		var _g = 0;
+		var _g1 = rdata.markedLines;
+		while(_g < _g1.length) {
+			var m = _g1[_g];
+			++_g;
+			this.addLog(m.label,m.line,m.className);
+			this.addLineMark(m.line,m.className);
+		}
+		if(rdata.errors.length > 0) {
+			this.addErrors(rdata.errors);
+		}
 	}
 	,download: function() {
 		this.checkAutoSave();
@@ -1680,6 +1812,9 @@ EditorUI.prototype = $extend(SiteProcess.prototype,{
 	}
 	,update: function() {
 		SiteProcess.prototype.update.call(this);
+		if(this.invalidatedMapCurrent && !this.cd.fastCheck.h.hasOwnProperty(20971520)) {
+			this.updateMapCurrent();
+		}
 	}
 	,__class__: EditorUI
 });
@@ -1981,10 +2116,9 @@ RandomParser.run = function(raw) {
 	if(raw == null) {
 		return null;
 	}
-	var rdata = { keys : [], tables : new haxe_ds_StringMap(), options : [], markedLines : []};
-	var errors = [];
+	var rdata = { rawFile : raw, keys : [], tables : new haxe_ds_StringMap(), options : [], markedLines : [], errors : []};
 	var _err = function(e,line) {
-		errors.push({ err : Std.string(e), line : line});
+		rdata.errors.push({ err : Std.string(e), line : line});
 	};
 	var lines = raw.split("\n");
 	var curKey = null;
@@ -2104,7 +2238,7 @@ RandomParser.run = function(raw) {
 			}
 		}
 	}
-	return { data : rdata, errors : errors};
+	return rdata;
 };
 RandomParser.parseOption = function(raw,lineIdx,onError) {
 	var keyReferenceReg = new EReg(RandomParser.KEY_REFERENCE_REG,"");
@@ -2167,30 +2301,14 @@ $hxClasses["RandomUI"] = RandomUI;
 RandomUI.__name__ = "RandomUI";
 RandomUI.__super__ = SiteProcess;
 RandomUI.prototype = $extend(SiteProcess.prototype,{
-	onFileChanged: function(raw) {
+	onFileChanged: function(rdata) {
 		var _gthis = this;
-		SiteProcess.prototype.onFileChanged.call(this,raw);
+		SiteProcess.prototype.onFileChanged.call(this,rdata);
 		this.clearOutput();
 		this.jRandButtons.empty();
-		var parsed = RandomParser.run(raw);
-		this.randomizer = new Randomizer(parsed.data);
-		if(App.ME.editor != null) {
-			App.ME.editor.clearLog();
-			var _g = 0;
-			var _g1 = parsed.data.markedLines;
-			while(_g < _g1.length) {
-				var m = _g1[_g];
-				++_g;
-				App.ME.editor.addLog(m.label,m.line,m.className);
-				App.ME.editor.addLineMark(m.line,m.className);
-			}
-		}
-		if(parsed.errors.length > 0) {
-			App.ME.openEditor();
-			App.ME.editor.addErrors(parsed.errors);
-		}
+		this.randomizer = new Randomizer(rdata);
 		var _g = 0;
-		var _g1 = parsed.data.options;
+		var _g1 = rdata.options;
 		while(_g < _g1.length) {
 			var o = [_g1[_g]];
 			++_g;
@@ -2690,6 +2808,17 @@ dn_Cooldown.prototype = {
 	}
 	,toString: function() {
 		return "Cooldowns(" + this.cds.nalloc + "/" + this.cds.size + ")";
+	}
+	,_getCdObject: function(k) {
+		var _g_rpool = this.cds;
+		var _g_i = 0;
+		while(_g_i < _g_rpool.nalloc) {
+			var cd = _g_rpool.pool[_g_i++];
+			if(cd.k == k) {
+				return cd;
+			}
+		}
+		return null;
 	}
 	,update: function(tmod) {
 		var i = 0;
@@ -34442,7 +34571,7 @@ RandomParser.QUICK_LIST_REG = "\\[(.*?)\\]";
 RandomParser.COUNT_REG = "([0-9]+)-([0-9]+)";
 RandomParser.OPTION_REG = "^#([a-zA-Z0-9_-]+)([ \t]+(.+)|)";
 RandomParser.PROBA_MUL_REG = "[ \t]+x([0-9.]+)[ \t]*$";
-dn_Cooldown.__meta__ = { obj : { indexes : ["test","jump","a","b","c"]}};
+dn_Cooldown.__meta__ = { obj : { indexes : ["test","jump","a","b","c","updateCurrentLock"]}};
 dn_Cooldown.DEFAULT_COUNT_LIMIT = 512;
 dn_data_JsonPretty.HEADER_VALUE_NAME = "__header__";
 dn_data_JsonPretty.customFormaters = new haxe_ds_StringMap();

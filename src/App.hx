@@ -241,7 +241,7 @@ class App extends dn.Process {
 		var rdata = RandomParser.run(raw);
 		if( rdata.errors.length>0 )
 			openEditor();
-		
+
 		for(p in SiteProcess.ALL)
 			p.onFileChanged(rdata);
 	}

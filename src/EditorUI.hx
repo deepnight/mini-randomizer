@@ -1,17 +1,22 @@
 class EditorUI extends SiteProcess {
 	var ace : aceEditor.AceEditor;
 	var jLog : J;
+	var jMap : J;
+	var lastRData : Null<RandomParser.RandData>;
+	var invalidatedMapCurrent = true;
 
 	public function new() {
 		super("editor");
 
 		jLog = jRoot.find(".log");
+		jMap = jRoot.find(".map");
 
 		ace = aceEditor.AceEditor.edit("ace");
 		ace.setTheme("ace/theme/randomizer");
 		ace.session.setMode("ace/mode/randomizer");
 
 		ace.on("change", ()->onChange());
+		ace.on("changeSelection", ()->invalidateMapCurrent());
 
 		ace.commands.removeCommand("removeline",true);
 		ace.commands.removeCommand("duplicateSelection",true);
@@ -153,10 +158,50 @@ class EditorUI extends SiteProcess {
 		delayer.cancelById("autoSave");
 		ace.session.getUndoManager().reset();
 		markSaved();
+		updateMap();
+	}
+
+	function updateMap() {
+		jMap.empty();
+		for(k in lastRData.keys) {
+			var jKey = new J('<li id="key-${k.key}">${k.key}</li>');
+			jKey.click(_->{
+				gotoLine(k.line+1);
+				updateMapCurrent();
+			});
+			jMap.append(jKey);
+		}
+		updateMapCurrent();
+	}
+
+	function invalidateMapCurrent() {
+		invalidatedMapCurrent = true;
+		if( !cd.has("updateCurrentLock") )
+			cd.setS("updateCurrentLock", 0.3);
+	}
+
+	function updateMapCurrent() {
+		invalidatedMapCurrent = false;
+		jMap.find(".current").removeClass("current");
+		if( lastRData==null )
+			return;
+
+		var curLine = ace.getSelectionRange().start.row;
+		var curKey = null;
+		for(k in lastRData.keys)
+			if( k.line-1<=curLine )
+				curKey = k;
+			else
+				break;
+
+		if( curKey!=null )
+			jMap.find("#key-"+curKey.key).addClass("current");
 	}
 
 	override function onFileChanged(rdata:RandomParser.RandData) {
 		super.onFileChanged(rdata);
+
+		lastRData = rdata;
 
 		if( !ignoreNextChangeEvent)
 			setContent(rdata.rawFile);
@@ -196,7 +241,8 @@ class EditorUI extends SiteProcess {
 
 	override function update() {
 		super.update();
-		// if( !ace.isFocused() )
-			// ace.focus();
+
+		if( invalidatedMapCurrent && !cd.has("updateCurrentLock") )
+			updateMapCurrent();
 	}
 }

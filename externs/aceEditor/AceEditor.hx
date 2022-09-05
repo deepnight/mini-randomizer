@@ -24,6 +24,7 @@ package aceEditor;
 	public function getCursorPosition() : { row:Int, column:Int }
 	public function moveCursorTo(row:Int, column:Int) : Void;
 	public function gotoLine(lineNumber:Int, column:Int, animate:Bool) : Void;
+	public function getSelectionRange() : AceRange;
 }
 
 extern class AceEditorSession {
@@ -59,6 +60,8 @@ extern class AceSelection {
 
 @:native("ace.Range")
 extern class AceRange {
+	public var start : { row:Int, column:Int }
+	public var end : { row:Int, column:Int }
 	public function new(startRow:Int, startCol:Int, endRow:Int, endCol:Int);
 }
 
