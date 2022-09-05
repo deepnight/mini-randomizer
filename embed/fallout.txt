@@ -4,7 +4,6 @@
 #button @loot
 #button @trinket
 
-
 >location
 @buildingLocation @locationDetails
 @outdoorLocation @locationDetails
@@ -120,19 +119,19 @@ Parc d'attraction
 Eolienne
 Panneaux solaires
 Stade
-Site d'un crash (@flyingObject)
-Site d'un atterissage en catastrophe (@flyingObject)
+Site d'un crash : @flyingObject
 Epave d'un navire
-Site de tournage (@buildingLocation)
+Plateau de tournage : @buildingLocation x0.3
 Scène de concert
 
 >flyingObject
 Avion de ligne
-Jet
+Jet luxueux
 Petit avion
 Avion de chasse
 Hélicoptère civil
 Hélicoptère militaire
+Deltaplane x0.3
 Hovercraft
 Deltaplane
 Montgolfière
@@ -503,8 +502,8 @@ Alliance en @metal
 Œuf de gecko éclos
 Petit gecko empaillé
 Jouet brahmine en bois
-Photo d'un lieu (@outdoorLocation) avec @mysteriousNote au dos <<<
-Post-it avec des coordonnées GPS et la mention @mysteriousNote <<<
+Photo d'un lieu (@outdoorLocation) avec @mysteriousNote au dos
+Post-it avec des coordonnées GPS et la mention @mysteriousNote
 Carte postale représentant une explosion nucléaire
 Nez de clown
 Champignons séchés dans un boîte en bois
@@ -549,7 +548,7 @@ Globe de neige
 Balle de tennis
 Tabac de la marque Coyote
 Ceinture à outils
-Pistolet @color tirant des flêchettes en mousse (6-12 munitions) <<<
+Pistolet @color tirant des flêchettes en mousse (6-12 munitions)
 Perruque
 Épée en bois
 Paquet de 20-50 cartes de Magic
