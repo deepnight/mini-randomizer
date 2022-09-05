@@ -367,7 +367,7 @@ Maraudeur non agressif
 Passage d'un robot/drone
 Passage : @flyingObject
 Passage : @vehicleType
-Quelque chose tombant du ciel: @skyFall x0.2
+Quelque chose tombant du ciel: @eventSkyObject x0.2
 Observateur étrange
 Lumières au loin
 Bruit non identifié
@@ -382,8 +382,8 @@ Craquements
 Grognements
 Musique
 
->skyFall
-@flyingObject
+>eventSkyObject
+@flyingObject x2
 caisse (@loot)
 
 
@@ -732,6 +732,7 @@ rose
 "abri @shelterID ?"
 "1000-9999"
 "1-9 / 10-99 / 1-9"
+Qui est Gary ? x0.3
 
 >metal
 or x2
