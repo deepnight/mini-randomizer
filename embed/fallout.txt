@@ -38,7 +38,7 @@ Magasin @shopType
 Boucherie
 Poissonerie
 Armurier x0.3
-Gare
+Gare [de trains,routière]
 Garage @vehicleType
 Fourrière @vehicleType
 Station service
@@ -147,6 +147,7 @@ Tir x0.5
 Natation
 Athlétisme
 Tennis
+Skatepark
 
 >newBuilding
 Place forte
