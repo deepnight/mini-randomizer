@@ -2135,7 +2135,7 @@ RandomParser.run = function(raw) {
 	var keyDefinionReg = new EReg(RandomParser.KEY_DEFINITION_REG,"");
 	var keyReferenceReg_r = new RegExp(RandomParser.KEY_REFERENCE_REG,"".split("u").join(""));
 	var probaMulReg = new EReg(RandomParser.PROBA_MUL_REG,"");
-	var testEntries = [];
+	var quickDebugs = [];
 	var lineIdx = 0;
 	var _g = 0;
 	while(_g < lines.length) {
@@ -2161,6 +2161,11 @@ RandomParser.run = function(raw) {
 			if(!Object.prototype.hasOwnProperty.call(rdata.tables.h,curKey)) {
 				rdata.tables.h[curKey] = [];
 			}
+			if(l.indexOf(RandomParser.DEBUG_MARK) >= 0) {
+				l = StringTools.replace(l,RandomParser.DEBUG_MARK,"");
+				rdata.markedLines.push({ parentKey : curKey, line : lineIdx1, className : "debug"});
+				quickDebugs.push(l);
+			}
 		} else if(curKey != null) {
 			var probaMul = 1.;
 			if(probaMulReg.match(l)) {
@@ -2173,20 +2178,25 @@ RandomParser.run = function(raw) {
 			if(l.indexOf(RandomParser.DEBUG_MARK) >= 0) {
 				l = StringTools.replace(l,RandomParser.DEBUG_MARK,"");
 				rdata.markedLines.push({ parentKey : curKey, line : lineIdx1, className : "debug"});
-				testEntries.push(l);
+				quickDebugs.push(l);
 			}
 			rdata.tables.h[curKey].push({ line : lineIdx1, raw : l, probaMul : probaMul});
 		}
 	}
 	var i = 0;
 	var _g = 0;
-	while(_g < testEntries.length) {
-		var e = testEntries[_g];
+	while(_g < quickDebugs.length) {
+		var d = quickDebugs[_g];
 		++_g;
-		var k = "customTest" + i;
-		rdata.tables.h[k] = [{ raw : e, line : -1, probaMul : 1}];
-		var label = RandomParser.removeSpecialChars("\"" + HxOverrides.substr(e,0,12) + (e.length > 12 ? "..." : "") + "\"");
-		rdata.options.push(RandomParser.parseOption("#button " + label + " @" + k,-1,_err));
+		if(keyDefinionReg.match(d)) {
+			var k = keyDefinionReg.matched(1);
+			rdata.options.push(RandomParser.parseOption("#button @" + k,-1,_err));
+		} else {
+			var k1 = "customTest" + i;
+			rdata.tables.h[k1] = [{ raw : d, line : -1, probaMul : 1}];
+			var label = RandomParser.removeSpecialChars("\"" + HxOverrides.substr(d,0,12) + (d.length > 12 ? "..." : "") + "\"");
+			rdata.options.push(RandomParser.parseOption("#button " + label + " @" + k1,-1,_err));
+		}
 		++i;
 	}
 	var hasAnyButton = false;
@@ -34578,13 +34588,13 @@ SiteProcess.ALL = [];
 dn_FilePath.WIN_NETWORK_DRIVE_REG = new EReg("^\\\\\\\\([a-z0-9-]+)\\\\(.*)","i");
 dn_FilePath.SLASH_MODE = dn_PathSlashMode.Preserve;
 RandomParser.DEBUG_MARK = "<<<";
-RandomParser.KEY_DEFINITION_REG = "^[ \t]*>[ \t]*([a-zA-Z0-9_-]+)\\s*$";
+RandomParser.KEY_DEFINITION_REG = "^[ \t]*>[ \t]*([a-zA-Z0-9_-]+)[\\s<]*$";
 RandomParser.KEY_REFERENCE_REG = "@([a-zA-Z0-9_-]+)";
 RandomParser.QUICK_LIST_REG = "\\[(.*?)\\]";
 RandomParser.COUNT_REG = "([0-9]+)-([0-9]+)";
 RandomParser.OPTION_REG = "^#([a-zA-Z0-9_-]+)([ \t]+(.+)|)";
 RandomParser.PROBA_MUL_REG = "[ \t]+x([0-9.]+)[ \t]*$";
-dn_Cooldown.__meta__ = { obj : { indexes : ["test","jump","a","b","c","updateCurrentLock","mapLock"]}};
+dn_Cooldown.__meta__ = { obj : { indexes : ["test","jump","a","b","c","updateCurrentLock"]}};
 dn_Cooldown.DEFAULT_COUNT_LIMIT = 512;
 dn_data_JsonPretty.HEADER_VALUE_NAME = "__header__";
 dn_data_JsonPretty.customFormaters = new haxe_ds_StringMap();

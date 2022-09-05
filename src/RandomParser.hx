@@ -27,7 +27,7 @@ typedef Error = {
 **/
 class RandomParser {
 	public static var DEBUG_MARK = "<<<";
-	public static var KEY_DEFINITION_REG = "^[ \t]*>[ \t]*([a-zA-Z0-9_-]+)\\s*$";
+	public static var KEY_DEFINITION_REG = "^[ \t]*>[ \t]*([a-zA-Z0-9_-]+)[\\s<]*$";
 	public static var KEY_REFERENCE_REG = "@([a-zA-Z0-9_-]+)";
 	public static var QUICK_LIST_REG = "\\[(.*?)\\]";
 	public static var COUNT_REG = "([0-9]+)-([0-9]+)";
@@ -58,7 +58,7 @@ class RandomParser {
 		var probaMulReg = new EReg(PROBA_MUL_REG,"");
 		// var countReg = new EReg(COUNT_REG,"");
 
-		var testEntries = [];
+		var quickDebugs = [];
 
 		var lineIdx = 0;
 		for( l in lines ) {
@@ -85,6 +85,13 @@ class RandomParser {
 				rdata.keys.push({ key:curKey, line:lineIdx });
 				if( !rdata.tables.exists(curKey) )
 					rdata.tables.set(curKey, []);
+
+				// Quick debug table
+				if( l.indexOf(DEBUG_MARK)>=0 ) {
+					l = StringTools.replace(l,DEBUG_MARK,"");
+					rdata.markedLines.push({ parentKey:curKey, line:lineIdx, className:"debug" });
+					quickDebugs.push(l);
+				}
 			}
 			else if( curKey!=null ) {
 				var probaMul = 1.;
@@ -99,7 +106,7 @@ class RandomParser {
 				if( l.indexOf(DEBUG_MARK)>=0 ) {
 					l = StringTools.replace(l,DEBUG_MARK,"");
 					rdata.markedLines.push({ parentKey:curKey, line:lineIdx, className:"debug" });
-					testEntries.push(l);
+					quickDebugs.push(l);
 				}
 				// Store table entry
 				rdata.tables.get(curKey).push({
@@ -113,15 +120,23 @@ class RandomParser {
 
 		// Add custom test entries
 		var i = 0;
-		for(e in testEntries) {
-			var k = "customTest"+i;
-			rdata.tables.set(k, [{
-				raw: e,
-				line: -1,
-				probaMul: 1,
-			}]);
-			var label = removeSpecialChars( '"' + e.substr(0,12) + (e.length>12?"...":"") + '"' );
-			rdata.options.push( parseOption('#button $label @$k', -1, _err) );
+		for(d in quickDebugs) {
+			if( keyDefinionReg.match(d) ) {
+				// Debug a full table
+				var k = keyDefinionReg.matched(1);
+				rdata.options.push( parseOption('#button @$k', -1, _err) );
+			}
+			else {
+				// Debug a single entry
+				var k = "customTest"+i;
+				rdata.tables.set(k, [{
+					raw: d,
+					line: -1,
+					probaMul: 1,
+				}]);
+				var label = removeSpecialChars( '"' + d.substr(0,12) + (d.length>12?"...":"") + '"' );
+				rdata.options.push( parseOption('#button $label @$k', -1, _err) );
+			}
 			i++;
 		}
 
