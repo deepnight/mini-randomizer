@@ -2,7 +2,7 @@
 #button Campement @camp
 #button Rencontre @encounter
 #button @loot
-#button @trinket
+#button Babiole @trinket
 
 >location
 @buildingLocation @locationDetails
@@ -402,6 +402,8 @@ Grand vent
 
 >trinket
 Pile usagée
+T-shirt @popTheme
+Frisbee @popTheme
 Couverts
 Casquette @popTheme
 Pull @popTheme
@@ -436,7 +438,7 @@ Nuka Cola collector
 Grand tube intérieur
 Livre intact
 1d30 perles de verre ornementales
-Poche de pièces de monnaie
+Porte-monnaie contenant des pièces d'avant-guerre
 Volant en fourrure
 Petite ticycle
 Skateboard
@@ -585,7 +587,7 @@ Ouvre-boîte
 Ciseaux
 Marteau
 Cafetière italienne
-5-10 crayons
+5-10 crayons [à papier,de couleurs]
 Coucou d'une horloge
 Poêle à cuisson en métal
 Agrafeuse
@@ -599,9 +601,10 @@ Bol à poisson
 Boîte d'ameçons
 Canne à pêche
 Flûte
-Poêle à frire
+Casque microphone
+Petit couteau de cuisine avec un manche [gravé, en argent]
 Entonnoir
-Tuyau de jardin (12 mètres)
+Tuyau d'arrosage compact ([6,8,10] mètres)
 2-8 balles de golf
 Sac de golf
 Club de golf
