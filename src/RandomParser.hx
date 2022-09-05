@@ -1,7 +1,12 @@
 typedef RandData = {
 	var keys: Array<{ key:String, line:Int }>;
 	var tables: Map<String, Array<RandTableEntry>>;
-	var options: Array<{ id:String, line:Int, args:Map<String, String> }>;
+	var options: Array<Option>;
+}
+typedef Option = {
+	var id: String;
+	var line: Int;
+	var args: Map<String, String>;
 }
 typedef RandTableEntry = {
 	var raw : String;
@@ -18,6 +23,7 @@ typedef Error = {
 	Inspired by RandomGen from Orteil (https://orteil.dashnet.org/randomgen/)
 **/
 class RandomParser {
+	public static var DEBUG_MARK = "<<<";
 	public static var KEY_DEFINITION_REG = "^[ \t]*>[ \t]*([a-zA-Z0-9_-]+)\\s*$";
 	public static var KEY_REFERENCE_REG = "@([a-zA-Z0-9_-]+)";
 	public static var QUICK_LIST_REG = "\\[(.*?)\\]";
@@ -36,7 +42,7 @@ class RandomParser {
 			options: [],
 		}
 		var errors = [];
-		inline function _err(e:Dynamic, line:Int) errors.push({ err:Std.string(e), line:line });
+		function _err(e:Dynamic, line:Int) errors.push({ err:Std.string(e), line:line });
 
 		var lines = raw.split("\n");
 		var curKey : Null<String> = null;
@@ -47,7 +53,8 @@ class RandomParser {
 		var probaMulReg = new EReg(PROBA_MUL_REG,"");
 		// var countReg = new EReg(COUNT_REG,"");
 
-		var hasAnyButton = false;
+		var testEntries = [];
+
 		var lineIdx = 0;
 		for( l in lines ) {
 			lineIdx++;
@@ -58,46 +65,13 @@ class RandomParser {
 
 			// Option
 			if( optionReg.match(l) ) {
-				var o = optionReg.matched(1);
-				var rawArgs = optionReg.matched(3);
-				var args = new Map();
-
-				switch o {
-					case "button":
-						args.set("label", "???");
-						if( rawArgs==null )
-							_err('Missing argument for #$o', lineIdx);
-						else {
-							if( keyReferenceReg.match(rawArgs) ) {
-								args.set("key", keyReferenceReg.matched(1));
-								rawArgs = keyReferenceReg.matchedLeft() + keyReferenceReg.matchedRight();
-							}
-							else
-								_err('Missing key name (ex: "@myKey") in #button', lineIdx);
-							if( probaMulReg.match(rawArgs) ) {
-								args.set( "count", probaMulReg.matched(1) );
-								rawArgs = probaMulReg.matchedLeft() + probaMulReg.matchedRight();
-							}
-							else
-								args.set( "count", "1" );
-
-							var label = StringTools.trim(rawArgs);
-							if( label.length==0 && args.exists("key") )
-								label = args.get("key");
-							args.set("label", label);
-							hasAnyButton = true;
-						}
-
-					case _: _err('Unknown option: #$o', lineIdx);
+				var o = parseOption(l, lineIdx, _err);
+				if( o!=null ) {
+					rdata.options.push(o);
+					continue;
 				}
-
-
-				rdata.options.push({
-					id: o,
-					line: lineIdx,
-					args: args,
-				});
-				continue;
+				else
+					_err('Cannot parse this option', lineIdx);
 			}
 
 			if( keyDefinionReg.match(l) ) {
@@ -116,6 +90,11 @@ class RandomParser {
 						probaMul = 1;
 					l = probaMulReg.matchedLeft();
 				}
+				// Quick debug test
+				if( l.indexOf(DEBUG_MARK)>=0 ) {
+					l = StringTools.replace(l,DEBUG_MARK,"");
+					testEntries.push(l);
+				}
 				// Store table entry
 				rdata.tables.get(curKey).push({
 					line: lineIdx,
@@ -126,7 +105,28 @@ class RandomParser {
 		}
 
 
+		// Add custom test entries
+		var i = 0;
+		for(e in testEntries) {
+			var k = "customTest"+i;
+			rdata.tables.set(k, [{
+				raw: e,
+				line: -1,
+				probaMul: 1,
+			}]);
+			var label = removeSpecialChars( '"' + e.substr(0,12) + (e.length>12?"...":"") + '"' );
+			rdata.options.push( parseOption('#button $label @$k', -1, _err) );
+			i++;
+		}
+
+
 		// Add some default button
+		var hasAnyButton = false;
+		for(o in rdata.options)
+			if( o.id=="button" ) {
+				hasAnyButton = true;
+				break;
+			}
 		if( !hasAnyButton && rdata.keys.length>0 ) {
 			var k = rdata.keys[0].key;
 			rdata.options.push({
@@ -165,6 +165,53 @@ class RandomParser {
 		}
 	}
 
+	static function parseOption(raw:String, lineIdx:Int, onError:(err:Dynamic,line:Int)->Void) : Null<Option> {
+		var keyReferenceReg = new EReg(KEY_REFERENCE_REG,"");
+		var probaMulReg = new EReg(PROBA_MUL_REG,"");
+		var optionReg = new EReg(OPTION_REG,"");
+
+		optionReg.match(raw);
+
+		var o = optionReg.matched(1);
+		var rawArgs = optionReg.matched(3);
+		var args = new Map();
+
+		switch o {
+			case "button":
+				trace(rawArgs);
+				args.set("label", "???");
+				if( rawArgs==null )
+					onError('Missing argument for #$o', lineIdx);
+				else {
+					if( keyReferenceReg.match(rawArgs) ) {
+						args.set("key", keyReferenceReg.matched(1));
+						rawArgs = keyReferenceReg.matchedLeft() + keyReferenceReg.matchedRight();
+					}
+					else
+						onError('Missing key name (ex: "@myKey") in #button', lineIdx);
+					if( probaMulReg.match(rawArgs) ) {
+						args.set( "count", probaMulReg.matched(1) );
+						rawArgs = probaMulReg.matchedLeft() + probaMulReg.matchedRight();
+					}
+					else
+						args.set( "count", "1" );
+
+					var label = StringTools.trim(rawArgs);
+					if( label.length==0 && args.exists("key") )
+						label = args.get("key");
+					args.set("label", label);
+				}
+
+			case _: onError('Unknown option: #$o', lineIdx);
+		}
+
+		return {
+			id: o,
+			line: lineIdx,
+			args: args,
+		}
+	}
+
 	public static function debugRandData(rdata:RandData) {
 		trace("OPTIONS:");
 		for(o in rdata.options)
@@ -178,6 +225,11 @@ class RandomParser {
 		str = StringTools.replace(str, "\r", "");
 		str = StringTools.trim(str);
 		return str;
+	}
+
+	static function removeSpecialChars(str:String) {
+		var r = ~/[^a-z0-9-_.:,;!?'"]/gim;
+		return r.replace(str," ");
 	}
 
 	static function error(msg:String) {
