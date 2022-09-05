@@ -155,12 +155,22 @@ class EditorUI extends SiteProcess {
 		markSaved();
 	}
 
-	override function onFileChanged(raw:String) {
-		super.onFileChanged(raw);
+	override function onFileChanged(rdata:RandomParser.RandData) {
+		super.onFileChanged(rdata);
+
 		if( !ignoreNextChangeEvent)
-			setContent(raw);
+			setContent(rdata.rawFile);
 		updateToolbar();
 		ignoreNextChangeEvent = false;
+
+		app.editor.clearLog();
+		for(m in rdata.markedLines) {
+			addLog(m.label, m.line, m.className);
+			addLineMark(m.line, m.className);
+		}
+
+		if( rdata.errors.length>0 )
+			addErrors(rdata.errors);
 	}
 
 	function download() {

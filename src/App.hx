@@ -238,8 +238,12 @@ class App extends dn.Process {
 		saveSettings();
 		updateSelect();
 
+		var rdata = RandomParser.run(raw);
+		if( rdata.errors.length>0 )
+			openEditor();
+		
 		for(p in SiteProcess.ALL)
-			p.onFileChanged(raw);
+			p.onFileChanged(rdata);
 	}
 
 	override function onDispose() {

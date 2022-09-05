@@ -1,8 +1,10 @@
 typedef RandData = {
+	var rawFile: String;
 	var keys: Array<{ key:String, line:Int }>;
 	var tables: Map<String, Array<RandTableEntry>>;
 	var options: Array<Option>;
 	var markedLines: Array<{ line:Int, className:String, label:String }>;
+	var errors: Array<Error>;
 }
 typedef Option = {
 	var id: String;
@@ -32,19 +34,20 @@ class RandomParser {
 	public static var OPTION_REG = "^#([a-zA-Z0-9_-]+)([ \t]+(.+)|)";
 	public static var PROBA_MUL_REG = "[ \t]+x([0-9.]+)[ \t]*$";
 
-	public static function run(raw:String) : { data:Null<RandData>, errors:Array<Error> } {
+	public static function run(raw:String) : RandData {
 		if( raw==null )
 			return null;
 
 
 		var rdata : RandData = {
+			rawFile: raw,
 			keys: [],
 			tables: new Map(),
 			options: [],
 			markedLines: [],
+			errors: [],
 		}
-		var errors = [];
-		function _err(e:Dynamic, line:Int) errors.push({ err:Std.string(e), line:line });
+		function _err(e:Dynamic, line:Int) rdata.errors.push({ err:Std.string(e), line:line });
 
 		var lines = raw.split("\n");
 		var curKey : Null<String> = null;
@@ -162,10 +165,7 @@ class RandomParser {
 						_err('Unknown key "@$k" in #button', o.line);
 			}
 
-		return {
-			data: rdata,
-			errors: errors,
-		}
+		return rdata;
 	}
 
 	static function parseOption(raw:String, lineIdx:Int, onError:(err:Dynamic,line:Int)->Void) : Null<Option> {

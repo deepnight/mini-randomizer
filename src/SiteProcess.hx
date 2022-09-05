@@ -29,7 +29,7 @@ class SiteProcess extends dn.Process {
 			jRoot.append("hello "+name);
 	}
 
-	public function onFileChanged(raw:String) {}
+	public function onFileChanged(rdata:RandomParser.RandData) {} 
 	inline function notify(str:String) app.notify(str);
 
 	override function onDispose() {

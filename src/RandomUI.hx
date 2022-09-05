@@ -17,32 +17,16 @@ class RandomUI extends SiteProcess {
 		jToolbar.find(".clear").click( _->clearOutput() );
 	}
 
-	override function onFileChanged(raw:String) {
-		super.onFileChanged(raw);
+	override function onFileChanged(rdata:RandomParser.RandData) {
+		super.onFileChanged(rdata);
 
 		clearOutput();
 		jRandButtons.empty();
 
-		var parsed = RandomParser.run(raw);
-		randomizer = new Randomizer(parsed.data);
-
-		if( app.editor!=null ) {
-			app.editor.clearLog();
-			for(m in parsed.data.markedLines) {
-				app.editor.addLog(m.label, m.line, m.className);
-				app.editor.addLineMark(m.line, m.className);
-			}
-		}
-
-		if( parsed.errors.length>0 ) {
-			app.openEditor();
-			app.editor.addErrors(parsed.errors);
-		}
-
-
+		randomizer = new Randomizer(rdata);
 
 		// Add buttons
-		for(o in parsed.data.options)
+		for(o in rdata.options)
 			switch o.id {
 				case "button":
 					var jBt = new J('<button>🎲 ${o.args.get("label")}</button>');
