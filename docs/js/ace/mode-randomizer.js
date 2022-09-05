@@ -5,7 +5,7 @@ var RandomizerHighlightRules = function () {
     this.$rules = {
         "start": [
             { token: "option", regex: '^#[a-zA-Z0-9]+' },
-            { token: "keyDef", regex: '^>[a-zA-Z0-9_-]+$' },
+            { token: "keyDef", regex: '^[ \t]*>[ \t]*([a-zA-Z0-9_-]+)[\\s<]*$' },
             { token: "keyRef", regex: '@([a-zA-Z0-9_-]+)' },
             { token: "count", regex: ':[0-9]+-[0-9]+:' },
             { token: "quickList", regex: '\\[(.*?)\\]' },
