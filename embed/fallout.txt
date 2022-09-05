@@ -14,7 +14,7 @@
 >buildingLocation
 Manoir x0.5
 Bunker x0.3
-Petit abri anti-atomique
+Petit abri anti-atomique x0.3
 Maison
 Immeuble d'habitation
 Petite centrale électrique
@@ -45,51 +45,21 @@ Station service
 Cabane
 Marché couvert
 Prison
+Laboratoire d'expérimentation [militaire,animale,pharmaceutique] x0.2
 Usine
-Laboratoire
+Bâtiment universitaire ([Sciences,Biologie,Géologie,Médecine,Arts appliqués,Ecole d'officiers])
 Commissariat
 Chenil
 Musée
 Fête forraine
 Bâtiment administratif
 Boîte de nuit
-
-
->vehicleType
-voiture
-moto
-camion
-vélo
-voiture de sport x0.3
-
->storageType
-pièces mécaniques
-composants électronique
-nourriture
-vêtements
-
->shopType
-sport
-vêtements
-bricolage
-librairie
-informatique
-@vehicleType
-
->restaurantType
-français
-asiatique
-burgers
-italien
-pizzeria
-mexicain
-gastronomique
-routier
-sushi
+Cave d'une résidence
 
 
 >outdoorLocation
 Terrain de sport (@sport)
+Terrain d'entraînement militaire
 Lac
 Route
 Pont
@@ -123,6 +93,39 @@ Site d'un crash : @flyingObject
 Epave d'un navire
 Plateau de tournage : @buildingLocation x0.3
 Scène de concert
+
+
+>vehicleType
+voiture
+moto
+camion
+vélo
+voiture de sport x0.3
+
+>storageType
+pièces mécaniques
+composants électronique
+nourriture
+vêtements
+
+>shopType
+sport
+vêtements
+bricolage
+librairie
+informatique
+@vehicleType
+
+>restaurantType
+français
+asiatique
+burgers
+italien
+pizzeria
+mexicain
+gastronomique
+routier
+sushi
 
 >flyingObject
 Avion de ligne
@@ -242,7 +245,6 @@ Petite communauté (@npcStatus) x0.2
 Défenses automatisées (@robotStatus)
 
 >encounter
-Monstres mineurs
 Monstre majeur
 Animal non agressif
 Grosse créature non agressive x0.3
@@ -436,7 +438,9 @@ Livre intact
 1d30 perles de verre ornementales
 Poche de pièces de monnaie
 Volant en fourrure
-Tricycle
+Petite ticycle
+Skateboard
+Paire de rollers (@color)
 Miroir à main
 Parapluie
 Enregistrement en vinyle
