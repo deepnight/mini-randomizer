@@ -246,8 +246,14 @@ h2 {
 			background-color: #ffdcdc;
 			z-index: 2;
 			position: absolute;
-			color: red;
 			outline: 1px solid red;
+			outline-offset: -1px;
+		}
+		.cust-debug {
+			background-color: #fcd6ff;
+			z-index: 2;
+			position: absolute;
+			outline: 1px solid #f0f;
 			outline-offset: -1px;
 		}
 	}
