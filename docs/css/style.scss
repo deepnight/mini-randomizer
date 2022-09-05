@@ -114,7 +114,7 @@ h2 {
 
 	.row {
 		display: flex;
-		flex-wrap: nowrap;
+		flex-wrap: wrap;
 		flex: 1 0 100%;
 
 		&>* {
