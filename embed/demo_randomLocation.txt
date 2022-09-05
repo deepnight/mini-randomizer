@@ -1,7 +1,7 @@
 #button Generate random location @demo
 
 >demo
-@buildingType\n @locationFeature\n Inhabitant(s): @inhabitant
+@buildingType\n Feature: @locationFeature\n Inhabitant(s): @inhabitant
 
 >buildingType
 [Super,Mini]market
