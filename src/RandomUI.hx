@@ -17,8 +17,8 @@ class RandomUI extends SiteProcess {
 		jToolbar.find(".clear").click( _->clearOutput() );
 	}
 
-	override function onFileChanged(rdata:RandomParser.RandData) {
-		super.onFileChanged(rdata);
+	override function onFileChanged() {
+		super.onFileChanged();
 
 		clearOutput();
 		jRandButtons.empty();

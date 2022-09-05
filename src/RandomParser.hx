@@ -3,7 +3,7 @@ typedef RandData = {
 	var keys: Array<{ key:String, line:Int }>;
 	var tables: Map<String, Array<RandTableEntry>>;
 	var options: Array<Option>;
-	var markedLines: Array<{ line:Int, className:String, label:String }>;
+	var markedLines: Array<{ parentKey:String, line:Int, className:String, label:String }>;
 	var errors: Array<Error>;
 }
 typedef Option = {
@@ -35,10 +35,6 @@ class RandomParser {
 	public static var PROBA_MUL_REG = "[ \t]+x([0-9.]+)[ \t]*$";
 
 	public static function run(raw:String) : RandData {
-		if( raw==null )
-			return null;
-
-
 		var rdata : RandData = {
 			rawFile: raw,
 			keys: [],
@@ -47,6 +43,10 @@ class RandomParser {
 			markedLines: [],
 			errors: [],
 		}
+
+		if( raw==null )
+			return rdata;
+
 		function _err(e:Dynamic, line:Int) rdata.errors.push({ err:Std.string(e), line:line });
 
 		var lines = raw.split("\n");
@@ -98,7 +98,7 @@ class RandomParser {
 				// Quick debug test
 				if( l.indexOf(DEBUG_MARK)>=0 ) {
 					l = StringTools.replace(l,DEBUG_MARK,"");
-					rdata.markedLines.push({ line:lineIdx, className:"debug", label:l });
+					rdata.markedLines.push({ parentKey:curKey, line:lineIdx, className:"debug", label:l });
 					testEntries.push(l);
 				}
 				// Store table entry
@@ -156,14 +156,17 @@ class RandomParser {
 				}
 			}
 
-		// Check key refs in options
-		for(o in rdata.options)
+		// Finalize
+		rdata.keys.sort( (a,b)->Reflect.compare(a.key,b.key) );
+		for(o in rdata.options) {
 			switch o.id {
 				case "button":
+					// Check key refs in options
 					var k = o.args.get("key");
 					if( k!=null && !rdata.tables.exists(k) )
 						_err('Unknown key "@$k" in #button', o.line);
 			}
+		}
 
 		return rdata;
 	}

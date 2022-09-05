@@ -1290,8 +1290,8 @@ App.prototype = $extend(dn_Process.prototype,{
 		this.settings.curFileId = fileId;
 		this.saveSettings();
 		this.updateSelect();
-		var rdata = RandomParser.run(raw);
-		if(rdata.errors.length > 0) {
+		this.rdata = RandomParser.run(raw);
+		if(this.rdata.errors.length > 0) {
 			this.openEditor();
 		}
 		var _g = 0;
@@ -1299,7 +1299,7 @@ App.prototype = $extend(dn_Process.prototype,{
 		while(_g < _g1.length) {
 			var p = _g1[_g];
 			++_g;
-			p.onFileChanged(rdata);
+			p.onFileChanged();
 		}
 	}
 	,onDispose: function() {
@@ -1483,7 +1483,7 @@ $hxClasses["SiteProcess"] = SiteProcess;
 SiteProcess.__name__ = "SiteProcess";
 SiteProcess.__super__ = dn_Process;
 SiteProcess.prototype = $extend(dn_Process.prototype,{
-	onFileChanged: function(rdata) {
+	onFileChanged: function() {
 	}
 	,onDispose: function() {
 		dn_Process.prototype.onDispose.call(this);
@@ -1494,7 +1494,7 @@ SiteProcess.prototype = $extend(dn_Process.prototype,{
 });
 var EditorUI = function() {
 	this.ignoreNextChangeEvent = false;
-	this.invalidatedMapCurrent = true;
+	this.invalidatedMapMarkers = true;
 	var _gthis = this;
 	SiteProcess.call(this,"editor");
 	this.jLog = this.jRoot.find(".log");
@@ -1506,7 +1506,7 @@ var EditorUI = function() {
 		_gthis.onChange();
 	});
 	this.ace.on("changeSelection",function() {
-		_gthis.invalidateMapCurrent();
+		_gthis.invalidateMapMarkers();
 	});
 	this.ace.commands.removeCommand("removeline",true);
 	this.ace.commands.removeCommand("duplicateSelection",true);
@@ -1660,13 +1660,13 @@ EditorUI.prototype = $extend(SiteProcess.prototype,{
 		this.delayer.cancelById("autoSave");
 		this.ace.session.getUndoManager().reset();
 		this.markSaved();
-		this.updateMap();
+		this.fillMap();
 	}
-	,updateMap: function() {
+	,fillMap: function() {
 		var _gthis = this;
 		this.jMap.empty();
 		var _g = 0;
-		var _g1 = this.lastRData.keys;
+		var _g1 = App.ME.rdata.keys;
 		while(_g < _g1.length) {
 			var k = [_g1[_g]];
 			++_g;
@@ -1674,16 +1674,16 @@ EditorUI.prototype = $extend(SiteProcess.prototype,{
 			jKey.click((function(k) {
 				return function(_) {
 					_gthis.gotoLine(k[0].line + 1);
-					_gthis.updateMapCurrent();
+					_gthis.updateMapMarkers();
 				};
 			})(k));
 			this.jMap.append(jKey);
 		}
-		this.updateMapCurrent();
+		this.updateMapMarkers();
 	}
-	,invalidateMapCurrent: function() {
-		this.invalidatedMapCurrent = true;
-		if(!this.cd.fastCheck.h.hasOwnProperty(20971520)) {
+	,invalidateMapMarkers: function() {
+		this.invalidatedMapMarkers = true;
+		if(!this.cd.fastCheck.h.hasOwnProperty(25165824)) {
 			var _this = this.cd;
 			var frames = 0.3 * this.cd.baseFps;
 			var allowLower = true;
@@ -1691,7 +1691,7 @@ EditorUI.prototype = $extend(SiteProcess.prototype,{
 			if(allowLower == null) {
 				allowLower = true;
 			}
-			var cur = _this._getCdObject(20971520);
+			var cur = _this._getCdObject(25165824);
 			if(!(cur != null && frames < cur.frames && !allowLower)) {
 				if(frames <= 0) {
 					if(cur != null) {
@@ -1717,7 +1717,7 @@ EditorUI.prototype = $extend(SiteProcess.prototype,{
 						}
 					}
 				} else {
-					_this.fastCheck.h[20971520] = true;
+					_this.fastCheck.h[25165824] = true;
 					if(cur != null) {
 						cur.frames = frames;
 						cur.initial = frames;
@@ -1729,7 +1729,7 @@ EditorUI.prototype = $extend(SiteProcess.prototype,{
 						var e = _this1.pool[_this1.nalloc++];
 						e.recycle();
 						var cd = e;
-						cd.k = 20971520;
+						cd.k = 25165824;
 						cd.frames = frames;
 						cd.initial = frames;
 					}
@@ -1738,9 +1738,9 @@ EditorUI.prototype = $extend(SiteProcess.prototype,{
 					if(frames <= 0) {
 						onComplete();
 					} else {
-						var cd = _this._getCdObject(20971520);
+						var cd = _this._getCdObject(25165824);
 						if(cd == null) {
-							throw haxe_Exception.thrown("cannot bind onComplete(" + 20971520 + "): cooldown " + 20971520 + " isn't running");
+							throw haxe_Exception.thrown("cannot bind onComplete(" + 25165824 + "): cooldown " + 25165824 + " isn't running");
 						}
 						cd.onCompleteOnce = onComplete;
 					}
@@ -1748,16 +1748,33 @@ EditorUI.prototype = $extend(SiteProcess.prototype,{
 			}
 		}
 	}
-	,updateMapCurrent: function() {
-		this.invalidatedMapCurrent = false;
+	,updateMapMarkers: function() {
+		this.invalidatedMapMarkers = false;
 		this.jMap.find(".current").removeClass("current");
-		if(this.lastRData == null) {
+		this.jMap.find(".mark").removeClass("mark");
+		if(App.ME.rdata == null) {
 			return;
+		}
+		var _g = 0;
+		var _g1 = App.ME.rdata.options;
+		while(_g < _g1.length) {
+			var o = _g1[_g];
+			++_g;
+			if(o.id == "button") {
+				this.jMap.find("#key-" + o.args.h["key"]).addClass("mark button");
+			}
+		}
+		var _g = 0;
+		var _g1 = App.ME.rdata.markedLines;
+		while(_g < _g1.length) {
+			var m = _g1[_g];
+			++_g;
+			this.jMap.find("#key-" + m.parentKey).addClass("mark " + m.className);
 		}
 		var curLine = this.ace.getSelectionRange().start.row;
 		var curKey = null;
 		var _g = 0;
-		var _g1 = this.lastRData.keys;
+		var _g1 = App.ME.rdata.keys;
 		while(_g < _g1.length) {
 			var k = _g1[_g];
 			++_g;
@@ -1771,25 +1788,23 @@ EditorUI.prototype = $extend(SiteProcess.prototype,{
 			this.jMap.find("#key-" + curKey.key).addClass("current");
 		}
 	}
-	,onFileChanged: function(rdata) {
-		SiteProcess.prototype.onFileChanged.call(this,rdata);
-		this.lastRData = rdata;
+	,onFileChanged: function() {
+		SiteProcess.prototype.onFileChanged.call(this);
 		if(!this.ignoreNextChangeEvent) {
-			this.setContent(rdata.rawFile);
+			this.setContent(App.ME.rdata.rawFile);
 		}
 		this.updateToolbar();
 		this.ignoreNextChangeEvent = false;
 		App.ME.editor.clearLog();
 		var _g = 0;
-		var _g1 = rdata.markedLines;
+		var _g1 = App.ME.rdata.markedLines;
 		while(_g < _g1.length) {
 			var m = _g1[_g];
 			++_g;
-			this.addLog(m.label,m.line,m.className);
 			this.addLineMark(m.line,m.className);
 		}
-		if(rdata.errors.length > 0) {
-			this.addErrors(rdata.errors);
+		if(App.ME.rdata.errors.length > 0) {
+			this.addErrors(App.ME.rdata.errors);
 		}
 	}
 	,download: function() {
@@ -1812,8 +1827,8 @@ EditorUI.prototype = $extend(SiteProcess.prototype,{
 	}
 	,update: function() {
 		SiteProcess.prototype.update.call(this);
-		if(this.invalidatedMapCurrent && !this.cd.fastCheck.h.hasOwnProperty(20971520)) {
-			this.updateMapCurrent();
+		if(this.invalidatedMapMarkers && !this.cd.fastCheck.h.hasOwnProperty(25165824)) {
+			this.updateMapMarkers();
 		}
 	}
 	,__class__: EditorUI
@@ -2113,10 +2128,10 @@ var RandomParser = function() { };
 $hxClasses["RandomParser"] = RandomParser;
 RandomParser.__name__ = "RandomParser";
 RandomParser.run = function(raw) {
-	if(raw == null) {
-		return null;
-	}
 	var rdata = { rawFile : raw, keys : [], tables : new haxe_ds_StringMap(), options : [], markedLines : [], errors : []};
+	if(raw == null) {
+		return rdata;
+	}
 	var _err = function(e,line) {
 		rdata.errors.push({ err : Std.string(e), line : line});
 	};
@@ -2163,7 +2178,7 @@ RandomParser.run = function(raw) {
 			}
 			if(l.indexOf(RandomParser.DEBUG_MARK) >= 0) {
 				l = StringTools.replace(l,RandomParser.DEBUG_MARK,"");
-				rdata.markedLines.push({ line : lineIdx1, className : "debug", label : l});
+				rdata.markedLines.push({ parentKey : curKey, line : lineIdx1, className : "debug", label : l});
 				testEntries.push(l);
 			}
 			rdata.tables.h[curKey].push({ line : lineIdx1, raw : l, probaMul : probaMul});
@@ -2226,6 +2241,9 @@ RandomParser.run = function(raw) {
 			}
 		}
 	}
+	rdata.keys.sort(function(a,b) {
+		return Reflect.compare(a.key,b.key);
+	});
 	var _g = 0;
 	var _g1 = rdata.options;
 	while(_g < _g1.length) {
@@ -2301,14 +2319,14 @@ $hxClasses["RandomUI"] = RandomUI;
 RandomUI.__name__ = "RandomUI";
 RandomUI.__super__ = SiteProcess;
 RandomUI.prototype = $extend(SiteProcess.prototype,{
-	onFileChanged: function(rdata) {
+	onFileChanged: function() {
 		var _gthis = this;
-		SiteProcess.prototype.onFileChanged.call(this,rdata);
+		SiteProcess.prototype.onFileChanged.call(this);
 		this.clearOutput();
 		this.jRandButtons.empty();
-		this.randomizer = new Randomizer(rdata);
+		this.randomizer = new Randomizer(App.ME.rdata);
 		var _g = 0;
-		var _g1 = rdata.options;
+		var _g1 = App.ME.rdata.options;
 		while(_g < _g1.length) {
 			var o = [_g1[_g]];
 			++_g;

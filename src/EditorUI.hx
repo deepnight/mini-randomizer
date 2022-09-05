@@ -2,8 +2,7 @@ class EditorUI extends SiteProcess {
 	var ace : aceEditor.AceEditor;
 	var jLog : J;
 	var jMap : J;
-	var lastRData : Null<RandomParser.RandData>;
-	var invalidatedMapCurrent = true;
+	var invalidatedMapMarkers = true;
 
 	public function new() {
 		super("editor");
@@ -16,7 +15,7 @@ class EditorUI extends SiteProcess {
 		ace.session.setMode("ace/mode/randomizer");
 
 		ace.on("change", ()->onChange());
-		ace.on("changeSelection", ()->invalidateMapCurrent());
+		ace.on("changeSelection", ()->invalidateMapMarkers());
 
 		ace.commands.removeCommand("removeline",true);
 		ace.commands.removeCommand("duplicateSelection",true);
@@ -158,37 +157,45 @@ class EditorUI extends SiteProcess {
 		delayer.cancelById("autoSave");
 		ace.session.getUndoManager().reset();
 		markSaved();
-		updateMap();
+		fillMap();
 	}
 
-	function updateMap() {
+	function fillMap() {
 		jMap.empty();
-		for(k in lastRData.keys) {
+		for(k in rdata.keys) {
 			var jKey = new J('<li id="key-${k.key}">${k.key}</li>');
 			jKey.click(_->{
 				gotoLine(k.line+1);
-				updateMapCurrent();
+				updateMapMarkers();
 			});
 			jMap.append(jKey);
 		}
-		updateMapCurrent();
+		updateMapMarkers();
 	}
 
-	function invalidateMapCurrent() {
-		invalidatedMapCurrent = true;
-		if( !cd.has("updateCurrentLock") )
-			cd.setS("updateCurrentLock", 0.3);
+	function invalidateMapMarkers() {
+		invalidatedMapMarkers = true;
+		if( !cd.has("mapLock") )
+			cd.setS("mapLock", 0.3);
 	}
 
-	function updateMapCurrent() {
-		invalidatedMapCurrent = false;
+	function updateMapMarkers() {
+		invalidatedMapMarkers = false;
 		jMap.find(".current").removeClass("current");
-		if( lastRData==null )
+		jMap.find(".mark").removeClass("mark");
+		if( rdata==null )
 			return;
+
+		for(o in rdata.options)
+			if( o.id=="button" )
+				jMap.find("#key-"+o.args.get("key")).addClass("mark button");
+
+		for(m in rdata.markedLines)
+			jMap.find("#key-"+m.parentKey).addClass("mark "+m.className);
 
 		var curLine = ace.getSelectionRange().start.row;
 		var curKey = null;
-		for(k in lastRData.keys)
+		for(k in rdata.keys)
 			if( k.line-1<=curLine )
 				curKey = k;
 			else
@@ -198,10 +205,8 @@ class EditorUI extends SiteProcess {
 			jMap.find("#key-"+curKey.key).addClass("current");
 	}
 
-	override function onFileChanged(rdata:RandomParser.RandData) {
-		super.onFileChanged(rdata);
-
-		lastRData = rdata;
+	override function onFileChanged() {
+		super.onFileChanged();
 
 		if( !ignoreNextChangeEvent)
 			setContent(rdata.rawFile);
@@ -209,10 +214,8 @@ class EditorUI extends SiteProcess {
 		ignoreNextChangeEvent = false;
 
 		app.editor.clearLog();
-		for(m in rdata.markedLines) {
-			addLog(m.label, m.line, m.className);
+		for(m in rdata.markedLines)
 			addLineMark(m.line, m.className);
-		}
 
 		if( rdata.errors.length>0 )
 			addErrors(rdata.errors);
@@ -242,7 +245,7 @@ class EditorUI extends SiteProcess {
 	override function update() {
 		super.update();
 
-		if( invalidatedMapCurrent && !cd.has("updateCurrentLock") )
-			updateMapCurrent();
+		if( invalidatedMapMarkers && !cd.has("mapLock") )
+			updateMapMarkers();
 	}
 }

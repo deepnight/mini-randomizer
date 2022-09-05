@@ -20,6 +20,7 @@ class App extends dn.Process {
 	public var settings : Settings;
 
 	public var editor : Null<EditorUI>;
+	public var rdata : Null<RandomParser.RandData>;
 
 
 	public function new() {
@@ -238,12 +239,12 @@ class App extends dn.Process {
 		saveSettings();
 		updateSelect();
 
-		var rdata = RandomParser.run(raw);
+		rdata = RandomParser.run(raw);
 		if( rdata.errors.length>0 )
 			openEditor();
 
 		for(p in SiteProcess.ALL)
-			p.onFileChanged(rdata);
+			p.onFileChanged();
 	}
 
 	override function onDispose() {

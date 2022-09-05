@@ -5,6 +5,7 @@ class SiteProcess extends dn.Process {
 	var jBody(get,never) : js.jquery.JQuery; inline function get_jBody() return App.ME.jBody;
 	var jDoc(get,never) : js.jquery.JQuery; inline function get_jDoc() return App.ME.jDoc;
 	var jSite(get,never) : js.jquery.JQuery; inline function get_jSite() return App.ME.jSite;
+	var rdata(get,never) : Null<RandomParser.RandData>; inline function get_rdata() return App.ME.rdata;
 
 	var jRoot : J;
 	var curFileId(get,never) : String; inline function get_curFileId() return app.settings.curFileId;
@@ -29,7 +30,7 @@ class SiteProcess extends dn.Process {
 			jRoot.append("hello "+name);
 	}
 
-	public function onFileChanged(rdata:RandomParser.RandData) {} 
+	public function onFileChanged() {}
 	inline function notify(str:String) app.notify(str);
 
 	override function onDispose() {
