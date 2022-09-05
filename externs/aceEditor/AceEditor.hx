@@ -31,6 +31,10 @@ extern class AceEditorSession {
 	public function getUndoManager() : AceUndoManager;
 	public function clearAnnotations() : Void;
 	public function setAnnotations(annotations:Array<AceAnnotation>) : Void;
+
+	public function addMarker(range:AceRange, className:String, type:String, ?inFront:Bool) : Int;
+	public function getMarkers() : Dynamic;
+	public function removeMarker(id:Int) : Void;
 }
 
 typedef AceAnnotation = {
@@ -51,4 +55,15 @@ extern class AceUndoManager {
 
 extern class AceSelection {
 	public function selectLine():Void;
+}
+
+@:native("ace.Range")
+extern class AceRange {
+	public function new(startRow:Int, startCol:Int, endRow:Int, endCol:Int);
+}
+
+extern class MarkerLike {
+	public var id: Int;
+	public var clazz: String;
+	public var type: String;
 }

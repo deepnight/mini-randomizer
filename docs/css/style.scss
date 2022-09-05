@@ -199,13 +199,29 @@ h2 {
 #site .column.editor {
 	grid-template-rows: min-content 1fr min-content;
 
-	.errors {
-		border: 1px dashed red;
+	#ace .ace_content .ace_marker-layer {
+		.cust-error {
+			background-color: #ffdcdc;
+			z-index: 2;
+			position: absolute;
+			color: red;
+			outline: 1px solid red;
+			outline-offset: -1px;
+		}
+	}
+
+	.log {
 		padding: 2px;
 		max-height: 200px;
 		overflow-y: auto;
-		background-color: #ffcccc;
 		min-height: 50px;
+		border: 1px solid lightgray;
+		background-color: #eee;
+
+		&.errors {
+			border: 1px dashed red;
+			background-color: #ffcccc;
+		}
 
 		&:empty {
 			display: none;
@@ -214,12 +230,19 @@ h2 {
 		pre {
 			margin: 0;
 			padding: 3px;
-			color: red;
-			font-weight: bold;
 			cursor: pointer;
 			&:hover {
-				background-color: #ffdede;
+				background-color: rgba(255,255,255, 0.5);
 				outline: 1px solid white;
+			}
+
+			&.error {
+				font-weight: bold;
+				color: red;
+			}
+
+			&.debug {
+				background-color: #ffdd99;
 			}
 		}
 	}

@@ -26,12 +26,20 @@ class RandomUI extends SiteProcess {
 		var parsed = RandomParser.run(raw);
 		randomizer = new Randomizer(parsed.data);
 
+		if( app.editor!=null ) {
+			app.editor.clearLog();
+			for(m in parsed.data.markedLines) {
+				app.editor.addLog(m.label, m.line, m.className);
+				app.editor.addLineMark(m.line, m.className);
+			}
+		}
+
 		if( parsed.errors.length>0 ) {
 			app.openEditor();
-			app.editor.showErrors(parsed.errors);
+			app.editor.addErrors(parsed.errors);
 		}
-		else if( app.editor!=null )
-			app.editor.clearErrors();
+
+
 
 		// Add buttons
 		for(o in parsed.data.options)

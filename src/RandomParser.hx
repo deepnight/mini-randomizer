@@ -2,6 +2,7 @@ typedef RandData = {
 	var keys: Array<{ key:String, line:Int }>;
 	var tables: Map<String, Array<RandTableEntry>>;
 	var options: Array<Option>;
+	var markedLines: Array<{ line:Int, className:String, label:String }>;
 }
 typedef Option = {
 	var id: String;
@@ -40,6 +41,7 @@ class RandomParser {
 			keys: [],
 			tables: new Map(),
 			options: [],
+			markedLines: [],
 		}
 		var errors = [];
 		function _err(e:Dynamic, line:Int) errors.push({ err:Std.string(e), line:line });
@@ -93,6 +95,7 @@ class RandomParser {
 				// Quick debug test
 				if( l.indexOf(DEBUG_MARK)>=0 ) {
 					l = StringTools.replace(l,DEBUG_MARK,"");
+					rdata.markedLines.push({ line:lineIdx, className:"debug", label:l });
 					testEntries.push(l);
 				}
 				// Store table entry
@@ -178,7 +181,6 @@ class RandomParser {
 
 		switch o {
 			case "button":
-				trace(rawArgs);
 				args.set("label", "???");
 				if( rawArgs==null )
 					onError('Missing argument for #$o', lineIdx);

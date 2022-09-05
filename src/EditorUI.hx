@@ -1,8 +1,11 @@
 class EditorUI extends SiteProcess {
 	var ace : aceEditor.AceEditor;
+	var jLog : J;
 
 	public function new() {
 		super("editor");
+
+		jLog = jRoot.find(".log");
 
 		ace = aceEditor.AceEditor.edit("ace");
 		ace.setTheme("ace/theme/randomizer");
@@ -30,33 +33,48 @@ class EditorUI extends SiteProcess {
 		markSaved();
 	}
 
-	public function showErrors(errors:Array<RandomParser.Error>) {
-		clearErrors();
+	public function addLineMark(line:Int, className:String) {
+		ace.session.addMarker( new aceEditor.AceEditor.AceRange(line-1, 1, line-1, 1000), "cust-"+className, "fullLine" );
+	}
 
+	public function addLog(str:String, line:Int, className:String) {
+		var jLine = new J('<pre>Line ${line} -- <strong>${str}</strong></pre>');
+		jLine.addClass(className);
+		jLine.click(_->{
+			app.openEditor();
+			app.editor.gotoLine(line);
+		});
+		jLog.append(jLine);
+	}
+
+	public function addErrors(errors:Array<RandomParser.Error>) {
 		// Show in editor
 		ace.session.setAnnotations(
 			errors.map( e->{ row:e.line-1, text:e.err, type:"error", column:0 })
 		);
+		for(e in errors)
+			addLineMark(e.line, "error");
 
 		// Errors listing
-		var jErrors = jRoot.find(".errors");
-		if( errors.length==0 )
-			jErrors.empty();
-		else {
-			jErrors.empty();
-			for(e in errors) {
-				var jError = new J('<pre>Line ${e.line} -- <strong>${e.err}</strong></pre>');
-				jError.click(_->{
-					app.openEditor();
-					app.editor.gotoLine(e.line);
-				});
-				jErrors.append(jError);
-			}
+		for(e in errors) {
+			addLog(e.err, e.line, "error");
+			jLog.addClass("errors");
 		}
 	}
 
-	public function clearErrors() {
+	public function clearLog() {
+		jLog.removeClass("errors");
+		jLog.empty();
+
 		ace.session.clearAnnotations();
+
+		var markers = ace.session.getMarkers();
+		for( k in Reflect.fields(markers) ) {
+			var m : aceEditor.AceEditor.MarkerLike = Reflect.field(markers, k);
+			if( m.clazz.indexOf("cust-")==0 )
+				ace.session.removeMarker(m.id);
+		}
+
 		jRoot.find(".errors").empty();
 	}
 
