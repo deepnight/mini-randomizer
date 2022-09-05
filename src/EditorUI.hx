@@ -10,16 +10,10 @@ class EditorUI extends SiteProcess {
 
 		ace.on("change", ()->onChange());
 
-		ace.commands.addCommand({
-			name: "Save",
-			bindKey: { win:"Ctrl-s", mac:"Command-s" },
-			exec: (e)->save(),
-		});
-		ace.commands.addCommand({
-			name: "Search",
-			bindKey: { win:"F3", mac:"" },
-			exec: (e)->ace.execCommand("find"),
-		});
+		ace.commands.addCommand({ bindKey:{ win:"Ctrl-s", mac:"Command-s" }, exec: _->save() });
+		ace.commands.addCommand({ bindKey:{ win:"F3" }, exec: _->ace.execCommand("find") });
+		ace.commands.addCommand({ bindKey:{ win:"ctrl-shift-D"}, exec: _->ace.execCommand("removeline") });
+		ace.commands.addCommand({ bindKey:{ win:"ctrl-D"}, exec: _->ace.execCommand("duplicateSelection") });
 		ace.focus();
 
 		setContent(app.getCurrentFileContent());

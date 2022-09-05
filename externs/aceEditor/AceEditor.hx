@@ -41,7 +41,7 @@ typedef AceAnnotation = {
 }
 
 extern class AceEditorCommands {
-	public function addCommand(cmd:{ name:String, bindKey:{win:String, mac:String }, exec:AceEditor->Void }) : Void;
+	public function addCommand(cmd:{ ?name:String, bindKey:{win:String, ?mac:String }, exec:AceEditor->Void }) : Void;
 }
 
 extern class AceUndoManager {
