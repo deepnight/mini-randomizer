@@ -32,7 +32,7 @@ class EditorUI extends SiteProcess {
 		jRoot.find(".download").click(_->download());
 		jRoot.find(".upload").click(_->notify("Not implemented yet"));
 		jRoot.find(".copy").click(_->copy());
-		updateToolbar();
+		updateUI();
 
 		markSaved();
 	}
@@ -96,7 +96,17 @@ class EditorUI extends SiteProcess {
 				if( js.Browser.window.confirm("This will delete the file from browser storage!\nTHERE IS NO TURNING BACK!") )
 					app.deleteFile(curFileId);
 			});
+	}
 
+	public function updateUI() {
+		updateToolbar();
+
+		clearLog();
+		for(m in rdata.markedLines)
+			addLineMark(m.line, m.className);
+
+		if( rdata.errors.length>0 )
+			addErrors(rdata.errors);
 	}
 
 	override function onDispose() {
@@ -186,10 +196,6 @@ class EditorUI extends SiteProcess {
 		if( rdata==null )
 			return;
 
-		for(o in rdata.options)
-			if( o.id=="button" )
-				jMap.find("#key-"+o.args.get("key")).addClass("mark button");
-
 		for(m in rdata.markedLines)
 			jMap.find("#key-"+m.parentKey).addClass("mark "+m.className);
 
@@ -210,15 +216,8 @@ class EditorUI extends SiteProcess {
 
 		if( !ignoreNextChangeEvent)
 			setContent(rdata.rawFile);
-		updateToolbar();
+		updateUI();
 		ignoreNextChangeEvent = false;
-
-		app.editor.clearLog();
-		for(m in rdata.markedLines)
-			addLineMark(m.line, m.className);
-
-		if( rdata.errors.length>0 )
-			addErrors(rdata.errors);
 	}
 
 	function download() {
