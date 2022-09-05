@@ -3,7 +3,7 @@ typedef RandData = {
 	var keys: Array<{ key:String, line:Int }>;
 	var tables: Map<String, Array<RandTableEntry>>;
 	var options: Array<Option>;
-	var markedLines: Array<{ parentKey:String, line:Int, className:String, label:String }>;
+	var markedLines: Array<{ parentKey:String, line:Int, className:String }>;
 	var errors: Array<Error>;
 }
 typedef Option = {
@@ -98,7 +98,7 @@ class RandomParser {
 				// Quick debug test
 				if( l.indexOf(DEBUG_MARK)>=0 ) {
 					l = StringTools.replace(l,DEBUG_MARK,"");
-					rdata.markedLines.push({ parentKey:curKey, line:lineIdx, className:"debug", label:l });
+					rdata.markedLines.push({ parentKey:curKey, line:lineIdx, className:"debug" });
 					testEntries.push(l);
 				}
 				// Store table entry
@@ -161,7 +161,10 @@ class RandomParser {
 		for(o in rdata.options) {
 			switch o.id {
 				case "button":
-					// Check key refs in options
+					// Add button marker
+					rdata.markedLines.push({ parentKey:o.args.get("key"), line:o.line, className:"button" });
+
+					// Check key refs in button
 					var k = o.args.get("key");
 					if( k!=null && !rdata.tables.exists(k) )
 						_err('Unknown key "@$k" in #button', o.line);
