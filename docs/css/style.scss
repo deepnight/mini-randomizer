@@ -186,6 +186,10 @@ h2 {
 					font-weight: bold;
 				}
 			}
+
+			&.old {
+				color: gray;
+			}
 		}
 
 		.entry+.entry {

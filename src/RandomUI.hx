@@ -39,6 +39,9 @@ class RandomUI extends SiteProcess {
 							clearOutput();
 							count = 10;
 						}
+						else
+							jOutput.find(".entry:not(.old)").addClass("old");
+
 						for(i in 0...count)
 							output( randomizer.draw( o.args.get("key") ) );
 					});
