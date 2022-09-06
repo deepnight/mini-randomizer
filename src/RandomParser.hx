@@ -26,7 +26,7 @@ typedef Error = {
 	Inspired by RandomGen from Orteil (https://orteil.dashnet.org/randomgen/)
 **/
 class RandomParser {
-	public static var DEBUG_MARK = "<<<";
+	public static var DEBUG_MARK = "<<";
 	public static var KEY_DEFINITION_REG = "^[ \t]*>[ \t]*([a-zA-Z0-9_-]+)[\\s<]*$";
 	public static var KEY_REFERENCE_REG = "@([a-zA-Z0-9_-]+)";
 	public static var QUICK_LIST_REG = "\\[(.*?)\\]";
@@ -172,7 +172,6 @@ class RandomParser {
 			}
 
 		// Finalize
-		rdata.keys.sort( (a,b)->Reflect.compare(a.key,b.key) );
 		for(o in rdata.options) {
 			switch o.id {
 				case "button":
