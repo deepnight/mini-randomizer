@@ -1065,7 +1065,7 @@ var App = function() {
 	this.internalFiles = _g;
 	var _g = new haxe_ds_StringMap();
 	_g.h["embed/tpl/random.html"] = "<div class=\"toolbar\">\r\n\t<div class=\"row buttons randButtons\"></div>\r\n\t<div class=\"row small\">\r\n\t\t<button class=\"clear\">Clear</button>\r\n\t</div>\r\n</div>\r\n\r\n<div class=\"output\"></div>\r\n";
-	_g.h["embed/tpl/editor.html"] = "<div class=\"toolbar\">\r\n\t<button class=\"close small\">Close</button>\r\n\t<button class=\"download\">📥 Download</button>\r\n\t<button class=\"upload\">📁 Upload</button>\r\n\t<button class=\"copy\">📄 Copy</button>\r\n\t<button class=\"delete small\">🗑️ Delete</button>\r\n\t<div class=\"saveStatus\"></div>\r\n</div>\r\n\r\n<ul class=\"map\">map map</ul>\r\n<div id=\"ace\"></div>\r\n<div class=\"log\"></div>\r\n";
+	_g.h["embed/tpl/editor.html"] = "<div class=\"toolbar\">\r\n\t<button class=\"close small\"></button>\r\n\t<button class=\"download\">📥 Download</button>\r\n\t<button class=\"upload\">📁 Upload</button>\r\n\t<button class=\"copy\">📄 Copy</button>\r\n\t<button class=\"delete small\">🗑️ Delete</button>\r\n\t<div class=\"saveStatus\"></div>\r\n</div>\r\n\r\n<ul class=\"map\">map map</ul>\r\n<div id=\"ace\"></div>\r\n<div class=\"log\"></div>\r\n";
 	this.templates = _g;
 	this.storage = dn_data_LocalStorage.createJsonStorage("settings");
 	this.loadSettings();
@@ -1507,6 +1507,7 @@ var EditorUI = function() {
 	this.ace.on("changeSelection",function() {
 		_gthis.invalidateMapMarkers();
 	});
+	this.ace.session.setUseWrapMode(true);
 	this.ace.commands.removeCommand("removeline",true);
 	this.ace.commands.removeCommand("duplicateSelection",true);
 	this.ace.commands.addCommand({ bindKey : { win : "Ctrl-s", mac : "Command-s"}, exec : function(_) {
@@ -1678,10 +1679,13 @@ EditorUI.prototype = $extend(SiteProcess.prototype,{
 	,fillMap: function() {
 		var _gthis = this;
 		this.jMap.empty();
+		var sortedKeys = App.ME.rdata.keys.slice();
+		sortedKeys.sort(function(a,b) {
+			return Reflect.compare(a.key,b.key);
+		});
 		var _g = 0;
-		var _g1 = App.ME.rdata.keys;
-		while(_g < _g1.length) {
-			var k = [_g1[_g]];
+		while(_g < sortedKeys.length) {
+			var k = [sortedKeys[_g]];
 			++_g;
 			var jKey = $("<li id=\"key-" + k[0].key + "\">" + k[0].key + "</li>");
 			jKey.click((function(k) {
@@ -2244,9 +2248,6 @@ RandomParser.run = function(raw) {
 			}
 		}
 	}
-	rdata.keys.sort(function(a,b) {
-		return Reflect.compare(a.key,b.key);
-	});
 	var _g = 0;
 	var _g1 = rdata.options;
 	while(_g < _g1.length) {
@@ -2459,6 +2460,8 @@ Randomizer.prototype = {
 		if(out == "-") {
 			out = "";
 		}
+		var spaceReg_r = new RegExp(" {2,}","gim".split("u").join(""));
+		out = out.replace(spaceReg_r," ");
 		return out;
 	}
 	,__class__: Randomizer
@@ -34588,7 +34591,7 @@ dn_Process.PROFILER_TIMES = new haxe_ds_StringMap();
 SiteProcess.ALL = [];
 dn_FilePath.WIN_NETWORK_DRIVE_REG = new EReg("^\\\\\\\\([a-z0-9-]+)\\\\(.*)","i");
 dn_FilePath.SLASH_MODE = dn_PathSlashMode.Preserve;
-RandomParser.DEBUG_MARK = "<<<";
+RandomParser.DEBUG_MARK = "<<";
 RandomParser.KEY_DEFINITION_REG = "^[ \t]*>[ \t]*([a-zA-Z0-9_-]+)[\\s<]*$";
 RandomParser.KEY_REFERENCE_REG = "@([a-zA-Z0-9_-]+)";
 RandomParser.QUICK_LIST_REG = "\\[(.*?)\\]";
