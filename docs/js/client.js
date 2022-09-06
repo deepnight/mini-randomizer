@@ -1065,7 +1065,7 @@ var App = function() {
 	this.internalFiles = _g;
 	var _g = new haxe_ds_StringMap();
 	_g.h["embed/tpl/random.html"] = "<div class=\"toolbar\">\r\n\t<div class=\"row buttons randButtons\"></div>\r\n\t<div class=\"row small\">\r\n\t\t<button class=\"clear\">Clear</button>\r\n\t</div>\r\n</div>\r\n\r\n<div class=\"output\"></div>\r\n";
-	_g.h["embed/tpl/editor.html"] = "<div class=\"toolbar\">\r\n\t<button class=\"close small\">Close</button>\r\n\t<button class=\"save\">...</button>\r\n\t<button class=\"download\">📥 Download</button>\r\n\t<button class=\"upload\">📁 Upload</button>\r\n\t<button class=\"copy\">📄 Copy</button>\r\n\t<button class=\"delete small\">🗑️ Delete save</button>\r\n</div>\r\n\r\n<ul class=\"map\">map map</ul>\r\n<div id=\"ace\"></div>\r\n<div class=\"log\"></div>\r\n";
+	_g.h["embed/tpl/editor.html"] = "<div class=\"toolbar\">\r\n\t<button class=\"close small\">Close</button>\r\n\t<button class=\"download\">📥 Download</button>\r\n\t<button class=\"upload\">📁 Upload</button>\r\n\t<button class=\"copy\">📄 Copy</button>\r\n\t<button class=\"delete small\">🗑️ Delete</button>\r\n\t<div class=\"saveStatus\"></div>\r\n</div>\r\n\r\n<ul class=\"map\">map map</ul>\r\n<div id=\"ace\"></div>\r\n<div class=\"log\"></div>\r\n";
 	this.templates = _g;
 	this.storage = dn_data_LocalStorage.createJsonStorage("settings");
 	this.loadSettings();
@@ -1638,10 +1638,10 @@ EditorUI.prototype = $extend(SiteProcess.prototype,{
 		this.ace = null;
 	}
 	,markSaved: function() {
-		this.jRoot.find(".save").prop("disabled",true).text("✔️ Saved.");
+		this.jRoot.find(".saveStatus").addClass("saved");
 	}
 	,markUnsaved: function() {
-		this.jRoot.find(".save").prop("disabled",false).text("Save");
+		this.jRoot.find(".saveStatus").removeClass("saved");
 	}
 	,onChange: function() {
 		this.markUnsaved();

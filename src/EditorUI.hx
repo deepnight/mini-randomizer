@@ -117,11 +117,11 @@ class EditorUI extends SiteProcess {
 	}
 
 	function markSaved() {
-		jRoot.find(".save").prop("disabled", true).text("✔️ Saved.");
+		jRoot.find(".saveStatus").addClass("saved");
 	}
 
 	function markUnsaved() {
-		jRoot.find(".save").prop("disabled", false).text("Save");
+		jRoot.find(".saveStatus").removeClass("saved");
 	}
 
 	function onChange() {
