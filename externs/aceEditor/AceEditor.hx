@@ -32,6 +32,7 @@ extern class AceEditorSession {
 	public function getUndoManager() : AceUndoManager;
 	public function clearAnnotations() : Void;
 	public function setAnnotations(annotations:Array<AceAnnotation>) : Void;
+	public function setUseWrapMode(wrap:Bool) : Void;
 
 	public function addMarker(range:AceRange, className:String, type:String, ?inFront:Bool) : Int;
 	public function getMarkers() : Dynamic;

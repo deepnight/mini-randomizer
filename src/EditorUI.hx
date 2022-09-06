@@ -17,6 +17,7 @@ class EditorUI extends SiteProcess {
 		ace.on("change", ()->onChange());
 		ace.on("changeSelection", ()->invalidateMapMarkers());
 
+		ace.session.setUseWrapMode(true);
 		ace.commands.removeCommand("removeline",true);
 		ace.commands.removeCommand("duplicateSelection",true);
 		ace.commands.addCommand({ bindKey:{ win:"Ctrl-s", mac:"Command-s" }, exec: _->save() });
@@ -172,7 +173,9 @@ class EditorUI extends SiteProcess {
 
 	function fillMap() {
 		jMap.empty();
-		for(k in rdata.keys) {
+		var sortedKeys = rdata.keys.copy();
+		sortedKeys.sort( (a,b)->Reflect.compare(a.key,b.key) );
+		for(k in sortedKeys) {
 			var jKey = new J('<li id="key-${k.key}">${k.key}</li>');
 			jKey.click(_->{
 				gotoLine(k.line+1);
@@ -190,15 +193,18 @@ class EditorUI extends SiteProcess {
 	}
 
 	function updateMapMarkers() {
+		// Clear
 		invalidatedMapMarkers = false;
 		jMap.find(".current").removeClass("current");
 		jMap.find(".mark").removeClass("mark");
 		if( rdata==null )
 			return;
 
+		// Marked lines
 		for(m in rdata.markedLines)
 			jMap.find("#key-"+m.parentKey).addClass("mark "+m.className);
 
+		// Cursor on current key
 		var curLine = ace.getSelectionRange().start.row;
 		var curKey = null;
 		for(k in rdata.keys)
@@ -206,7 +212,6 @@ class EditorUI extends SiteProcess {
 				curKey = k;
 			else
 				break;
-
 		if( curKey!=null )
 			jMap.find("#key-"+curKey.key).addClass("current");
 	}
