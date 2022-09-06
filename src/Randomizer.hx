@@ -68,6 +68,10 @@ class Randomizer {
 		if( out=="-" )
 			out = "";
 
+		// Remove multiple spaces
+		var spaceReg = ~/ {2,}/gim;
+		out = spaceReg.replace(out, " ");
+
 		return out;
 	}
 }
